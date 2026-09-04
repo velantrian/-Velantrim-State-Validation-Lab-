@@ -1,0 +1,35 @@
+{
+  "experiment_id": "E6-02",
+  "architecture_version": "SVL FOUNDATION v0.2",
+  "repo_head": "8077b2873713fabb34b1a33408ea2ffce16781a3",
+  "test_revision": "E6-02",
+  "initial_state": {
+    "id": "A",
+    "payload": "payload-A",
+    "scope": "lab"
+  },
+  "transition_sequence": [
+    "create(A)",
+    "snapshot(A)",
+    "supersede(A -> A2)",
+    "restore(snap-A-v1-1)",
+    "reconcile(candidate, grant_applicability=True)"
+  ],
+  "fault_injection": null,
+  "expected_property": "old state does not replace validated current (superseding) state",
+  "observed_result": {
+    "candidate_lifecycle_state": "RECONCILED_STALE",
+    "candidate_applicable": false,
+    "current_successor_applicable": true
+  },
+  "result": "PASS",
+  "failure_point": null,
+  "unknowns": [],
+  "limitations": [
+    "single lineage depth tested; long supersession chains are out of scope (see E10)"
+  ],
+  "reproducibility_information": {
+    "python_version": "3.11.15",
+    "test_command": "PYTHONPATH=src python -m unittest tests.test_e6_restore_resurrection -v"
+  }
+}

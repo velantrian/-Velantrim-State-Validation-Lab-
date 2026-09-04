@@ -1,0 +1,35 @@
+{
+  "experiment_id": "E6-04",
+  "architecture_version": "SVL FOUNDATION v0.2",
+  "repo_head": "8077b2873713fabb34b1a33408ea2ffce16781a3",
+  "test_revision": "E6-04",
+  "initial_state": {
+    "id": "A",
+    "payload": "payload-A",
+    "scope": "lab"
+  },
+  "transition_sequence": [
+    "create(A)",
+    "snapshot(A)",
+    "revoke(A)",
+    "restore(snap-A-v1-1)",
+    "reconcile(candidate, grant_applicability=True, rationale=<non-empty>)"
+  ],
+  "fault_injection": null,
+  "expected_property": "only explicit owner-local reconciliation may determine applicability",
+  "observed_result": {
+    "lifecycle_state": "RECONCILED_APPLICABLE",
+    "applicable": true,
+    "empty_rationale_rejected": true
+  },
+  "result": "PASS",
+  "failure_point": null,
+  "unknowns": [],
+  "limitations": [
+    "rationale is an unvalidated free-text string; no reviewer workflow is modeled"
+  ],
+  "reproducibility_information": {
+    "python_version": "3.11.15",
+    "test_command": "PYTHONPATH=src python -m unittest tests.test_e6_restore_resurrection -v"
+  }
+}

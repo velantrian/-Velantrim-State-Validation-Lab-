@@ -308,6 +308,19 @@ Create a snapshot before revoke/erase/supersede. Restored bytes may exist, but c
 **🥉 Cross-scope isolation**  
 Create state in scope A. Scope B attempts to read, mutate, derive, delete, or replay it. Any scope expansion must be explicit and testable.
 
+## ✅ Execution status
+
+The first research wave is no longer purely `SPECIFIED`. E6 (Restore
+Resurrection) has a deterministic reference model, tests, and Evidence
+Ledger records; E3 and E4 remain `SPECIFIED` only. See
+[`docs/EXECUTION_STATUS.md`](docs/EXECUTION_STATUS.md) for the full,
+per-experiment `SPECIFIED` / `IMPLEMENTED` / `EXECUTED` breakdown, and
+[`docs/NATIVE_KERNEL_CROSS_CHECK.md`](docs/NATIVE_KERNEL_CROSS_CHECK.md)
+for the read-only Native Kernel semantic cross-check performed before
+implementation. None of this changes the authority claims above:
+`Runtime authority: FALSE`, `Canon authority: FALSE`, `Action
+authority: FALSE`, `Production authorization: FALSE` still hold.
+
 ## 📚 Detailed architecture
 
 See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the full research model and architectural rationale.
