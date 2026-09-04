@@ -1,0 +1,35 @@
+{
+  "architecture_version": "svl-foundation/0.2",
+  "fixture_family": "E6_RESTORE_RESURRECTION",
+  "fixtures": [
+    {
+      "expected_property": "restored stale candidate remains inapplicable after later revocation",
+      "experiment_id": "E6-01",
+      "transition_sequence": ["create", "snapshot", "revoke", "restore"]
+    },
+    {
+      "expected_property": "restored predecessor cannot replace the applicable successor",
+      "experiment_id": "E6-02",
+      "transition_sequence": ["create", "snapshot", "supersede", "restore"]
+    },
+    {
+      "expected_property": "restored payload remains inapplicable after fixture-local logical erasure",
+      "experiment_id": "E6-03",
+      "transition_sequence": ["create", "snapshot", "logical erase", "restore"]
+    },
+    {
+      "expected_property": "only explicit reconciliation can assess a matching restored candidate as applicable",
+      "experiment_id": "E6-04",
+      "transition_sequence": ["create", "snapshot", "restore", "explicit reconciliation"]
+    },
+    {
+      "expected_property": "restore without reconciliation fails closed",
+      "experiment_id": "E6-05",
+      "transition_sequence": ["create", "snapshot", "restore"]
+    }
+  ],
+  "model_version": "svl-e6-reference-model/0.1",
+  "random_generation": "NONE",
+  "scope": "OWNER_LOCAL_RESEARCH_ONLY",
+  "synthetic_payloads_only": true
+}
