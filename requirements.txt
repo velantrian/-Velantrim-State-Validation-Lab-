@@ -1,0 +1,11 @@
+# 🔬 Velantrim State Validation Lab — Minimal Dependencies
+# RESEARCH-ONLY: No production dependencies
+
+# Standard library only - no external dependencies required
+# This file exists for documentation purposes only
+
+# To run tests:
+# python -m unittest tests.test_e6_restore_resurrection -v
+
+# Optional: pytest for alternative test runner
+# pytest
