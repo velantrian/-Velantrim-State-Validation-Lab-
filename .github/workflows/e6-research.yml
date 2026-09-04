@@ -1,0 +1,55 @@
+name: E6 deterministic research
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/e6-research.yml"
+      - "src/**"
+      - "tests/**"
+      - "evidence/E6/**"
+      - "docs/EXECUTION_STATUS.md"
+      - "docs/E6_NATIVE_KERNEL_CROSS_CHECK.md"
+      - "requirements.txt"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  e6:
+    name: E6 tests and evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      SVL_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Check out exact head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SVL_HEAD_SHA }}
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run deterministic tests
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: Generate exact-head Evidence Ledger
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m state_validation_lab.run_e6 \
+            --output-dir .artifacts/evidence/E6 \
+            --repo-head "$SVL_HEAD_SHA" \
+            --test-revision "$SVL_HEAD_SHA"
+
+      - name: Upload Evidence Ledger
+        uses: actions/upload-artifact@v4
+        with:
+          name: e6-evidence-${{ env.SVL_HEAD_SHA }}
+          path: .artifacts/evidence/E6/*.json
+          if-no-files-found: error
+          retention-days: 30

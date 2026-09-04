@@ -308,6 +308,27 @@ Create a snapshot before revoke/erase/supersede. Restored bytes may exist, but c
 **🥉 Cross-scope isolation**  
 Create state in scope A. Scope B attempts to read, mutate, derive, delete, or replay it. Any scope expansion must be explicit and testable.
 
+## ▶️ Executable research status
+
+The first bounded executable layer implements **E6 — Restore Resurrection**
+only. It is an owner-local, deterministic, in-memory falsification fixture:
+
+```text
+E6: SPECIFIED · IMPLEMENTED · EXECUTION RESULT BOUND TO EACH EVIDENCE LEDGER RUN
+E3: SPECIFIED · NOT IMPLEMENTED · NOT EXECUTED
+E4: SPECIFIED · NOT IMPLEMENTED · NOT EXECUTED
+```
+
+Run the standard-library test suite:
+
+```bash
+python -m unittest discover -s tests -p 'test_*.py' -v
+```
+
+See [`docs/EXECUTION_STATUS.md`](docs/EXECUTION_STATUS.md) for exact commands
+and authority boundaries. This model is not a production schema, runtime,
+truth engine, Canon, permission issuer, or rollback authority.
+
 ## 📚 Detailed architecture
 
 See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the full research model and architectural rationale.

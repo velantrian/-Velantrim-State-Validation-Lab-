@@ -45,6 +45,7 @@ Thumbs.db
 
 # Local test outputs
 .test_output/
+.artifacts/
 .coverage
 htmlcov/
 .pytest_cache/
