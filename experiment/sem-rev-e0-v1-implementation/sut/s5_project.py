@@ -35,12 +35,6 @@ def get_connection(db_path=DB_PATH):
     return conn
 
 
-def compute_sha256(data):
-    if isinstance(data, dict) or isinstance(data, list):
-        data = json.dumps(data, sort_keys=True, indent=2)
-    return hashlib.sha256(data.encode('utf-8')).hexdigest()
-
-
 def main():
     print('S5 PROJECT: Starting...')
 
@@ -60,6 +54,7 @@ def main():
 
         projection = {
             's5_projection': {
+                'fixture_a': s4_result.get('fixture_a', {}),
                 'fixture_b': s4_result['fixture_b'],
                 'fixture_c': s4_result['fixture_c'],
                 'timestamp': datetime.now(timezone.utc).isoformat(),
@@ -67,16 +62,23 @@ def main():
             }
         }
 
-        output_bytes = json.dumps(projection, sort_keys=True, indent=2).encode('utf-8')
+        # Write exact output bytes
         output_path = 's5_output.json'
-        with open(output_path, 'wb') as f:
-            f.write(output_bytes)
+        with open(output_path, 'w') as f:
+            json.dump(projection, f, sort_keys=True, indent=2)
 
-        sha256_hash = compute_sha256(output_bytes)
+        # Read back the exact bytes that were written
+        with open(output_path, 'rb') as f:
+            output_bytes = f.read()
 
+        # Compute SHA-256 of the exact written bytes
+        sha256_hash = hashlib.sha256(output_bytes).hexdigest()
+
+        # Write hash file
         hash_path = 's5_output.sha256'
         with open(hash_path, 'w') as f:
-            f.write(f'{sha256_hash}  {output_path}\n')
+            f.write(f'{sha256_hash}  {output_path}
+')
 
         print(f'S5 PROJECT: Output written to {output_path}')
         print(f'S5 PROJECT: SHA-256: {sha256_hash}')
