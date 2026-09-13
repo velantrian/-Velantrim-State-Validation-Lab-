@@ -1,78 +1,73 @@
 -- SEM-REV-E0 v1 Schema
 -- SQLite 3.53.4 required
 -- STRICT tables, explicit PKs, foreign keys ON
+-- BOOLEAN is not a valid STRICT datatype; use INTEGER 0/1.
 
 PRAGMA foreign_keys = ON;
 PRAGMA journal_mode = WAL;
 
--- Entity table
 CREATE TABLE IF NOT EXISTS entity (
     entity_id TEXT PRIMARY KEY,
     entity_type TEXT NOT NULL,
     recorded_at TEXT NOT NULL
 ) STRICT;
 
--- Scope table
 CREATE TABLE IF NOT EXISTS scope (
     scope_id TEXT PRIMARY KEY,
     description TEXT
 ) STRICT;
 
--- Semantic force enum
 CREATE TABLE IF NOT EXISTS semantic_force (
     force_id TEXT PRIMARY KEY,
     description TEXT NOT NULL
 ) STRICT;
 
--- Uncertainty enum
 CREATE TABLE IF NOT EXISTS uncertainty (
     uncertainty_id TEXT PRIMARY KEY,
     description TEXT NOT NULL
 ) STRICT;
 
--- Authority table
 CREATE TABLE IF NOT EXISTS authority (
     authority_id TEXT PRIMARY KEY,
     authority_type TEXT NOT NULL
 ) STRICT;
 
--- Source table
 CREATE TABLE IF NOT EXISTS source (
     source_id TEXT PRIMARY KEY,
     source_type TEXT NOT NULL,
     description TEXT
 ) STRICT;
 
--- Assertion table
 CREATE TABLE IF NOT EXISTS assertion (
     assertion_id TEXT PRIMARY KEY,
     entity_id TEXT NOT NULL,
     semantic_force TEXT NOT NULL,
     scope_id TEXT NOT NULL,
     content TEXT,
+    reason TEXT,
+    reopen_requires TEXT,
     asserted_at TEXT NOT NULL,
     recorded_at TEXT NOT NULL,
     valid_from TEXT,
     valid_to TEXT,
     uncertainty TEXT,
-    declared_loss BOOLEAN DEFAULT FALSE,
+    declared_loss INTEGER NOT NULL DEFAULT 0,
     FOREIGN KEY (entity_id) REFERENCES entity(entity_id),
     FOREIGN KEY (semantic_force) REFERENCES semantic_force(force_id),
     FOREIGN KEY (scope_id) REFERENCES scope(scope_id),
     FOREIGN KEY (uncertainty) REFERENCES uncertainty(uncertainty_id)
 ) STRICT;
 
--- Evidence table
 CREATE TABLE IF NOT EXISTS evidence (
     evidence_id TEXT PRIMARY KEY,
     source_id TEXT NOT NULL,
     observed_at TEXT NOT NULL,
     recorded_at TEXT NOT NULL,
     description TEXT,
+    declared_loss INTEGER NOT NULL DEFAULT 0,
     FOREIGN KEY (source_id) REFERENCES source(source_id)
 ) STRICT;
 
--- Evidence-Assertion link
 CREATE TABLE IF NOT EXISTS evidence_assertion_link (
     evidence_id TEXT NOT NULL,
     assertion_id TEXT NOT NULL,
@@ -81,7 +76,6 @@ CREATE TABLE IF NOT EXISTS evidence_assertion_link (
     FOREIGN KEY (assertion_id) REFERENCES assertion(assertion_id)
 ) STRICT;
 
--- Revision table
 CREATE TABLE IF NOT EXISTS revision (
     revision_id TEXT PRIMARY KEY,
     revision_type TEXT NOT NULL,
@@ -94,7 +88,6 @@ CREATE TABLE IF NOT EXISTS revision (
     FOREIGN KEY (replacement_assertion_id) REFERENCES assertion(assertion_id)
 ) STRICT;
 
--- Authority decision table
 CREATE TABLE IF NOT EXISTS authority_decision (
     decision_id TEXT PRIMARY KEY,
     assertion_id TEXT,
@@ -111,7 +104,6 @@ CREATE TABLE IF NOT EXISTS authority_decision (
     FOREIGN KEY (scope_id) REFERENCES scope(scope_id)
 ) STRICT;
 
--- Trace table (for audit)
 CREATE TABLE IF NOT EXISTS trace (
     trace_id TEXT PRIMARY KEY,
     operation TEXT NOT NULL,
@@ -121,21 +113,19 @@ CREATE TABLE IF NOT EXISTS trace (
     details TEXT
 ) STRICT;
 
--- Qualified projection (S5 output)
 CREATE TABLE IF NOT EXISTS qualified_projection (
     projection_id TEXT PRIMARY KEY,
     assertion_id TEXT NOT NULL,
-    is_qualified BOOLEAN NOT NULL,
+    is_qualified INTEGER NOT NULL,
     reason TEXT,
-    currentness BOOLEAN NOT NULL,
+    currentness INTEGER NOT NULL,
     authority_status TEXT,
     uncertainty TEXT,
-    declared_loss BOOLEAN DEFAULT FALSE,
+    declared_loss INTEGER NOT NULL DEFAULT 0,
     FOREIGN KEY (assertion_id) REFERENCES assertion(assertion_id),
     FOREIGN KEY (uncertainty) REFERENCES uncertainty(uncertainty_id)
 ) STRICT;
 
--- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_assertion_entity ON assertion(entity_id);
 CREATE INDEX IF NOT EXISTS idx_assertion_force ON assertion(semantic_force);
 CREATE INDEX IF NOT EXISTS idx_assertion_scope ON assertion(scope_id);
