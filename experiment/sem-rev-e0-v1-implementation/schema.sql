@@ -10,38 +10,38 @@ CREATE TABLE IF NOT EXISTS entity (
     entity_id TEXT PRIMARY KEY,
     entity_type TEXT NOT NULL,
     recorded_at TEXT NOT NULL
-);
+) STRICT;
 
 -- Scope table
 CREATE TABLE IF NOT EXISTS scope (
     scope_id TEXT PRIMARY KEY,
     description TEXT
-);
+) STRICT;
 
 -- Semantic force enum
 CREATE TABLE IF NOT EXISTS semantic_force (
     force_id TEXT PRIMARY KEY,
     description TEXT NOT NULL
-);
+) STRICT;
 
 -- Uncertainty enum
 CREATE TABLE IF NOT EXISTS uncertainty (
     uncertainty_id TEXT PRIMARY KEY,
     description TEXT NOT NULL
-);
+) STRICT;
 
 -- Authority table
 CREATE TABLE IF NOT EXISTS authority (
     authority_id TEXT PRIMARY KEY,
     authority_type TEXT NOT NULL
-);
+) STRICT;
 
 -- Source table
 CREATE TABLE IF NOT EXISTS source (
     source_id TEXT PRIMARY KEY,
     source_type TEXT NOT NULL,
     description TEXT
-);
+) STRICT;
 
 -- Assertion table
 CREATE TABLE IF NOT EXISTS assertion (
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS assertion (
     FOREIGN KEY (semantic_force) REFERENCES semantic_force(force_id),
     FOREIGN KEY (scope_id) REFERENCES scope(scope_id),
     FOREIGN KEY (uncertainty) REFERENCES uncertainty(uncertainty_id)
-);
+) STRICT;
 
 -- Evidence table
 CREATE TABLE IF NOT EXISTS evidence (
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS evidence (
     recorded_at TEXT NOT NULL,
     description TEXT,
     FOREIGN KEY (source_id) REFERENCES source(source_id)
-);
+) STRICT;
 
 -- Evidence-Assertion link
 CREATE TABLE IF NOT EXISTS evidence_assertion_link (
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS evidence_assertion_link (
     PRIMARY KEY (evidence_id, assertion_id),
     FOREIGN KEY (evidence_id) REFERENCES evidence(evidence_id),
     FOREIGN KEY (assertion_id) REFERENCES assertion(assertion_id)
-);
+) STRICT;
 
 -- Revision table
 CREATE TABLE IF NOT EXISTS revision (
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS revision (
     recorded_at TEXT NOT NULL,
     FOREIGN KEY (target_assertion_id) REFERENCES assertion(assertion_id),
     FOREIGN KEY (replacement_assertion_id) REFERENCES assertion(assertion_id)
-);
+) STRICT;
 
 -- Authority decision table
 CREATE TABLE IF NOT EXISTS authority_decision (
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS authority_decision (
     FOREIGN KEY (authority_id) REFERENCES authority(authority_id),
     FOREIGN KEY (semantic_force) REFERENCES semantic_force(force_id),
     FOREIGN KEY (scope_id) REFERENCES scope(scope_id)
-);
+) STRICT;
 
 -- Trace table (for audit)
 CREATE TABLE IF NOT EXISTS trace (
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS trace (
     entity_id TEXT NOT NULL,
     timestamp TEXT NOT NULL,
     details TEXT
-);
+) STRICT;
 
 -- Qualified projection (S5 output)
 CREATE TABLE IF NOT EXISTS qualified_projection (
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS qualified_projection (
     declared_loss BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (assertion_id) REFERENCES assertion(assertion_id),
     FOREIGN KEY (uncertainty) REFERENCES uncertainty(uncertainty_id)
-);
+) STRICT;
 
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_assertion_entity ON assertion(entity_id);
