@@ -350,6 +350,23 @@ Experiment must not pass by simply failing to retrieve dangerous V1.
 
 Reads **only typed columns/relations** for mandatory semantics.
 
+S3 candidate membership ≠ S4 qualification-dependency availability.
+
+S4 MUST obtain `dec:ad-9` and every typed revision / retraction / supersession / scope / temporal record required to qualify `as:alpha-v1` and `as:beta-v1` by deterministic lookup in the reopened persisted store. Those records need not be S3 candidates. Missing from S3 MUST NOT mean they do not exist.
+
+If a required typed qualification dependency cannot be recovered:
+- `S4 = FAIL`;
+- `SEM_REV_E0_CORE_PASS` is prohibited.
+
+A missing required dependency MUST NOT:
+- become a normal candidate exclusion;
+- be interpreted as evidence of absence;
+- silently produce `NO_QUALIFIED_RESULT`.
+
+Dependency loss is stage failure, not valid qualification rejection.
+
+No graph traversal, Graphiti, FalkorDBLite, or new retrieval engine is required or implied.
+
 Must not infer force/scope/authority/retraction/currentness from source prose.
 
 Request:
@@ -461,6 +478,8 @@ trivial abstention
 
 Commit all frozen records; typed qualifiers queryable; stable IDs; links present; no free `is_current`; positive and adversarial controls stored.
 
+S0 MUST NOT persist oracle-derived expected-answer material into the database. The database reopened by S2 MUST NOT contain an oracle / answer key introduced by S0.
+
 Mandatory qualifier only in prose = `HARD FAIL / S0 FAIL`.
 
 ### S1 CLOSE
@@ -474,9 +493,23 @@ Mandatory qualifier only in prose = `HARD FAIL / S0 FAIL`.
 
 ### S2 NEW-PROCESS REOPEN
 
-New OS process; only database file + frozen query/rules/oracle available.
+New OS process. The system under test may load only:
 
-Recover all canonical records/relations required by oracle.
+- the reopened persisted database file;
+- the frozen query;
+- the frozen deterministic execution rules;
+- the frozen deterministic qualification rules.
+
+The S0–S5 system under test MUST NOT access:
+- REQUIRED atoms;
+- FORBIDDEN atoms;
+- expected result labels;
+- gold projections;
+- equivalent oracle-derived answer material.
+
+Recover all canonical records/relations required by the frozen fixtures and deterministic execution / qualification rules.
+
+The scoring oracle is evaluation-only and is not an S0–S5 SUT input.
 
 ### S3 RETRIEVE
 
@@ -493,6 +526,25 @@ Deterministic:
 - no summary interpretation;
 - no source-text parsing for mandatory qualifiers.
 
+S3 returns candidate identities according to the frozen fixture-specific candidate construction.
+
+For Fixture B, S3 assertion candidates are distinct from S4 qualification-dependency records. Fixture C retains `dec:pos-1` as its required S3 candidate.
+
+S4 MUST resolve every typed qualification dependency required to evaluate those candidates (revision, retraction, supersession, authority decision, scope, temporal applicability) by deterministic lookup in the reopened persisted store.
+
+`NOT RETRIEVED ≠ ABSENT` is an S4 execution rule. Absence from the S3 candidate set MUST NOT be treated as nonexistence of a dependency. A revision, retraction, supersession, or authority-decision record need not be a ranked S3 candidate in order to bind qualification.
+
+If a required typed qualification dependency cannot be recovered from the store:
+- `S4 = FAIL`;
+- `SEM_REV_E0_CORE_PASS` is prohibited.
+
+A missing required dependency MUST NOT:
+- become a normal candidate exclusion;
+- be interpreted as evidence of absence;
+- silently produce `NO_QUALIFIED_RESULT`.
+
+Dependency loss is stage failure, not valid qualification rejection.
+
 Outputs:
 
 - accepted/excluded IDs;
@@ -503,7 +555,9 @@ Outputs:
 
 ### S5 PROJECT
 
-Deterministic task-facing structured projection evaluated only via atoms; no gold essay.
+Deterministic task-facing structured projection; no gold essay.
+
+S5 output bytes MUST be written and SHA-256 recorded before the scoring harness may open the oracle. Scorer / oracle information MUST NOT flow backward into S0–S5.
 
 ## 17. Oracle format
 
@@ -513,6 +567,10 @@ REQUIRED ATOMS + FORBIDDEN ATOMS only
 
 No stylistic matching.  
 No interpretive scoring for CORE.
+
+The atom oracle is harness-only. It becomes available only after S5 output is fixed and hashed. The oracle is not an S0–S5 SUT input.
+
+Principle donor (not imported machinery): FM-17-pre v1.3.1 — `SYSTEM UNDER TEST ≠ ANSWER KEY`; `PACKAGE ≠ AUTHORITY`.
 
 ## 18. Hard fails
 
