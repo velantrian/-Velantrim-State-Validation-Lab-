@@ -1,0 +1,53 @@
+{
+  "artifact_id": "SQLITE_ENVIRONMENT",
+  "config": {
+    "application_issued_semantic_ids": true,
+    "explicit_primary_keys": true,
+    "explicit_transactions": true,
+    "file_backed_database_only": true,
+    "pragma_foreign_keys": "ON",
+    "pragma_foreign_keys_on_every_connection": true,
+    "strict_tables_required": true
+  },
+  "does_not_mean": [
+    "SQLite is selected as Velantrim architecture",
+    "SQLite is production-approved",
+    "SQLite is superior to graph/storage alternatives",
+    "Graph Kernel is rejected",
+    "implementation is authorized"
+  ],
+  "forbidden": {
+    "free_mutable_is_current": true,
+    "llm_qualification_in_s0_s5": true,
+    "memory_database": true,
+    "rowid_semantic_identity": true
+  },
+  "pin_scope": "experimental_environment_only",
+  "role": "sqlite_version_config_declaration",
+  "runtime_guard": {
+    "applies_before": "any future SEM-REV-E0 experimental write",
+    "environment_mismatch_is_not_an_experimental_result": true,
+    "on_mismatch": "STOP BEFORE S0",
+    "silent_substitution_forbidden": [
+      "another SQLite version",
+      "system default",
+      "latest release",
+      "development snapshot"
+    ],
+    "sqlite_source_id_must_match": "2026-07-24 19:02:57 bf7c7f30031888f4e796e429ab3978879485813aaca6f641c7b33e4e09459bcc",
+    "sqlite_version_must_equal": "3.53.4"
+  },
+  "source_commit": "b217db3776078d01d6d5411820cb352e9a1bd36b",
+  "source_reference": "OWNER PIN 2026-09-13 + prereg §6 Substrate rules; SOURCE_ID confirmed against https://sqlite.org/c3ref/c_source_id.html / release 3.53.4",
+  "source_type": "generated_metadata",
+  "sqlite": {
+    "engine_version": "3.53.4",
+    "release_date": "2026-07-24",
+    "sqlite_source_id": "2026-07-24 19:02:57 bf7c7f30031888f4e796e429ab3978879485813aaca6f641c7b33e4e09459bcc"
+  },
+  "text_representation": {
+    "encoding": "UTF-8",
+    "final_newline": "single_LF",
+    "line_ending": "LF"
+  }
+}
