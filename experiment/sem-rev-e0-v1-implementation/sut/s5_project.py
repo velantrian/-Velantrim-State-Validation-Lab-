@@ -2,96 +2,87 @@
 """
 S5 STRUCTURED PROJECTION
 FROZEN SPEC: SEM-REV-E0 v1
+IMPLEMENTATION_TEST_ONLY
+
+Writes exact output bytes, then hashes those exact written bytes.
+Oracle / scorer MUST NOT run before the hash file exists.
 """
 
-import sqlite3
+import hashlib
+import json
 import os
 import sys
-import json
-import hashlib
-from datetime import datetime, timezone
 
-DB_PATH = os.environ.get('SEMREV_DB_PATH', 'semrev_e0.db')
+from runtime import connect, fail_exit, RuntimeGuardError
 
 
-def get_connection(db_path=DB_PATH):
-    conn = sqlite3.connect(db_path)
-    conn.execute('PRAGMA foreign_keys = ON')
-    conn.execute('PRAGMA journal_mode = WAL')
-
-    version = conn.execute('SELECT sqlite_version()').fetchone()[0]
-    if version != '3.53.4':
-        print(f'ERROR: SQLite version mismatch. Expected 3.53.4, got {version}')
-        conn.close()
-        sys.exit(1)
-
-    source_id = conn.execute('SELECT sqlite_source_id()').fetchone()[0]
-    expected_source_id = '2026-07-24 19:02:57 bf7c7f30031888f4e796e429ab3978879485813aaca6f641c7b33e4e09459bcc'
-    if source_id != expected_source_id:
-        print('ERROR: SQLite source ID mismatch')
-        conn.close()
-        sys.exit(1)
-
-    return conn
+def write_exact(path, payload):
+    text = json.dumps(payload, sort_keys=True, indent=2) + '\n'
+    data = text.encode('utf-8')
+    with open(path, 'wb') as f:
+        f.write(data)
+    return data
 
 
-def main():
-    print('S5 PROJECT: Starting...')
+def sha256_bytes(data):
+    return hashlib.sha256(data).hexdigest()
 
-    if DB_PATH == ':memory:' or 'memory' in DB_PATH.lower():
-        print('ERROR: :memory: database is forbidden')
-        sys.exit(1)
 
-    if not os.path.exists(DB_PATH):
-        print(f'ERROR: Database file not found at {DB_PATH}')
-        sys.exit(1)
-
-    conn = get_connection(DB_PATH)
-
+def run_s5(db_path, s4_path='s4_output.json', output_path='s5_output.json',
+           hash_path='s5_output.sha256'):
+    conn = connect(db_path, must_exist=True)
     try:
-        with open('s4_output.json', 'r') as f:
+        with open(s4_path, 'r', encoding='utf-8') as f:
             s4_result = json.load(f)
 
         projection = {
             's5_projection': {
                 'fixture_a': s4_result.get('fixture_a', {}),
-                'fixture_b': s4_result['fixture_b'],
-                'fixture_c': s4_result['fixture_c'],
-                'timestamp': datetime.now(timezone.utc).isoformat(),
-                'database_path': DB_PATH
+                'fixture_b': s4_result.get('fixture_b', {}),
+                'fixture_c': s4_result.get('fixture_c', {}),
+                'query_as_of': s4_result.get('query_as_of'),
+                'database_path': db_path,
             }
         }
 
-        # Write exact output bytes
-        output_path = 's5_output.json'
-        with open(output_path, 'w') as f:
-            json.dump(projection, f, sort_keys=True, indent=2)
-
-        # Read back the exact bytes that were written
+        output_bytes = write_exact(output_path, projection)
         with open(output_path, 'rb') as f:
-            output_bytes = f.read()
-
-        # Compute SHA-256 of the exact written bytes
-        sha256_hash = hashlib.sha256(output_bytes).hexdigest()
-
-        # Write hash file
-        hash_path = 's5_output.sha256'
-        with open(hash_path, 'w') as f:
-            f.write(f'{sha256_hash}  {output_path}
-')
+            on_disk = f.read()
+        if on_disk != output_bytes:
+            print('ERROR: S5 written bytes differ from in-memory payload')
+            return None
+        digest = sha256_bytes(on_disk)
+        with open(hash_path, 'w', encoding='utf-8', newline='\n') as f:
+            f.write(f'{digest}  {os.path.basename(output_path)}\n')
 
         print(f'S5 PROJECT: Output written to {output_path}')
-        print(f'S5 PROJECT: SHA-256: {sha256_hash}')
+        print(f'S5 PROJECT: SHA-256: {digest}')
         print('S5 PROJECT: SUCCESS')
         print('S5 PROJECT: Scoring harness may now access oracle')
-
+        return {
+            'projection': projection,
+            'sha256': digest,
+            'output_path': output_path,
+            'hash_path': hash_path,
+            'byte_count': len(on_disk),
+        }
+    finally:
         conn.close()
 
+
+def main():
+    print('S5 PROJECT: Starting...')
+    db_path = os.environ.get('SEMREV_DB_PATH', 'semrev_e0.db')
+    try:
+        result = run_s5(db_path)
+        if result is None:
+            sys.exit(1)
+    except RuntimeGuardError as e:
+        fail_exit(e)
     except Exception as e:
         print(f'S5 PROJECT: ERROR - {e}')
         import traceback
         traceback.print_exc()
-        conn.close()
         sys.exit(1)
 
 
