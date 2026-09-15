@@ -201,6 +201,9 @@ def qualify_fixture_b(conn, s3_candidates, query_as_of):
     if alpha_rev is None:
         print('ERROR: alpha missing revision -> S4 FAIL')
         return None
+    if not alpha_rev['effective_from']:
+        print('ERROR: required revision temporal metadata missing: rev:alpha-retract -> S4 FAIL')
+        return None
 
     dec_ad9 = require_row(
         conn,
@@ -214,6 +217,9 @@ def qualify_fixture_b(conn, s3_candidates, query_as_of):
     )
     if dec_ad9 is None:
         print('ERROR: dec:ad-9 cannot be recovered - S4 FAIL')
+        return None
+    if not dec_ad9['effective_from'] or not dec_ad9['recorded_at']:
+        print('ERROR: required authority temporal metadata missing: dec:ad-9 -> S4 FAIL')
         return None
 
     qualified = []
@@ -235,7 +241,21 @@ def qualify_fixture_b(conn, s3_candidates, query_as_of):
         if row is None:
             return None
 
-        ev = conn.execute(
+        link = require_row(
+            conn,
+            """
+            SELECT evidence_id, assertion_id
+            FROM evidence_assertion_link WHERE assertion_id = ?
+            """,
+            (assertion_id,),
+            f'evidence_assertion_link:{assertion_id}',
+        )
+        if link is None:
+            print(f'ERROR: required evidence->assertion link missing: {assertion_id} -> S4 FAIL')
+            return None
+
+        ev = require_row(
+            conn,
             """
             SELECT e.evidence_id, e.observed_at, e.recorded_at, e.declared_loss
             FROM evidence e
@@ -243,7 +263,27 @@ def qualify_fixture_b(conn, s3_candidates, query_as_of):
             WHERE l.assertion_id = ?
             """,
             (assertion_id,),
-        ).fetchone()
+            f'evidence:{assertion_id}',
+        )
+        if ev is None:
+            print(f'ERROR: required evidence record missing: {assertion_id} -> S4 FAIL')
+            return None
+
+        if not row['recorded_at']:
+            print(f'ERROR: required recorded_at missing: {assertion_id} -> S4 FAIL')
+            return None
+        if not row['asserted_at']:
+            print(f'ERROR: required asserted_at missing: {assertion_id} -> S4 FAIL')
+            return None
+        if not row['valid_from']:
+            print(f'ERROR: required temporal metadata valid_from missing: {assertion_id} -> S4 FAIL')
+            return None
+        if not ev['observed_at']:
+            print(f'ERROR: required observed_at missing: {assertion_id} -> S4 FAIL')
+            return None
+        if not ev['recorded_at']:
+            print(f'ERROR: required evidence recorded_at missing: {assertion_id} -> S4 FAIL')
+            return None
 
         reasons = []
         status, revs = derived_status(conn, assertion_id, query_as_of)
@@ -275,12 +315,11 @@ def qualify_fixture_b(conn, s3_candidates, query_as_of):
             'valid_from': row['valid_from'],
             'recorded_at': row['recorded_at'],
             'asserted_at': row['asserted_at'],
-            'observed_at': ev['observed_at'] if ev else UNKNOWN,
+            'observed_at': ev['observed_at'],
             'authority_status': auth['outcome'] if auth else UNKNOWN,
             'reasons': reasons,
         }
-        if ev:
-            payload['evidence_declared_loss'] = int(ev['declared_loss'])
+        payload['evidence_declared_loss'] = int(ev['declared_loss'])
 
         if reasons:
             excluded.append(payload)

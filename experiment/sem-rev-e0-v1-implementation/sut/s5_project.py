@@ -35,13 +35,13 @@ def run_s5(db_path, s4_path='s4_output.json', output_path='s5_output.json',
         with open(s4_path, 'r', encoding='utf-8') as f:
             s4_result = json.load(f)
 
+        # Normative projection is path-independent (no temp/runtime paths).
         projection = {
             's5_projection': {
                 'fixture_a': s4_result.get('fixture_a', {}),
                 'fixture_b': s4_result.get('fixture_b', {}),
                 'fixture_c': s4_result.get('fixture_c', {}),
                 'query_as_of': s4_result.get('query_as_of'),
-                'database_path': db_path,
             }
         }
 

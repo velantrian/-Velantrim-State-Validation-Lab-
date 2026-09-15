@@ -255,6 +255,70 @@ class TestS4(HarnessCase):
         result = s4_qualify.run_s4(self.db)
         self.assertIsNone(result)
 
+    def test_evidence_record_missing_fails_closed(self):
+        conn = s0_write.run_s0(self.db)
+        conn.execute("DELETE FROM evidence_assertion_link")
+        conn.execute("DELETE FROM evidence")
+        conn.commit()
+        conn.close()
+        s3_retrieve.run_s3(self.db)
+        result = s4_qualify.run_s4(self.db)
+        self.assertIsNone(result)
+
+    def test_evidence_link_missing_fails_closed(self):
+        conn = s0_write.run_s0(self.db)
+        conn.execute("DELETE FROM evidence_assertion_link WHERE assertion_id = 'as:alpha-v1'")
+        conn.commit()
+        conn.close()
+        s3_retrieve.run_s3(self.db)
+        result = s4_qualify.run_s4(self.db)
+        self.assertIsNone(result)
+
+    def test_observed_at_missing_fails_closed(self):
+        conn = s0_write.run_s0(self.db)
+        # STRICT NOT NULL: clear via delete+reinsert without observed_at is blocked;
+        # emulate missing by nulling through a rebuild of evidence row using empty string
+        # then S4 treats empty observed_at as missing.
+        conn.execute("UPDATE evidence SET observed_at = '' WHERE evidence_id LIKE 'ev:%' OR 1=1")
+        conn.commit()
+        conn.close()
+        s3_retrieve.run_s3(self.db)
+        result = s4_qualify.run_s4(self.db)
+        self.assertIsNone(result)
+
+    def test_temporal_valid_from_missing_fails_closed(self):
+        conn = s0_write.run_s0(self.db)
+        conn.execute("UPDATE assertion SET valid_from = NULL WHERE assertion_id = 'as:alpha-v1'")
+        conn.commit()
+        conn.close()
+        s3_retrieve.run_s3(self.db)
+        result = s4_qualify.run_s4(self.db)
+        self.assertIsNone(result)
+
+    def test_revision_dependency_missing_fails_closed(self):
+        conn = s0_write.run_s0(self.db)
+        conn.execute("DELETE FROM revision WHERE revision_id = 'rev:A-reject'")
+        conn.commit()
+        conn.close()
+        s3_retrieve.run_s3(self.db)
+        result = s4_qualify.run_s4(self.db)
+        self.assertIsNone(result)
+
+    def test_authority_dependency_missing_fails_closed(self):
+        # Keep S3 candidate membership, then remove the authority row so S4
+        # fail-closes on the typed dependency rather than ordinary exclusion.
+        conn = s0_write.run_s0(self.db)
+        conn.close()
+        s3 = s3_retrieve.run_s3(self.db)
+        self.assertIsNotNone(s3)
+        import runtime as _rt
+        conn = _rt.connect(self.db, must_exist=True)
+        conn.execute("DELETE FROM authority_decision WHERE decision_id = 'dec:pos-1'")
+        conn.commit()
+        conn.close()
+        result = s4_qualify.run_s4(self.db)
+        self.assertIsNone(result)
+
     def test_declared_loss_preserved(self):
         self.write_full()
         s4 = json.loads(Path('s4_output.json').read_text(encoding='utf-8'))
@@ -289,7 +353,38 @@ class TestS5(HarnessCase):
         line = Path('s5_output.sha256').read_text(encoding='utf-8')
         self.assertTrue(line.endswith('\n'))
         self.assertEqual(line.strip().split()[0], digest)
+        proj = json.loads(on_disk.decode('utf-8'))
+        self.assertNotIn('database_path', proj.get('s5_projection', {}))
 
+    def test_s5_deterministic_across_temp_dirs(self):
+        """Same semantic state in different temp dirs => identical S5 bytes/hash."""
+        digests = []
+        payloads = []
+        for _ in range(2):
+            with tempfile.TemporaryDirectory() as tmp:
+                cwd = os.getcwd()
+                try:
+                    os.chdir(tmp)
+                    db = os.path.join(tmp, 'semrev_e0.db')
+                    os.environ['SEMREV_DB_PATH'] = db
+                    os.environ['SEMREV_QUERY_AS_OF'] = '2026-02-01T00:00:00Z'
+                    conn = s0_write.run_s0(db)
+                    conn.close()
+                    s1_close.run_s1(db)
+                    conn = s2_reopen.run_s2(db)
+                    conn.close()
+                    s3_retrieve.run_s3(db)
+                    s4_qualify.run_s4(db)
+                    s5 = s5_project.run_s5(db)
+                    data = Path('s5_output.json').read_bytes()
+                    payloads.append(data)
+                    digests.append(s5['sha256'])
+                    self.assertNotIn(b'database_path', data)
+                    self.assertNotIn(tmp.encode(), data)
+                finally:
+                    os.chdir(cwd)
+        self.assertEqual(payloads[0], payloads[1])
+        self.assertEqual(digests[0], digests[1])
 
 class TestOracleIsolation(HarnessCase):
     def test_oracle_unavailable_before_s5_hash(self):
@@ -330,6 +425,9 @@ class TestScorer(HarnessCase):
         self.assertTrue(payload['scorer_pass'])
         self.assertEqual(payload['forbidden_hits'], [])
         self.assertFalse(payload['core_result_produced'])
+        self.assertTrue(payload.get('oracle_atoms_complete'))
+        self.assertIn('subject=ent:service:orion', payload['required_ok'])
+        self.assertIn('authority=principal:release-board', payload['required_ok'])
 
 
 class TestNoPlaceholders(unittest.TestCase):
