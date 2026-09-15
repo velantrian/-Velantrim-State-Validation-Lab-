@@ -39,11 +39,29 @@ Only fixture **world-state** records and typed query parameters:
 
 ## Scorer / oracle timing
 
+Default (fixtures preregistered to emit S5):
+
 ```text
 S0 → S1 → S2 → S3 → S4 → S5 → HASH(S5) verified → THEN oracle may run
 ```
 
-If S5 hash verification fails → classification stops (`INCOMPLETE` / integrity failure). Oracle must not “help” repair.
+If S5 hash verification fails on a fixture required to emit S5 → that
+fixture cannot be classified as PASS; unexpected integrity failure is
+`INCOMPLETE` / FAIL per `PASS_FAIL_INCOMPLETE_RULES.md`. Oracle must not
+“help” repair.
+
+### C1 exception: expected fail-closed (E1-F-01)
+
+E1-F-01 is preregistered to stop at **S4 fail-closed**. It is not required
+to emit S5. Oracle/adjudication for **that fixture** uses the recorded S4
+fail-closed evidence (exit status + absence of a valid-absence
+`NO_QUALIFIED_RESULT` path).
+
+Remaining CORE fixtures continue independently and keep the default
+S5-hash-then-oracle rule.
+
+SUT still must not access oracle atoms before the applicable evidence for
+that fixture is fixed.
 
 ---
 

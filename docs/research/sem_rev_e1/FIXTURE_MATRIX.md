@@ -43,7 +43,7 @@ Legend:
 | E1-E-02 | E Authority | NEG | H4 | P-E-out | refused outcome must not flip to approved |
 | E1-E-03 | E Authority | NEG | H4 | P-E-sup | superseded authority decision not current |
 | E1-E-NX | E Authority | NX | H4 | — | two in-jurisdiction conflicting approvals, no typed precedence |
-| E1-F-01 | F Dependency | NEG | H5 | P-F-dep | required dependency missing → stage FAIL path |
+| E1-F-01 | F Dependency | NEG (expected fail-closed) | H5 | P-F-dep | required dep absent → S4 fail-closed; FIXTURE_EXPECTATION=PASS; does **not** prohibit CORE_PASS |
 | E1-F-02 | F Dependency | NEG | H9 | P-F-dep | optional property absent → UNKNOWN (not FALSE) |
 | E1-G-01 | G Reopen | NEG | H7 | P-G-re | condition unsatisfied |
 | E1-G-02 | G Reopen | NEG | H7 | P-G-re | half of compound condition |

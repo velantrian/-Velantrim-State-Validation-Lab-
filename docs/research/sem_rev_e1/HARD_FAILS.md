@@ -5,6 +5,10 @@
 
 Any triggered CORE hard fail → `SEM_REV_E1_CORE_PASS` prohibited.
 
+E1-F-01 **expected** S4 fail-closed is **not** a hard fail.
+`E1-HF-06` triggers only if required-dependency loss is silently converted
+to a valid result / valid absence / ordinary `NO_QUALIFIED_RESULT`.
+
 ---
 
 ## Hard-fail table

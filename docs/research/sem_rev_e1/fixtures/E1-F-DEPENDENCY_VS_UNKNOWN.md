@@ -27,11 +27,22 @@ World intends:
 - Store is constructed such that **required dependency record is absent**
   (unrecoverable), while candidate is present in S3 set.
 
-**Expected:**
+**Expected (C1):**
 
-- S4 = FAIL (or equivalent stage failure per contract)
-- Must **not** emit silent `NO_QUALIFIED_RESULT` as if absence were valid evidence
-- `SEM_REV_E1_CORE_PASS` prohibited if this CORE case is processed as success-via-absence
+```text
+EXPECTED_FAIL_CLOSED ≠ EXPERIMENT_EXECUTION_FAILURE
+EXPECTED_FAIL_CLOSED ≠ ordinary NO_QUALIFIED_RESULT
+```
+
+- S4 = FAIL (fail-closed) is the **preregistered guard outcome**
+- `FIXTURE_EXPECTATION = PASS` **iff** that exact fail-closed occurs
+- Must **not** emit silent / ordinary `NO_QUALIFIED_RESULT` as if absence were valid evidence
+- Expected fail-closed does **not** prohibit `SEM_REV_E1_CORE_PASS`
+- Unexpected pipeline failure on other fixtures, or converting F-01 into a
+  valid-absence `NO_QUALIFIED_RESULT`, remains FAIL / INCOMPLETE / hard-fail
+  as specified
+- Remaining CORE fixtures MUST still be processed independently
+- This fixture is **not** required to emit S5
 
 ## E1-F-02 — Optional property absent → UNKNOWN (CORE NEG vs fabrication)
 

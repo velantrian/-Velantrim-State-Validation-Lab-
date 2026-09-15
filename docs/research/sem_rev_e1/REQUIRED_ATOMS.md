@@ -140,12 +140,16 @@ no_required_atoms_for_CORE (boundary documentation only)
 
 ## E1-F — Dependency vs UNKNOWN
 
-### E1-F-01 (required dependency missing)
+### E1-F-01 (required dependency missing — expected fail-closed)
 
 ```text
+guard=EXPECTED_FAIL_CLOSED
 S4_stage=FAIL
-CORE_PASS prohibited if this fixture is in CORE and dependency unrecovered
+FIXTURE_EXPECTATION=PASS iff exact fail-closed
 must_not_emit_silent_NO_QUALIFIED_RESULT_as_valid_absence
+EXPECTED_FAIL_CLOSED ≠ EXPERIMENT_EXECUTION_FAILURE
+does_not_prohibit_CORE_PASS
+S5_not_required_for_this_fixture
 ```
 
 ### E1-F-02 (optional absent)

@@ -63,12 +63,21 @@ rank order are `NOT EXPRESSIBLE UNDER CURRENT CONTRACT`.
 ## H5 — DEPENDENCY INTEGRITY FAILURE
 
 **Claim under test:** missing **required** typed qualification dependency
-causes stage failure / non-classifiable outcome — not silent
+causes **preregistered fail-closed** (S4 FAIL) — not silent
 `NO_QUALIFIED_RESULT` as if absence were valid evidence.
+
+That fail-closed is a classifiable fixture outcome:
+
+```text
+EXPECTED_FAIL_CLOSED ≠ EXPERIMENT_EXECUTION_FAILURE
+FIXTURE_EXPECTATION = PASS iff exact fail-closed
+```
+
+It must not be treated as suite `INCOMPLETE` or as automatic `CORE_FAIL`.
 
 **Discriminating family:** E1-F  
 **Typical fail signature:** required dep missing → treated as ordinary
-exclusion / valid absence.
+exclusion / valid absence (including silent `NO_QUALIFIED_RESULT`).
 
 ---
 

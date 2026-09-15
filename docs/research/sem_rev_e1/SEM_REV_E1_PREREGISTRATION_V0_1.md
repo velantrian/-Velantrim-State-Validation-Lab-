@@ -3,7 +3,8 @@
 
 **STATUS:** `PREREGISTRATION_CANDIDATE` — **NOT FROZEN**  
 **DATE BASELINE:** 2026-09-15  
-**MODE:** research design · falsification-first · docs-only · anti-drift
+**MODE:** research design · falsification-first · docs-only · anti-drift  
+**CORRECTION:** C1 applied 2026-09-15 against reviewed HEAD `1d572982cac9aaf068c3c2c16f5de3383e6c3b38`
 
 ---
 
@@ -223,6 +224,38 @@ SEM_REV_E1_CORE_INCOMPLETE
 ```
 
 No majority-pass. One CORE hard fail → `CORE_PASS` prohibited.
+
+Per-fixture:
+
+```text
+FIXTURE_EXPECTATION = PASS | FAIL
+```
+
+### C1 — expected fail-closed ≠ experiment failure
+
+E1-F-01 intentionally omits a **required** typed qualification dependency.
+The preregistered outcome is **S4 fail-closed**.
+
+If and only if that exact fail-closed outcome occurs:
+
+```text
+FIXTURE_EXPECTATION = PASS
+```
+
+This does **not** prohibit `SEM_REV_E1_CORE_PASS`.
+
+```text
+EXPECTED_FAIL_CLOSED ≠ EXPERIMENT_EXECUTION_FAILURE
+EXPECTED_FAIL_CLOSED ≠ ordinary NO_QUALIFIED_RESULT
+```
+
+Unexpected pipeline / execution failure (crash, integrity abort, S4 FAIL on a
+fixture that expected S4 PASS / S5) remains FAIL or INCOMPLETE.
+
+The future execution protocol MUST process CORE fixtures **independently**, so
+an expected fail-closed negative control cannot abort the suite.
+
+Do **not** rewrite E1-F-01 as ordinary `NO_QUALIFIED_RESULT`.
 
 See `PASS_FAIL_INCOMPLETE_RULES.md`.
 
