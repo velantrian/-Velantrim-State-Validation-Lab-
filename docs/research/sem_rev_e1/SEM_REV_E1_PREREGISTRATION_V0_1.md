@@ -197,8 +197,10 @@ Then revision state applies.
   contract → case labeled `NOT EXPRESSIBLE UNDER CURRENT CONTRACT` (not
   silently given a winner).
 - Intentional absence of an optional property → `UNKNOWN`.
-- Missing **required** typed qualification dependency → stage failure / non-classifiable
-  per contract (`DEPENDENCY LOSS ≠ VALID ABSENCE`).
+- Missing **required** typed qualification dependency → preregistered **S4 fail-closed**
+  (`EXPECTED_FAIL_CLOSED`; `DEPENDENCY LOSS ≠ VALID ABSENCE`). That outcome is a
+  classifiable fixture PASS when exact; it is not suite INCOMPLETE and does not
+  by itself prohibit CORE_PASS.
 
 ---
 
