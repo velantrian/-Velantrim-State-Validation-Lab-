@@ -1,0 +1,46 @@
+{
+  "candidate_constraints": {
+    "fixture_b_includes_alpha": true,
+    "fixture_b_includes_beta": true,
+    "fixture_c_includes_dec_pos_1": true
+  },
+  "classification": "SEM_REV_E0_CORE_PASS",
+  "dependency_integrity": "PASS",
+  "experiment_id": "SEM-REV-E0",
+  "forbidden_hits": [],
+  "freeze_commit": "349243745ceadea691b9070e08c05e35d876c0ab",
+  "hard_fails_triggered": [],
+  "implementation_commit": "6e523aae297cd0cbd1d3f777c672404248780f6e",
+  "implementation_test_only": false,
+  "oracle_isolation": "YES",
+  "positive_control": "PASS",
+  "required_missing": [],
+  "run_id": "e0-v1-20260915T065633Z-dd69520c",
+  "s3_sha256": "20960e3f94a8c79149f3fc795a707fe7f279d9850eb95bc4d863adbf81f091cf",
+  "s4_sha256": "2cb68812d534a23b2ee940979bde82000b8fb98441497a4ddf605c61de5a8656",
+  "s5_sha256": "2e66670d80aa29c5632ca3f9911d20fcdca14ca0b398f07ed457b407f590eb37",
+  "s5_sha256_verified": true,
+  "scientific_execution": true,
+  "scorer_output_sha256": "8e9471102bc16aec98be5c3bfb5e8260a32c53312a02408c27ac4cff66f98054",
+  "sqlite_source_id": "2026-07-24 19:02:57 bf7c7f30031888f4e796e429ab3978879485813aaca6f641c7b33e4e09459bcc",
+  "sqlite_version": "3.53.4",
+  "stage_exit_codes": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0,
+    "S4": 0,
+    "S5": 0,
+    "SCORER": 0
+  },
+  "stage_statuses": {
+    "S0": "PASS",
+    "S1": "PASS",
+    "S2": "PASS",
+    "S3": "PASS",
+    "S4": "PASS",
+    "S5": "PASS",
+    "SCORER": "PASS"
+  },
+  "strongest_allowed_claim_if_pass": "The frozen SEM-REV-E0 v1 deterministic S0\u2013S5 implementation preserved the tested semantic distinctions on the frozen Fixtures A/B/C under the specified SQLite 3.53.4 environment."
+}

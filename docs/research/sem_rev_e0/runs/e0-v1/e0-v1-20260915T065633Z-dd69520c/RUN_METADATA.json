@@ -1,0 +1,82 @@
+{
+  "S6": false,
+  "S7": false,
+  "clean_checkout": true,
+  "commands": [
+    {
+      "cmd": [
+        "/workspace/Graphiti_fractal_lab/.venv/bin/python3",
+        "/tmp/svl-semrev-core-run/experiment/sem-rev-e0-v1-implementation/sut/s0_write.py"
+      ],
+      "cwd": "/tmp/semrev-core-work-e0-v1-20260915T065633Z-dd69520c/db",
+      "stage": "S0"
+    },
+    {
+      "cmd": [
+        "/workspace/Graphiti_fractal_lab/.venv/bin/python3",
+        "/tmp/svl-semrev-core-run/experiment/sem-rev-e0-v1-implementation/sut/s1_close.py"
+      ],
+      "cwd": "/tmp/semrev-core-work-e0-v1-20260915T065633Z-dd69520c/db",
+      "stage": "S1"
+    },
+    {
+      "cmd": [
+        "/workspace/Graphiti_fractal_lab/.venv/bin/python3",
+        "/tmp/svl-semrev-core-run/experiment/sem-rev-e0-v1-implementation/sut/s2_reopen.py"
+      ],
+      "cwd": "/tmp/semrev-core-work-e0-v1-20260915T065633Z-dd69520c/db",
+      "stage": "S2"
+    },
+    {
+      "cmd": [
+        "/workspace/Graphiti_fractal_lab/.venv/bin/python3",
+        "/tmp/svl-semrev-core-run/experiment/sem-rev-e0-v1-implementation/sut/s3_retrieve.py"
+      ],
+      "cwd": "/tmp/semrev-core-work-e0-v1-20260915T065633Z-dd69520c/db",
+      "stage": "S3"
+    },
+    {
+      "cmd": [
+        "/workspace/Graphiti_fractal_lab/.venv/bin/python3",
+        "/tmp/svl-semrev-core-run/experiment/sem-rev-e0-v1-implementation/sut/s4_qualify.py"
+      ],
+      "cwd": "/tmp/semrev-core-work-e0-v1-20260915T065633Z-dd69520c/db",
+      "stage": "S4"
+    },
+    {
+      "cmd": [
+        "/workspace/Graphiti_fractal_lab/.venv/bin/python3",
+        "/tmp/svl-semrev-core-run/experiment/sem-rev-e0-v1-implementation/sut/s5_project.py"
+      ],
+      "cwd": "/tmp/semrev-core-work-e0-v1-20260915T065633Z-dd69520c/db",
+      "stage": "S5"
+    },
+    {
+      "cmd": [
+        "/workspace/Graphiti_fractal_lab/.venv/bin/python3",
+        "/tmp/svl-semrev-core-run/experiment/sem-rev-e0-v1-implementation/harness/scorer.py"
+      ],
+      "cwd": "/tmp/semrev-core-work-e0-v1-20260915T065633Z-dd69520c/db",
+      "stage": "SCORER"
+    }
+  ],
+  "db_path": "/tmp/semrev-core-work-e0-v1-20260915T065633Z-dd69520c/db/semrev_e0.db",
+  "end_timestamp_utc": "2026-09-15T06:56:34Z",
+  "experiment_id": "SEM-REV-E0",
+  "freeze_commit": "349243745ceadea691b9070e08c05e35d876c0ab",
+  "freeze_manifest_json_sha256": "28e5e60d671d05484e9e0a67e0f56115f380cfd3da600b6b70b026ad13946eac",
+  "freeze_version": "v1",
+  "graph_kernel": false,
+  "host": "cursor",
+  "implementation_commit": "6e523aae297cd0cbd1d3f777c672404248780f6e",
+  "ld_preload": "/tmp/sqlite3534/libsqlite3.so",
+  "platform": "Linux-6.12.94+-x86_64-with-glibc2.41",
+  "prereg_sha256": "d4974ee709edc9d83018b53733542588469bcbe9cfa5089c39cbb9799eaad49a",
+  "python_version": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "run_directory": "/tmp/semrev-core-work-e0-v1-20260915T065633Z-dd69520c",
+  "run_id": "e0-v1-20260915T065633Z-dd69520c",
+  "scientific_execution": true,
+  "sqlite_source_id": "2026-07-24 19:02:57 bf7c7f30031888f4e796e429ab3978879485813aaca6f641c7b33e4e09459bcc",
+  "sqlite_version": "3.53.4",
+  "start_timestamp_utc": "2026-09-15T06:56:33Z"
+}

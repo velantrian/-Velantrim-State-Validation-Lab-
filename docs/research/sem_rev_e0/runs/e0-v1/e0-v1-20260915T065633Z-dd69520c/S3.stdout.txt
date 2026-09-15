@@ -1,0 +1,5 @@
+S3 RETRIEVE: Starting...
+S3 RETRIEVE: Fixture A candidates: ['as:path-a-v1', 'as:path-b-v1', 'as:path-c-v1']
+S3 RETRIEVE: Fixture B candidates: ['as:alpha-v1', 'as:beta-v1']
+S3 RETRIEVE: Fixture C candidates: ['dec:pos-1']
+S3 RETRIEVE: SUCCESS

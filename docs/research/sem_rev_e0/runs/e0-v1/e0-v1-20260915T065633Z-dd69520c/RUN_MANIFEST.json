@@ -1,0 +1,130 @@
+{
+  "artifacts": [
+    {
+      "byte_size": 1669,
+      "relative_path": "RESULT.json",
+      "sha256": "796006bb92935170755923e24015537ac05d135ddd2a3f3ea0ce5660739efd0f"
+    },
+    {
+      "byte_size": 3146,
+      "relative_path": "RUN_METADATA.json",
+      "sha256": "8173b89728905d9d9b585990c9a2c3888253dbec1f516c62ce55ac886689fafb"
+    },
+    {
+      "byte_size": 0,
+      "relative_path": "S0.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_size": 140,
+      "relative_path": "S0.stdout.txt",
+      "sha256": "37c4ed5bbb36bfffa5863fab7809b7bada81944c7c3318fea8b8a819b72a8664"
+    },
+    {
+      "byte_size": 779,
+      "relative_path": "S0_DB_INVENTORY.json",
+      "sha256": "e0a8dd708db1daff131c8049557c2e6fc9cb29c54bfd77d8571ee76fc35e9a18"
+    },
+    {
+      "byte_size": 0,
+      "relative_path": "S1.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_size": 92,
+      "relative_path": "S1.stdout.txt",
+      "sha256": "e6a027abb6441a7c7cd5ecf166310b93c1290d80be8e6c1f19d5ecc00c11d73e"
+    },
+    {
+      "byte_size": 0,
+      "relative_path": "S2.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_size": 199,
+      "relative_path": "S2.stdout.txt",
+      "sha256": "48d8906b31c8a56607fd039b010c6eb01f38ca95737e0f72e54200968f7ace11"
+    },
+    {
+      "byte_size": 116,
+      "relative_path": "S2_PROCESS.txt",
+      "sha256": "60875272cb33bc9d22db27639e4d9fa26653bf5d460420ffa20cba263268ac99"
+    },
+    {
+      "byte_size": 0,
+      "relative_path": "S3.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_size": 244,
+      "relative_path": "S3.stdout.txt",
+      "sha256": "f5de2fd01f4faf9f073e537dd663c72014f37f5910049ae89983c00e788afd20"
+    },
+    {
+      "byte_size": 1913,
+      "relative_path": "S3_output.json",
+      "sha256": "20960e3f94a8c79149f3fc795a707fe7f279d9850eb95bc4d863adbf81f091cf"
+    },
+    {
+      "byte_size": 0,
+      "relative_path": "S4.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_size": 295,
+      "relative_path": "S4.stdout.txt",
+      "sha256": "3eec5b9781bc62fb634a522f38c932aa12169c281db293be6817ea7844cd1f3d"
+    },
+    {
+      "byte_size": 5530,
+      "relative_path": "S4_output.json",
+      "sha256": "2cb68812d534a23b2ee940979bde82000b8fb98441497a4ddf605c61de5a8656"
+    },
+    {
+      "byte_size": 0,
+      "relative_path": "S5.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_size": 225,
+      "relative_path": "S5.stdout.txt",
+      "sha256": "e39b175918d0a3bb3d6e8fc00b97ef674ced2a516829c913ed36c59e1fe762ed"
+    },
+    {
+      "byte_size": 5895,
+      "relative_path": "S5_output.json",
+      "sha256": "2e66670d80aa29c5632ca3f9911d20fcdca14ca0b398f07ed457b407f590eb37"
+    },
+    {
+      "byte_size": 81,
+      "relative_path": "S5_output.sha256",
+      "sha256": "50179efa3f436696706f42e51818ac2e907a3515667d5307ce50357b93485f93"
+    },
+    {
+      "byte_size": 0,
+      "relative_path": "SCORER.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_size": 292,
+      "relative_path": "SCORER.stdout.txt",
+      "sha256": "81c71f6838618f73cadc6a105a05fd76c75d0acc0020a504c56a43a19015315f"
+    },
+    {
+      "byte_size": 1893,
+      "relative_path": "SCORER_output.json",
+      "sha256": "8e9471102bc16aec98be5c3bfb5e8260a32c53312a02408c27ac4cff66f98054"
+    },
+    {
+      "byte_size": 151552,
+      "relative_path": "semrev_e0.db",
+      "sha256": "c824f74a5697b5888c35ab9e29414440fb468ecc0e66c0a9285efdd7b210ca45"
+    }
+  ],
+  "classification": "SEM_REV_E0_CORE_PASS",
+  "experiment_id": "SEM-REV-E0",
+  "freeze_commit": "349243745ceadea691b9070e08c05e35d876c0ab",
+  "freeze_version": "v1",
+  "implementation_commit": "6e523aae297cd0cbd1d3f777c672404248780f6e",
+  "run_id": "e0-v1-20260915T065633Z-dd69520c"
+}

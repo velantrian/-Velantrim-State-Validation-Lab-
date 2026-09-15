@@ -1,0 +1,7 @@
+S4 QUALIFY: Starting...
+S4 QUALIFY: Fixture A current_path: Path-C
+S4 QUALIFY: Fixture B status: NO_QUALIFIED_RESULT
+S4 QUALIFY: Fixture B excluded: ['as:alpha-v1', 'as:beta-v1', 'dec:ad-9']
+S4 QUALIFY: Fixture C qualified: ['dec:pos-1']
+S4 QUALIFY: dec:ad-9 recovered: True
+S4 QUALIFY: SUCCESS

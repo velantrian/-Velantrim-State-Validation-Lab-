@@ -1,0 +1,5 @@
+S5 PROJECT: Starting...
+S5 PROJECT: Output written to s5_output.json
+S5 PROJECT: SHA-256: 2e66670d80aa29c5632ca3f9911d20fcdca14ca0b398f07ed457b407f590eb37
+S5 PROJECT: SUCCESS
+S5 PROJECT: Scoring harness may now access oracle

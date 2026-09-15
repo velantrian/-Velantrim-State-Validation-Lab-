@@ -1,0 +1,3 @@
+S0 WRITE: Starting...
+S0 WRITE: Database created at /tmp/semrev-core-work-e0-v1-20260915T065633Z-dd69520c/db/semrev_e0.db
+S0 WRITE: SUCCESS

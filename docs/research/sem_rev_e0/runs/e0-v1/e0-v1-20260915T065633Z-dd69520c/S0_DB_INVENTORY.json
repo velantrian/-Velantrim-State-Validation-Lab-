@@ -1,0 +1,35 @@
+{
+  "db_path": "/tmp/semrev-core-work-e0-v1-20260915T065633Z-dd69520c/db/semrev_e0.db",
+  "db_sha256_after_s0": "c824f74a5697b5888c35ab9e29414440fb468ecc0e66c0a9285efdd7b210ca45",
+  "db_size_bytes": 151552,
+  "tables": [
+    "assertion",
+    "authority",
+    "authority_decision",
+    "entity",
+    "evidence",
+    "evidence_assertion_link",
+    "qualified_projection",
+    "revision",
+    "scope",
+    "semantic_force",
+    "source",
+    "trace",
+    "uncertainty"
+  ],
+  "row_counts": {
+    "assertion": 5,
+    "authority": 2,
+    "authority_decision": 4,
+    "entity": 3,
+    "evidence": 2,
+    "evidence_assertion_link": 2,
+    "qualified_projection": 0,
+    "revision": 3,
+    "scope": 4,
+    "semantic_force": 5,
+    "source": 3,
+    "trace": 0,
+    "uncertainty": 2
+  }
+}

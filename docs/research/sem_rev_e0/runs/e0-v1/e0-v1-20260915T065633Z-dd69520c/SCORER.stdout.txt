@@ -1,0 +1,10 @@
+Scoring Harness: Starting...
+Hash verified
+S5 output loaded
+REQUIRED satisfied: 46
+REQUIRED missing: []
+FORBIDDEN hits: []
+Scoring Harness: Oracle accessed AFTER S5 hash fixed
+Scoring Harness: COMPLETE frozen A/B/C atom sets
+Scoring Harness: IMPLEMENTATION_TEST_ONLY
+Scoring Harness: SUCCESS

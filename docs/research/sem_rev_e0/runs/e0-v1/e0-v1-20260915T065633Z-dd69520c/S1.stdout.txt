@@ -1,0 +1,3 @@
+S1 CLOSE: Starting...
+S1 CLOSE: Database committed and connections closed
+S1 CLOSE: SUCCESS

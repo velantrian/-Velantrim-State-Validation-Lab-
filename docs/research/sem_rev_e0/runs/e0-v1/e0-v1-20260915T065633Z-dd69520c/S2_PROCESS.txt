@@ -1,0 +1,3 @@
+new_os_process=yes
+returncode=0
+db_sha256_after_s2=c824f74a5697b5888c35ab9e29414440fb468ecc0e66c0a9285efdd7b210ca45

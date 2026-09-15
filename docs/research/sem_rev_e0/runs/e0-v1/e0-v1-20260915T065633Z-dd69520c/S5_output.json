@@ -1,0 +1,174 @@
+{
+  "s5_projection": {
+    "fixture_a": {
+      "assertions": {
+        "as:path-a-v1": {
+          "asserted_at": "2026-01-01T00:00:00Z",
+          "assertion_id": "as:path-a-v1",
+          "content": "Path-A",
+          "currentness": false,
+          "declared_loss": 0,
+          "entity_id": "ent:project:delta",
+          "path": "Path-A",
+          "reason": "UNKNOWN",
+          "recorded_at": "2026-01-04T00:00:00Z",
+          "rejection_reason": "R1_CONSTRAINT_FAILURE",
+          "reopen_requires": "UNKNOWN",
+          "revisions": [
+            {
+              "effective_from": "2026-01-02T00:00:00Z",
+              "reason": "R1_CONSTRAINT_FAILURE",
+              "revision_id": "rev:A-reject",
+              "revision_type": "retracts"
+            }
+          ],
+          "scope_id": "scope:project-delta",
+          "semantic_force": "proposal",
+          "status": "retracted",
+          "uncertainty": "UNKNOWN",
+          "valid_from": "2026-01-01T00:00:00Z"
+        },
+        "as:path-b-v1": {
+          "asserted_at": "2026-01-03T00:00:00Z",
+          "assertion_id": "as:path-b-v1",
+          "content": "Path-B",
+          "currentness": false,
+          "decision_reason": "R2_MEETS_K1",
+          "declared_loss": 0,
+          "entity_id": "ent:project:delta",
+          "path": "Path-B",
+          "reason": "R2_MEETS_K1",
+          "recorded_at": "2026-01-04T00:00:00Z",
+          "reopen_requires": "Y_K2_REMOVED_AND_OWNER_REAPPROVES_B",
+          "revisions": [
+            {
+              "effective_from": "2026-01-04T00:00:00Z",
+              "reason": "R3_NEW_REQUIREMENT_K2",
+              "revision_id": "rev:B-to-C",
+              "revision_type": "supersedes"
+            }
+          ],
+          "scope_id": "scope:project-delta",
+          "semantic_force": "decision",
+          "status": "superseded",
+          "uncertainty": "UNKNOWN",
+          "valid_from": "2026-01-03T00:00:00Z"
+        },
+        "as:path-c-v1": {
+          "asserted_at": "2026-01-04T00:00:00Z",
+          "assertion_id": "as:path-c-v1",
+          "content": "Path-C",
+          "currentness": true,
+          "decision_reason": "R3_NEW_REQUIREMENT_K2",
+          "declared_loss": 0,
+          "entity_id": "ent:project:delta",
+          "path": "Path-C",
+          "reason": "R3_NEW_REQUIREMENT_K2",
+          "recorded_at": "2026-01-04T00:00:00Z",
+          "reopen_requires": "UNKNOWN",
+          "revisions": [],
+          "scope_id": "scope:project-delta",
+          "semantic_force": "decision",
+          "status": "current",
+          "uncertainty": "UNKNOWN",
+          "valid_from": "2026-01-04T00:00:00Z"
+        }
+      },
+      "current_path": "Path-C",
+      "reopen_B_requires": "Y_K2_REMOVED_AND_OWNER_REAPPROVES_B",
+      "scope": "scope:project-delta"
+    },
+    "fixture_b": {
+      "alpha_revision_reason": "INSUFFICIENT_FOR_AUTHORIZATION",
+      "alpha_revision_recovered": true,
+      "dec_ad9_outcome": "refused",
+      "dec_ad9_recovered": true,
+      "excluded": [
+        {
+          "asserted_at": "2026-01-01T00:00:00Z",
+          "assertion_id": "as:alpha-v1",
+          "authority_status": "refused",
+          "currentness": false,
+          "declared_loss": 1,
+          "entity_id": "ent:service:atlas",
+          "evidence_declared_loss": 1,
+          "observed_at": "2026-01-10T00:00:00Z",
+          "reasons": [
+            "scope_mismatch",
+            "force_not_allowed",
+            "retracted",
+            "no_approved_authority_decision"
+          ],
+          "recorded_at": "2026-01-15T00:00:00Z",
+          "scope_id": "scope:lab-a",
+          "semantic_force": "claim",
+          "status": "retracted",
+          "uncertainty": "preliminary_unblinded_two_runs",
+          "valid_from": "2026-01-01T00:00:00Z"
+        },
+        {
+          "asserted_at": "2026-01-01T00:00:00Z",
+          "assertion_id": "as:beta-v1",
+          "authority_status": "refused",
+          "currentness": true,
+          "declared_loss": 1,
+          "entity_id": "ent:service:atlas",
+          "evidence_declared_loss": 1,
+          "observed_at": "2026-01-12T00:00:00Z",
+          "reasons": [
+            "scope_mismatch",
+            "no_approved_authority_decision"
+          ],
+          "recorded_at": "2026-01-15T00:00:00Z",
+          "scope_id": "scope:lab-a",
+          "semantic_force": "observation",
+          "status": "current",
+          "uncertainty": "twelve_runs_summary_only",
+          "valid_from": "2026-01-01T00:00:00Z"
+        },
+        {
+          "assertion_id": null,
+          "authority_id": "principal:release-board",
+          "authority_status": "refused",
+          "decision_id": "dec:ad-9",
+          "declared_loss": 0,
+          "effective_from": "2026-01-15T00:00:00Z",
+          "reason": "ONLY_PRELIMINARY_LAB_A_EVIDENCE",
+          "reasons": [
+            "authority_outcome_refused"
+          ],
+          "recorded_at": "2026-01-15T00:00:00Z",
+          "scope_id": "scope:production-us",
+          "semantic_force": "authority_decision"
+        }
+      ],
+      "qualified": [],
+      "qualified_assertion_ids": [],
+      "qualified_decision_ids": [],
+      "status": "NO_QUALIFIED_RESULT"
+    },
+    "fixture_c": {
+      "excluded": [],
+      "qualified": [
+        {
+          "authority_id": "principal:release-board",
+          "currentness": true,
+          "decision_id": "dec:pos-1",
+          "effective_from": "2026-01-20T00:00:00Z",
+          "outcome": "approved",
+          "reason": "RELEASE_CRITERIA_MET",
+          "reasons": [],
+          "recorded_at": "2026-01-20T00:00:00Z",
+          "scope_id": "scope:production-eu",
+          "semantic_force": "authority_decision",
+          "subject": "ent:service:orion"
+        }
+      ],
+      "qualified_decision_ids": [
+        "dec:pos-1"
+      ],
+      "status": "QUALIFIED_RESULT"
+    },
+    "query_as_of": "2026-02-01T00:00:00Z"
+  }
+}
