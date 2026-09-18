@@ -15,6 +15,7 @@ superseded→current without new superseding version identity
 UNKNOWN→FALSE_or_fabricated_value on optional uncertainty
 declared_loss=UNKNOWN  (unsupported encoding)
 required_dependency_loss→valid_absence / ordinary NO_QUALIFIED_RESULT
+EXPECTED_FAIL_CLOSED used to bypass S4 hash-before-oracle gate
 recorded_at used as sole currentness authority
 mutable is_current stored answer flag
 oracle_atoms visible to SUT before evidence fixed
@@ -59,8 +60,10 @@ time_axes_conflated
 ## E1-C
 
 ```text
-late_recorded older observation becomes current over newer decision
-observed_at ignored in favor of recorded_at alone
+dec:e1c-v1 current solely because recorded_at is later
+dec:e1c-v1 outranks dec:e1c-v2 by recorded_at
+time_axes_conflated
+prefer_by_semantic_force as explanation (forces are equal)
 ```
 
 ---
@@ -126,6 +129,8 @@ evidence_conflict_preserved as typed detection claim
 ```text
 as:e1i-old revived as same assertion identity
 similarity-based silent un-retraction
+as:e1i-new omitted / not recoverable
+identity_collapse as:e1i-new → as:e1i-old
 ```
 
 ---

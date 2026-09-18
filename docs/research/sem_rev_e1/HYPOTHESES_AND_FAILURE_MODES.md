@@ -87,8 +87,11 @@ FIXTURE_SEMANTIC_PASS iff exact fail-closed
 **Claim under test:** later `recorded_at` does not imply later semantic
 authority / currentness when other axes say otherwise.
 
+Discriminating fixture uses **same semantic_force** on both sides so force
+preference cannot explain the outcome.
+
 **Discriminating family:** E1-C  
-**Typical fail signature:** late-recorded older observation outranks by `recorded_at`.
+**Typical fail signature:** late-recorded `dec:e1c-v1` outranks `dec:e1c-v2` by `recorded_at`.
 
 ---
 

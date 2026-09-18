@@ -4,7 +4,7 @@
 **STATUS:** `PREREGISTRATION_CANDIDATE` — **NOT FROZEN**  
 **DATE BASELINE:** 2026-09-15  
 **MODE:** research design · falsification-first · docs-only · anti-drift  
-**CORRECTIONS:** C1 CLOSED · C2–C12 applied on branch `research/sem-rev-e1-prereg-v0.1`
+**CORRECTIONS:** C1 CLOSED · C2–C12 applied · **final pre-freeze tightening** on `research/sem-rev-e1-prereg-v0.1`
 
 ---
 
@@ -95,19 +95,21 @@ This candidate authorizes **none** of that work.
 
 ---
 
-## 5. Fixture suite overview (corrected counts)
+## 5. Fixture suite overview (final tightened counts)
 
 | Metric | Count |
 |--------|------:|
-| PHYSICAL_CORE_FIXTURES | 19 |
-| CORE_ROLE_OR_CHECK_ENTRIES | 21 |
-| TRUE_PAIRWISE groups | 3 |
-| CONTRAST groups | 2 |
-| DUAL_CHECK_SAME_WORLD groups | 2 |
+| PHYSICAL_CORE_FIXTURES | **17** |
+| CORE_ROLE_OR_CHECK_ENTRIES | **20** |
+| TRUE_PAIRWISE groups | **2** (P-B-eff, P-D-scope) |
+| CONTRAST groups | **3** (CG-E-out, CG-E-sup, CG-F-dep) |
+| DUAL_CHECK_SAME_WORLD groups | **2** |
 | ROLE_ALIASES | 1 (J-02→G-04) |
 | POSITIVE_CONTROL_PHYSICAL | 5 |
 | NX_CASES | 2 (E1-E-NX, E1-G-NX) |
 
+F-01/F-02 are **CONTRAST_GROUP** (not TRUE_PAIRWISE).  
+C-01 is one physical late-arrival world; C-02 is dual-check only.  
 Full matrix: `FIXTURE_MATRIX.md`.
 
 ---
@@ -139,6 +141,8 @@ Currentness = derived projection, not stored answer flag.
 - Missing **required** typed qualification dependency → preregistered
   **S4 fail-closed** (`EXPECTED_FAIL_CLOSED`). Exact fail-closed ⇒ fixture
   semantic PASS; does not by itself prohibit CORE_PASS; must not abort the suite.
+- F-01: S4 fail-closed artifact must be fixed + SHA-256 verified **before**
+  oracle (`EXPECTED_FAIL_CLOSED ≠ ORACLE_ISOLATION_BYPASS`). Unhashable S4 ⇒ INCOMPLETE.
 
 ---
 

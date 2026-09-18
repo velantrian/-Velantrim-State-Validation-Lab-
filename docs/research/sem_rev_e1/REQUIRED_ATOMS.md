@@ -1,9 +1,7 @@
-# SEM-REV-E1 — Required Atoms (C2–C12)
+# SEM-REV-E1 — Required Atoms (final pre-freeze tightening)
 
 **STATUS:** preregistration candidate · NOT FROZEN  
-**Rule:** semantic atoms only; contract-first; no prose/style oracles.
-
-`declared_loss` atoms use INTEGER `0`/`1` only (E0 schema). Never `UNKNOWN`.
+`declared_loss` atoms: INTEGER `0`/`1` only.
 
 ---
 
@@ -39,7 +37,7 @@ qualified_decision_ids contains dec:e1b-0
 qualified_decision_ids does_not_contain dec:e1b-1
 ```
 
-### E1-B-02 / E1-B-04 (same physical instant; B-04 = dual-check)
+### E1-B-02 / E1-B-04 (B-04 = dual-check)
 
 ```text
 dec:e1b-0.status=not_temporally_applicable
@@ -49,7 +47,7 @@ qualified_decision_ids contains dec:e1b-1
 qualified_decision_ids does_not_contain dec:e1b-0
 ```
 
-B-04 additionally requires reason emphasis `valid_to_exclusive_boundary` for e1b-0.
+B-04 also requires `valid_to_exclusive_boundary` reason emphasis for e1b-0.
 
 ### E1-B-03
 
@@ -62,14 +60,16 @@ qualified_decision_ids contains dec:e1b-1
 
 ---
 
-## E1-C
+## E1-C (physical C-01; dual-check C-02)
 
 ```text
-current_decision=dec:e1c-new
-as:e1c-old does_not_outrank_by_recorded_at
-axes_preserved: observed_at, asserted_at, recorded_at, effective_from distinct
+dec:e1c-v1.status=superseded_not_current
+dec:e1c-v1 must_not_outrank_by_recorded_at
+dec:e1c-v2.status=current
 status=QUALIFIED_RESULT
-qualified_decision_ids contains dec:e1c-new
+qualified_decision_ids contains dec:e1c-v2
+qualified_decision_ids does_not_contain dec:e1c-v1
+same_semantic_force=authority_decision_both
 ```
 
 ---
@@ -115,14 +115,19 @@ excluded.dec:e1e-refused contains authority_outcome_refused
 ### E-03
 
 ```text
-dec:e1e-old.status=superseded_not_current
-dec:e1e-new outcome refused → no approved qualification
+dec:e1e-old.status=superseded
+dec:e1e-new.status=current
+dec:e1e-new.outcome=refused
+status=NO_QUALIFIED_RESULT
+qualified_approved_decision_ids does_not_contain dec:e1e-old
+qualified_approved_decision_ids does_not_contain dec:e1e-new
 ```
 
 ### E-NX
 
 ```text
 NOT EXPRESSIBLE UNDER CURRENT CONTRACT
+approved_vs_refused_same_scope_no_precedence
 no_required_CORE_atoms
 ```
 
@@ -135,12 +140,18 @@ no_required_CORE_atoms
 ```text
 FIXTURE_EXPECTED_FAIL_CLOSED
 S4_stage=FAIL
-FIXTURE_SEMANTIC_PASS iff exact fail-closed
+S4_OUTPUT_BYTES fixed
+S4_OUTPUT_SHA256 recorded
+S4_OUTPUT_SHA256 independently verified before oracle
+FIXTURE_SEMANTIC_PASS iff exact fail-closed after hash gate
 must_not_emit_silent_NO_QUALIFIED_RESULT_as_valid_absence
 EXPECTED_FAIL_CLOSED ≠ EXPERIMENT_EXECUTION_FAILURE
+EXPECTED_FAIL_CLOSED ≠ ORACLE_ISOLATION_BYPASS
 does_not_prohibit_CORE_PASS
 S5_not_required_for_this_fixture
 ```
+
+If S4 evidence cannot be fixed/hashed → CORE `INCOMPLETE` (not F-01 semantic PASS).
 
 ### F-02
 
@@ -159,7 +170,6 @@ qualification otherwise per contract
 
 ```text
 NOT EXPRESSIBLE UNDER CURRENT CONTRACT
-compound_reopen_condition_evaluation
 no_required_CORE_atoms
 ```
 
@@ -169,8 +179,12 @@ no_required_CORE_atoms
 as:e1g-prior-v1.status=superseded
 as:e1g-succ.status=superseded
 as:e1g-prior-v2.status=current
+dec:e1g-prior-v2.status=current
 current_path=Path-Prior
 status=QUALIFIED_RESULT
+qualified_decision_ids contains dec:e1g-prior-v2
+qualified_decision_ids does_not_contain dec:e1g-prior-v1
+qualified_decision_ids does_not_contain dec:e1g-succ
 same_id_resurrection=false
 ```
 
@@ -194,6 +208,9 @@ no_single_authorized_truth_fabricated_from_observations_alone=true
 ```text
 as:e1i-old.status=retracted
 as:e1i-old must_not_revive_as_same_assertion_identity
+as:e1i-new.recoverable_by_identity=true
+as:e1i-new remains a distinct identity
+as:e1i-new != as:e1i-old
 ```
 
 ---

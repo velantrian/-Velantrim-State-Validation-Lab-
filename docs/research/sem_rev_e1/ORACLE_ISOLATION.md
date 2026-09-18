@@ -1,4 +1,4 @@
-# SEM-REV-E1 — Oracle Isolation (Design Boundary)
+# SEM-REV-E1 — Oracle Isolation (final tightening)
 
 **STATUS:** preregistration candidate · NOT FROZEN  
 **Design only. Do NOT implement in this task.**
@@ -9,48 +9,53 @@
 
 ```text
 SYSTEM UNDER TEST ≠ ANSWER KEY
+EXPECTED_FAIL_CLOSED ≠ ORACLE_ISOLATION_BYPASS
 ```
 
 ---
 
 ## SUT must not access (before fixture evidence is fixed)
 
-- REQUIRED / FORBIDDEN atoms;
-- expected labels / gold outputs;
-- hard-fail answer keys;
-- equivalent answer-key structures.
+REQUIRED / FORBIDDEN atoms; expected labels; hard-fail keys; answer-key side channels.
 
 ---
 
 ## Allowed SUT inputs
 
-Only fixture **world-state** records and typed query parameters from registered
-E0 families: entity, scope, assertion, evidence (+ links), revision
-(`retracts`/`supersedes`/…), authority_decision, uncertainty ids, etc.
-
-No hidden flag records, condition engines, jurisdiction maps, rank orders,
-magic currentness fields, or per-fixture answer fields.
+Registered E0 world-state families only. No hidden flags, jurisdiction maps,
+rank orders, magic currentness fields, or per-fixture answer fields.
 
 ---
 
 ## Scorer / oracle timing
 
-Default (fixtures that emit S5):
+### Default (fixtures that emit S5)
 
 ```text
 S0 → S1 → S2 → S3 → S4 → S5 → HASH(S5) verified → THEN oracle may run
 ```
 
-### C1 exception: E1-F-01
+### E1-F-01 expected fail-closed (immutable S4 hash gate)
 
-Preregistered to stop at **S4 fail-closed**. Not required to emit S5.
-Adjudication uses recorded S4 fail-closed evidence.
+```text
+S0 → S1 → S2 → S3 → S4 FAIL (fail-closed)
+→ exact S4 status/output artifact bytes fixed
+→ SHA-256 recorded
+→ SHA-256 independently verified
+→ THEN oracle/scorer may inspect expected fail-closed outcome
+```
 
-Remaining CORE fixtures continue independently.
+If S4 evidence cannot be fixed and hashed:
+
+```text
+SEM_REV_E1_CORE_INCOMPLETE
+```
+
+Oracle must not run on unfixed/unhashed F-01 evidence.  
+F-01 is not required to emit S5. Remaining CORE fixtures continue independently.
 
 ---
 
 ## Design-time rule
 
-Oracle atoms authored from the **semantic contract**, not from implementation runs.
-No executable scorer in this candidate phase.
+Oracle atoms from semantic contract, not implementation runs. No executable scorer here.
