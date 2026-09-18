@@ -61,8 +61,9 @@ jurisdiction primitive in E0 contract). E1-E-01 is a **scope_mismatch** case.
 **Typical fail signature:** scope_mismatch accepted; refused flipped to approved;
 superseded decision treated current; invented hierarchy winner.
 
-**Expressibility note:** two same-scope conflicting approvals without typed
-supersession → `E1-E-NX` (`NOT EXPRESSIBLE UNDER CURRENT CONTRACT`).
+**Expressibility note:** same-scope **approved vs refused** decisions without typed
+supersession/precedence → `E1-E-NX` (`NOT EXPRESSIBLE UNDER CURRENT CONTRACT`).
+Not “two conflicting approvals” — outcomes genuinely disagree.
 
 ---
 

@@ -1,7 +1,15 @@
-# SEM-REV-E1 — Required Atoms (final pre-freeze tightening)
+# SEM-REV-E1 — Required Atoms (record-family aligned)
 
 **STATUS:** preregistration candidate · NOT FROZEN  
-`declared_loss` atoms: INTEGER `0`/`1` only.
+
+```text
+ASSERTION CURRENTNESS ≠ AUTHORITY DECISION OUTCOME
+REVISIONS TARGET ASSERTIONS ONLY
+```
+
+`declared_loss` / `uncertainty` / `valid_*` / `asserted_at` live on **assertions**.  
+`outcome` / `authority_id` / `effective_from` live on **authority_decisions**.  
+Qualification may list `qualified_decision_ids` containing `dec:*` bound to current assertions.
 
 ---
 
@@ -27,49 +35,51 @@ scope=scope:project-nova
 
 ## E1-B
 
-### E1-B-01
+### B-01
 
 ```text
-dec:e1b-0.status=current
-dec:e1b-1.status=not_yet_effective
+as:e1b-0.status=current
+as:e1b-1.status=not_yet_effective
+dec:e1b-0.outcome=approved
 status=QUALIFIED_RESULT
 qualified_decision_ids contains dec:e1b-0
 qualified_decision_ids does_not_contain dec:e1b-1
 ```
 
-### E1-B-02 / E1-B-04 (B-04 = dual-check)
+### B-02 / B-04
 
 ```text
-dec:e1b-0.status=not_temporally_applicable
-dec:e1b-1.status=current
+as:e1b-0.status=not_temporally_applicable
+as:e1b-1.status=current
+dec:e1b-1.outcome=approved
 status=QUALIFIED_RESULT
 qualified_decision_ids contains dec:e1b-1
 qualified_decision_ids does_not_contain dec:e1b-0
 ```
 
-B-04 also requires `valid_to_exclusive_boundary` reason emphasis for e1b-0.
+B-04 emphasizes exclusive `valid_to` on **as:e1b-0**.
 
-### E1-B-03
+### B-03
 
 ```text
-dec:e1b-1.status=current
-dec:e1b-0.status=not_current
+as:e1b-1.status=current
+as:e1b-0.status=not_current
 status=QUALIFIED_RESULT
 qualified_decision_ids contains dec:e1b-1
 ```
 
 ---
 
-## E1-C (physical C-01; dual-check C-02)
+## E1-C
 
 ```text
-dec:e1c-v1.status=superseded_not_current
-dec:e1c-v1 must_not_outrank_by_recorded_at
-dec:e1c-v2.status=current
+as:e1c-v1.status=superseded
+as:e1c-v2.status=current
+as:e1c-v1 must_not_outrank_by_recorded_at
+dec:e1c-v2.outcome=approved
 status=QUALIFIED_RESULT
 qualified_decision_ids contains dec:e1c-v2
 qualified_decision_ids does_not_contain dec:e1c-v1
-same_semantic_force=authority_decision_both
 ```
 
 ---
@@ -87,11 +97,12 @@ no_scope_widening
 ### D-03
 
 ```text
+as:e1d-us.status=current
+dec:e1d-us.outcome=approved
 status=QUALIFIED_RESULT
 qualified_decision_ids contains dec:e1d-us
 scope=scope:production-us
-outcome=approved
-declared_loss=0
+as:e1d-us.declared_loss=0
 ```
 
 ---
@@ -115,8 +126,8 @@ excluded.dec:e1e-refused contains authority_outcome_refused
 ### E-03
 
 ```text
-dec:e1e-old.status=superseded
-dec:e1e-new.status=current
+as:e1e-old.status=superseded
+as:e1e-new.status=current
 dec:e1e-new.outcome=refused
 status=NO_QUALIFIED_RESULT
 qualified_approved_decision_ids does_not_contain dec:e1e-old
@@ -141,25 +152,20 @@ no_required_CORE_atoms
 FIXTURE_EXPECTED_FAIL_CLOSED
 S4_stage=FAIL
 S4_OUTPUT_BYTES fixed
-S4_OUTPUT_SHA256 recorded
-S4_OUTPUT_SHA256 independently verified before oracle
+S4_OUTPUT_SHA256 recorded + independently verified before oracle
 FIXTURE_SEMANTIC_PASS iff exact fail-closed after hash gate
-must_not_emit_silent_NO_QUALIFIED_RESULT_as_valid_absence
-EXPECTED_FAIL_CLOSED ≠ EXPERIMENT_EXECUTION_FAILURE
 EXPECTED_FAIL_CLOSED ≠ ORACLE_ISOLATION_BYPASS
 does_not_prohibit_CORE_PASS
 S5_not_required_for_this_fixture
 ```
 
-If S4 evidence cannot be fixed/hashed → CORE `INCOMPLETE` (not F-01 semantic PASS).
-
 ### F-02
 
 ```text
-optional uncertainty=UNKNOWN
-declared_loss=0
+as:e1f-opt.uncertainty=UNKNOWN
+as:e1f-opt.declared_loss=0
+dec:e1f-opt.outcome=approved
 must_not_fabricate_FALSE_or_concrete_value
-qualification otherwise per contract
 ```
 
 ---
@@ -170,7 +176,6 @@ qualification otherwise per contract
 
 ```text
 NOT EXPRESSIBLE UNDER CURRENT CONTRACT
-no_required_CORE_atoms
 ```
 
 ### G-04 / J-02
@@ -179,7 +184,7 @@ no_required_CORE_atoms
 as:e1g-prior-v1.status=superseded
 as:e1g-succ.status=superseded
 as:e1g-prior-v2.status=current
-dec:e1g-prior-v2.status=current
+dec:e1g-prior-v2.outcome=approved
 current_path=Path-Prior
 status=QUALIFIED_RESULT
 qualified_decision_ids contains dec:e1g-prior-v2
@@ -198,7 +203,6 @@ as:e1h-obs-b recoverable=true
 distinct_identities_preserved=true
 no_authority_decision_fabricated=true
 no_production_authorization_inferred=true
-no_single_authorized_truth_fabricated_from_observations_alone=true
 ```
 
 ---
@@ -209,7 +213,6 @@ no_single_authorized_truth_fabricated_from_observations_alone=true
 as:e1i-old.status=retracted
 as:e1i-old must_not_revive_as_same_assertion_identity
 as:e1i-new.recoverable_by_identity=true
-as:e1i-new remains a distinct identity
 as:e1i-new != as:e1i-old
 ```
 
@@ -218,12 +221,12 @@ as:e1i-new != as:e1i-old
 ## E1-J-01
 
 ```text
+as:e1j-pos-1.status=current
+as:e1j-pos-1.declared_loss=0
+dec:e1j-pos-1.outcome=approved
 status=QUALIFIED_RESULT
 qualified_decision_ids contains dec:e1j-pos-1
 subject=ent:service:kepler
 scope=scope:production-apac
-outcome=approved
-semantic_force=authority_decision
 authority=principal:release-board
-declared_loss=0
 ```

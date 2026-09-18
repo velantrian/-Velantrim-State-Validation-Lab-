@@ -1,69 +1,62 @@
 # E1-F — Required Dependency Loss vs Optional UNKNOWN
 
 **Family:** E1-F  
-**Hypotheses:** H5, H9  
 **PHYSICAL_CORE:** E1-F-01, E1-F-02  
-**Taxonomy:** `CONTRAST_GROUP` **CG-F-dep** (NOT TRUE_PAIRWISE — more than one material semantic Δ)
-
----
-
-## Purpose
+**CONTRAST_GROUP:** CG-F-dep (NOT TRUE_PAIRWISE)
 
 ```text
-UNKNOWN ≠ FALSE
-DEPENDENCY LOSS ≠ VALID ABSENCE
-EXPECTED_FAIL_CLOSED ≠ EXPERIMENT_EXECUTION_FAILURE
 EXPECTED_FAIL_CLOSED ≠ ORACLE_ISOLATION_BYPASS
 ```
 
-`declared_loss`: INTEGER `0`/`1` only.  
-UNKNOWN-discipline via optional `uncertainty` NULL → UNKNOWN.
+---
+
+## E1-F-01 — Expected fail-closed (unchanged gate)
+
+Candidate `as:e1f-cand` (observation; declared_loss=0) requires missing `dec:e1f-auth`.
+
+S4 FAIL → fix bytes → SHA-256 → verify → THEN oracle.  
+Unhashable S4 → CORE INCOMPLETE.
 
 ---
 
-## E1-F-01 — Required dependency missing (EXPECTED FAIL-CLOSED)
+## E1-F-02 — Optional uncertainty UNKNOWN (NEG)
 
-World: candidate `as:e1f-cand` requires typed dependency `dec:e1f-auth`; dependency
-**absent**; candidate in S3 set; `declared_loss=0`.
+**Binding:** `as:e1f-opt` ↔ `dec:e1f-opt`
 
-### Immutable S4 hash gate (before oracle)
+### Assertion `as:e1f-opt`
 
-```text
-S4 fail-closed status/output artifact fixed
-→ exact bytes recorded
-→ SHA-256 recorded
-→ SHA-256 independently verified
-→ THEN oracle/scorer may inspect expected outcome
-```
+| Field | Value |
+|-------|-------|
+| entity_id | ent:service:kepler |
+| semantic_force | decision |
+| scope_id | scope:production-us |
+| asserted_at | 2026-01-20T00:00:00Z |
+| recorded_at | 2026-01-20T01:00:00Z |
+| valid_from | 2026-01-20T00:00:00Z |
+| valid_to | NULL |
+| **uncertainty** | **NULL** → projects as UNKNOWN |
+| declared_loss | **0** |
 
-If S4 evidence cannot be fixed and hashed → suite `SEM_REV_E1_CORE_INCOMPLETE`.
+### Decision `dec:e1f-opt`
 
-```text
-FIXTURE_EXPECTED_FAIL_CLOSED
-S4 = FAIL
-S4_OUTPUT_SHA256 verified = YES required before oracle
-FIXTURE_SEMANTIC_PASS iff exact fail-closed after hash gate
-must_not_emit_silent_NO_QUALIFIED_RESULT_as_valid_absence
-does_not_prohibit_CORE_PASS
-S5_not_required
-```
-
----
-
-## E1-F-02 — Optional uncertainty absent → UNKNOWN (NEG)
-
-`dec:e1f-opt` approved; production-us; `declared_loss=0`; `uncertainty` NULL → UNKNOWN.
+| Field | Value |
+|-------|-------|
+| assertion_id | as:e1f-opt |
+| authority_id | principal:release-board |
+| outcome | approved |
+| semantic_force | authority_decision |
+| scope_id | scope:production-us |
+| reason | R_E1_F_OPT |
+| effective_from | 2026-01-20T00:00:00Z |
+| recorded_at | 2026-01-20T01:00:00Z |
 
 ```text
-optional uncertainty=UNKNOWN
+as:e1f-opt.uncertainty=UNKNOWN
+as:e1f-opt.declared_loss=0
+dec:e1f-opt.outcome=approved
 must_not_fabricate_FALSE_or_concrete_value
 may QUALIFIED_RESULT if required gates pass
-FIXTURE_SEMANTIC_PASS when atoms match
+qualified_decision_ids may contain dec:e1f-opt
 ```
 
-### Why not TRUE_PAIRWISE
-
-F-01 varies required-dependency presence + expected stage outcome class
-(fail-closed). F-02 varies optional uncertainty presence under an otherwise
-qualifying decision. Multiple material deltas → **CONTRAST_GROUP**, not
-TRUE_PAIRWISE.
+Do **not** place `uncertainty` / `declared_loss` on the decision row.

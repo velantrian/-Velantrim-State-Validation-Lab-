@@ -131,6 +131,17 @@ Currentness = derived projection, not stored answer flag.
 
 ## 7. Scope / authority / UNKNOWN / declared_loss
 
+```text
+ASSERTION CURRENTNESS ≠ AUTHORITY DECISION OUTCOME
+REVISIONS TARGET ASSERTIONS ONLY
+```
+
+Where qualification depends on currentness/temporality/revision, every
+`dec:*` has an explicit bound `as:*`. Assertion-only fields
+(`valid_*`, `asserted_at`, `uncertainty`, `declared_loss`) must not be
+defined as authority_decision columns.
+
+
 - Scope identity is **exact**. Similarity must not widen scope.
 - `SCOPE ≠ JURISDICTION`. Principal names are not jurisdiction atoms.
 - Authority outcomes/supersession are typed; refused must not flip to approved.

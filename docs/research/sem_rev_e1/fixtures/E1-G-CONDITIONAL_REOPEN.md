@@ -6,6 +6,11 @@
 **PHYSICAL_CORE:** E1-G-04 — new-version path return  
 **ROLE_ALIAS:** E1-J-02 → E1-G-04  
 
+```text
+ASSERTION CURRENTNESS ≠ AUTHORITY DECISION OUTCOME
+REVISIONS TARGET ASSERTIONS ONLY
+```
+
 ---
 
 ## Invariant
@@ -67,7 +72,7 @@ condition/flag primitive. Do not invent `rev:e1g-k-removed` as a magic flag.
 as:e1g-prior-v1.status=superseded
 as:e1g-succ.status=superseded
 as:e1g-prior-v2.status=current
-dec:e1g-prior-v2.status=current
+dec:e1g-prior-v2.outcome=approved
 current_path=Path-Prior
 status=QUALIFIED_RESULT
 qualified_decision_ids contains dec:e1g-prior-v2

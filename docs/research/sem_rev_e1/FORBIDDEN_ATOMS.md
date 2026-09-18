@@ -7,6 +7,10 @@
 ## Cross-cutting
 
 ```text
+ASSERTION CURRENTNESS assigned as dec:*.status
+revision target/replacement = dec:* (must be as:*)
+asserted_at/valid_*/uncertainty/declared_loss on authority_decision rows
+hidden assertion↔decision binding
 scope_widening
 proposal→decision force flip
 observation→authorization
@@ -48,11 +52,13 @@ generic historical_recoverable_not_current as sole A/B/C status
 
 ```text
 dec:e1b-1 qualified before effective_from
-NO_QUALIFIED_RESULT while dec:e1b-0 remains valid (B-01)
-dec:e1b-0 incorrectly expired before valid_to (B-01)
-dec:e1b-0 qualified at T==valid_to (B-02/B-04)
+NO_QUALIFIED_RESULT while as:e1b-0 remains valid (B-01)
+as:e1b-0 incorrectly expired before valid_to (B-01)
+as:e1b-0 treated applicable at T==valid_to (B-02/B-04)
+dec:e1b-*.status used as assertion-currentness atom
 OR multi-valued B-04 oracle
 time_axes_conflated
+revision targeting dec:* 
 ```
 
 ---
@@ -60,8 +66,10 @@ time_axes_conflated
 ## E1-C
 
 ```text
-dec:e1c-v1 current solely because recorded_at is later
-dec:e1c-v1 outranks dec:e1c-v2 by recorded_at
+as:e1c-v1 current solely because recorded_at is later
+as:e1c-v1 outranks as:e1c-v2 by recorded_at
+dec:e1c-v*.status used as assertion-currentness atom
+revision targeting dec:*
 time_axes_conflated
 prefer_by_semantic_force as explanation (forces are equal)
 ```
