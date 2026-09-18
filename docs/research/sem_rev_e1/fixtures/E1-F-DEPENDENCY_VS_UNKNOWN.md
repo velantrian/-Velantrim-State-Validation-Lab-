@@ -2,8 +2,8 @@
 
 **Family:** E1-F  
 **Hypotheses:** H5, H9  
-**CORE cases:** E1-F-01, E1-F-02  
-**Pair:** P-F-dep
+**Physical CORE:** E1-F-01, E1-F-02  
+**TRUE_PAIRWISE:** P-F-dep — Δ = required dependency missing vs optional field absent
 
 ---
 
@@ -13,51 +13,52 @@
 UNKNOWN ≠ FALSE
 DEPENDENCY LOSS ≠ VALID ABSENCE
 NOT RETRIEVED ≠ ABSENT
+EXPECTED_FAIL_CLOSED ≠ EXPERIMENT_EXECUTION_FAILURE
 ```
+
+UNKNOWN-discipline uses an **existing optional** property: `uncertainty` NULL →
+projects as `UNKNOWN`. Do **not** use `declared_loss=UNKNOWN` (unsupported).
+
+`declared_loss` encoding (E0 schema): INTEGER NOT NULL, `0` = no loss, `1` = loss.
 
 ---
 
-## E1-F-01 — Required dependency missing (CORE NEG)
-
-World intends:
-
-- Candidate assertion `as:e1f-cand` (observation, scope=production-us) requires
-  typed qualification dependency `dec:e1f-auth` (authority_decision) to evaluate
-  authorization gate.
-- Store is constructed such that **required dependency record is absent**
-  (unrecoverable), while candidate is present in S3 set.
-
-**Expected (C1):**
-
-```text
-EXPECTED_FAIL_CLOSED ≠ EXPERIMENT_EXECUTION_FAILURE
-EXPECTED_FAIL_CLOSED ≠ ordinary NO_QUALIFIED_RESULT
-```
-
-- S4 = FAIL (fail-closed) is the **preregistered guard outcome**
-- `FIXTURE_EXPECTATION = PASS` **iff** that exact fail-closed occurs
-- Must **not** emit silent / ordinary `NO_QUALIFIED_RESULT` as if absence were valid evidence
-- Expected fail-closed does **not** prohibit `SEM_REV_E1_CORE_PASS`
-- Unexpected pipeline failure on other fixtures, or converting F-01 into a
-  valid-absence `NO_QUALIFIED_RESULT`, remains FAIL / INCOMPLETE / hard-fail
-  as specified
-- Remaining CORE fixtures MUST still be processed independently
-- This fixture is **not** required to emit S5
-
-## E1-F-02 — Optional property absent → UNKNOWN (CORE NEG vs fabrication)
+## E1-F-01 — Required dependency missing (EXPECTED FAIL-CLOSED)
 
 World:
 
-- `dec:e1f-opt`: approved authority_decision; production-us; all required typed
-  fields present;
-- optional field (e.g. non-mandatory uncertainty detail) intentionally unspecified → `UNKNOWN`
+- Candidate `as:e1f-cand` (observation, scope=production-us, `declared_loss=0`) requires
+  typed qualification dependency `dec:e1f-auth` (authority_decision).
+- Required dependency **absent** (unrecoverable); candidate present in S3 set.
+
+**Fixture classification (C1/C11):**
+
+```text
+FIXTURE_EXPECTED_FAIL_CLOSED
+S4 = FAIL
+FIXTURE_SEMANTIC_PASS iff exact fail-closed
+must_not_emit_silent_NO_QUALIFIED_RESULT_as_valid_absence
+does_not_prohibit_CORE_PASS
+S5_not_required
+```
+
+Unexpected crash / missing artifacts → `EXECUTION_INTEGRITY_FAILURE` → suite INCOMPLETE/FAIL per rules — not a semantic PASS.
+
+---
+
+## E1-F-02 — Optional uncertainty absent → UNKNOWN
+
+World:
+
+- `dec:e1f-opt`: approved authority_decision; production-us; required typed fields present;
+  `declared_loss=0`
+- `uncertainty` intentionally NULL / unspecified → **UNKNOWN** (existing optional encoding)
 
 **Expected:**
 
-- optional property remains `UNKNOWN`
-- must not fabricate FALSE / concrete value
-- may still qualify if all **required** gates pass
-
-### Material Δ
-
-F-01 vs F-02: **required dependency missing** vs **optional unspecified**.
+```text
+optional uncertainty = UNKNOWN
+must_not_fabricate_FALSE_or_concrete_value
+may QUALIFIED_RESULT if required gates pass
+FIXTURE_SEMANTIC_PASS when atoms match
+```

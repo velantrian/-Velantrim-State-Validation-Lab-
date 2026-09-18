@@ -2,7 +2,8 @@
 
 **Family:** E1-J  
 **Hypothesis:** H10  
-**CORE cases:** E1-J-01 (dedicated), E1-J-02 (cross-ref E1-G-04)
+**Physical CORE:** E1-J-01  
+**ROLE_ALIAS:** E1-J-02 → E1-G-04 (new-version path return)
 
 ---
 
@@ -12,7 +13,7 @@ Defeat trivial “exclude everything” strategies.
 
 ---
 
-## E1-J-01 — Straightforward current approved decision
+## E1-J-01 — Straightforward current approved decision (PHYSICAL POS)
 
 - `fixture_id`: `E1-J-01`
 - `entity_id`: `ent:service:kepler`
@@ -34,9 +35,8 @@ Defeat trivial “exclude everything” strategies.
 | effective_from | 2026-01-22T00:00:00Z |
 | valid_from | 2026-01-22T00:00:00Z |
 | valid_to | NULL |
-| observed_at | UNKNOWN |
-| uncertainty | UNKNOWN |
-| declared_loss | UNKNOWN |
+| uncertainty | NULL → optional UNKNOWN if projected |
+| declared_loss | **0** |
 | reason | R_E1_J_RELEASE_CRITERIA_MET |
 | revision_relation | none |
 
@@ -50,6 +50,7 @@ scope=scope:production-apac
 outcome=approved
 semantic_force=authority_decision
 authority=principal:release-board
+declared_loss=0
 ```
 
 ### FORBIDDEN
@@ -65,10 +66,7 @@ trivial abstention
 
 ---
 
-## E1-J-02 — Legitimate conditional reopen
+## E1-J-02 — ROLE_ALIAS of E1-G-04
 
-**Physical content:** identical to **E1-G-04**.
-
-Listed here as a positive-control **role** so H10 coverage is explicit.
-CORE suite must not count contradictory duplicate oracles; treat as one
-physical fixture with dual role tags `{E1-G-04, E1-J-02}`.
+Positive-control **role tag** on the physical E1-G-04 new-version path-return
+fixture. **Not** independent experimental evidence.

@@ -1,94 +1,90 @@
-# SEM-REV-E1 — Fixture Matrix
+# SEM-REV-E1 — Fixture Matrix (C2–C12 corrected)
 
 **STATUS:** preregistration candidate · NOT FROZEN  
-**CORE suite:** 10 families · 22 cases  
-**Design rule:** prefer pairwise counterfactuals (Δ = one material property)
-
-Legend:
-- **POS** = positive control / should qualify
-- **NEG** = adversarial negative / must not wrongly qualify or must preserve distinctions
-- **PAIR** = member of a counterfactual pair
-- **NX** = `NOT EXPRESSIBLE UNDER CURRENT CONTRACT` (documented boundary; not a CORE hard-fail oracle)
+**C1:** CLOSED (expected fail-closed)  
+**Corrections:** C2–C12 applied
 
 ---
 
-## Summary counts
+## Taxonomy (precise)
+
+| Term | Meaning |
+|------|---------|
+| PHYSICAL_CORE | Independent world-state fixture counted as experimental evidence |
+| ROLE_OR_CHECK | Additional required check/role on an existing physical fixture; **not** independent evidence |
+| TRUE_PAIRWISE | Shared base world; exactly one material semantic Δ; both sides explicit |
+| CONTRAST_GROUP | Related opposing cases; not necessarily single-Δ pairwise |
+| DUAL_CHECK_SAME_WORLD | Same physical bytes; multiple required check emphases |
+| CONDITION_LATTICE | Multi-flag reopen lattice — **NX** under current contract |
+| ROLE_ALIAS | Alternate role tag on one physical fixture |
+| NX | `NOT EXPRESSIBLE UNDER CURRENT CONTRACT` |
+
+---
+
+## Counts (recomputed)
 
 | Metric | Count |
 |--------|------:|
-| Fixture families | 10 |
-| CORE cases | 22 |
-| Positive controls | 3 |
-| Negative / adversarial CORE cases | 19 |
-| Pairwise counterfactual groupings | 8 |
-| NX boundary cases (documented, non-CORE) | 1 |
+| PHYSICAL_CORE_FIXTURES | **19** |
+| CORE_ROLE_OR_CHECK_ENTRIES | **21** (= 19 physical + B-04 dual-check + J-02 role alias) |
+| TRUE_PAIRWISE_COUNTERFACTUAL_GROUPS | **3** (P-B-eff, P-D-scope, P-F-dep) |
+| CONTRAST_GROUPS | **2** (CG-E-out, CG-E-sup) |
+| DUAL_CHECK_SAME_WORLD_GROUPS | **2** (B-04↔B-02; C-01/C-02) |
+| CONDITION_LATTICES | **0 CORE** (former G-01..G-03 → NX) |
+| ROLE_ALIASES | **1** (J-02 → G-04) |
+| POSITIVE_CONTROL_PHYSICAL_FIXTURES | **5** |
+| POSITIVE_CONTROL_ROLE_TAGS | **1** (J-02) |
+| NX_CASES | **2** (E1-E-NX, E1-G-NX) |
+
+### Positive-control physical fixtures (exact)
+
+1. `E1-B-02` (boundary qualify)  
+2. `E1-B-03` (post-boundary qualify)  
+3. `E1-D-03`  
+4. `E1-G-04`  
+5. `E1-J-01`  
+
+→ **POSITIVE_CONTROL_PHYSICAL_FIXTURES = 5**  
+→ **POSITIVE_CONTROL_ROLE_TAGS = 1** (`E1-J-02`)
+
+### Physical CORE inventory (19)
+
+A-01; B-01, B-02, B-03; C-01, C-02; D-01, D-02, D-03; E-01, E-02, E-03; F-01, F-02; G-04; H-01; I-01; J-01.
+
+Note: C-01 and C-02 share one world but are listed as two dual-check physical entries for artifact packaging; taxonomy marks them `DUAL_CHECK_SAME_WORLD` (not TRUE_PAIRWISE). If a future freeze collapses them to one physical package, recount accordingly — this candidate keeps two named entries with shared-world note.
+
+**Conservative physical-evidence count if C is collapsed:** 18.  
+**This candidate’s declared PHYSICAL_CORE_FIXTURES = 19** (named entries above).
 
 ---
 
-## Family × hypothesis map
+## Family × case map
 
-| Case ID | Family | Role | Primary H | Pair group | Notes |
-|---------|--------|------|-----------|------------|-------|
-| E1-A-01 | A Deep revision | NEG | H1 | — | A→B→C→D; D current |
-| E1-B-01 | B Temporal | NEG | H2 | P-B-eff | query **before** effective_from |
-| E1-B-02 | B Temporal | POS-ish/NEG | H2 | P-B-eff | query **at** effective_from |
-| E1-B-03 | B Temporal | NEG | H2 | P-B-eff | query after; overlapping older interval still not current |
-| E1-B-04 | B Temporal | NEG | H2 | P-B-bound | `valid_to` exclusive boundary (`T < valid_to`) |
-| E1-C-01 | C Late arrival | NEG | H6 | P-C-rec | late-recorded older obs must not outrank |
-| E1-C-02 | C Late arrival | NEG | H6 | P-C-rec | earlier-recorded newer decision remains current |
-| E1-D-01 | D Scopes | NEG | H3 | P-D-scope | approve US; query EU → no widen |
-| E1-D-02 | D Scopes | NEG | H3 | P-D-scope | approve US; query US-canary → no widen |
-| E1-D-03 | D Scopes | POS | H3/H10 | P-D-scope | approve US; query US → qualify |
-| E1-E-01 | E Authority | NEG | H4 | P-E-jur | out-of-jurisdiction “approve” must not qualify |
-| E1-E-02 | E Authority | NEG | H4 | P-E-out | refused outcome must not flip to approved |
-| E1-E-03 | E Authority | NEG | H4 | P-E-sup | superseded authority decision not current |
-| E1-E-NX | E Authority | NX | H4 | — | two in-jurisdiction conflicting approvals, no typed precedence |
-| E1-F-01 | F Dependency | NEG (expected fail-closed) | H5 | P-F-dep | required dep absent → S4 fail-closed; FIXTURE_EXPECTATION=PASS; does **not** prohibit CORE_PASS |
-| E1-F-02 | F Dependency | NEG | H9 | P-F-dep | optional property absent → UNKNOWN (not FALSE) |
-| E1-G-01 | G Reopen | NEG | H7 | P-G-re | condition unsatisfied |
-| E1-G-02 | G Reopen | NEG | H7 | P-G-re | half of compound condition |
-| E1-G-03 | G Reopen | NEG | H7 | P-G-re | full condition, **no** authority reapproval |
-| E1-G-04 | G Reopen | POS | H7/H10 | P-G-re | full frozen reopen condition satisfied |
-| E1-H-01 | H Evidence | NEG | H8 | — | conflicting evidence preserved; no auto-truth |
-| E1-I-01 | I Retract+late | NEG | H8/H1 | — | new similar evidence ≠ revive retracted ID |
-| E1-J-01 | J Positive | POS | H10 | — | straightforward current approved decision |
-| E1-J-02 | J Positive | POS | H10 | — | legitimate reopen (alias of E1-G-04 expectations) |
+| Case ID | Family | Kind | Category | Primary H | Group | Notes |
+|---------|--------|------|----------|-----------|-------|-------|
+| E1-A-01 | A | PHYSICAL | NEG | H1 | — | exact retracted/superseded/current |
+| E1-B-01 | B | PHYSICAL | NEG | H2 | P-B-eff | premature activation; e1b-0 still current |
+| E1-B-02 | B | PHYSICAL | POS | H2 | P-B-eff | at boundary; e1b-1 current |
+| E1-B-03 | B | PHYSICAL | POS | H2 | P-B-eff | after; e1b-1 current |
+| E1-B-04 | B | ROLE_OR_CHECK | BOUNDARY_CHECK | H2 | dual of B-02 | exclusive valid_to; **not** independent |
+| E1-C-01 | C | PHYSICAL* | NEG | H6 | dual-C | late record must not outrank |
+| E1-C-02 | C | PHYSICAL* | NEG/POS | H6 | dual-C | e1c-new remains current |
+| E1-D-01 | D | PHYSICAL | NEG | H3 | P-D-scope | scope_mismatch EU |
+| E1-D-02 | D | PHYSICAL | NEG | H3 | P-D-scope | scope_mismatch canary |
+| E1-D-03 | D | PHYSICAL | POS | H3/H10 | P-D-scope | US qualifies |
+| E1-E-01 | E | PHYSICAL | NEG | H4 | CG-E-scope | **scope_mismatch** (not jurisdiction) |
+| E1-E-02 | E | PHYSICAL | NEG | H4 | CG-E-out | refused |
+| E1-E-03 | E | PHYSICAL | NEG | H4 | CG-E-sup | superseded |
+| E1-E-NX | E | NX | NX | H4 | — | precedence underdefined |
+| E1-F-01 | F | PHYSICAL | EXPECTED_FAIL_CLOSED | H5 | P-F-dep | S4 fail-closed → fixture PASS |
+| E1-F-02 | F | PHYSICAL | NEG/UNKNOWN | H9 | P-F-dep | optional uncertainty UNKNOWN |
+| E1-G-NX | G | NX | NX | H7 | — | compound condition evaluation |
+| E1-G-04 | G | PHYSICAL | POS | H7/H10 | — | new-version path return |
+| E1-H-01 | H | PHYSICAL | NEG | H8 | — | preserve distinct observations |
+| E1-I-01 | I | PHYSICAL | NEG | H8/H1 | — | no same-ID revival |
+| E1-J-01 | J | PHYSICAL | POS | H10 | — | straightforward approve |
+| E1-J-02 | J | ROLE_ALIAS | POS tag | H10 | → G-04 | not independent |
 
-Note: E1-J-02 shares semantic expectation with E1-G-04 but is listed as a
-distinct positive-control **role** in the CORE suite (same fixture content
-may be referenced once physically; see `fixtures/E1-J-POSITIVE_CONTROLS.md`).
+\*C-01/C-02: `DUAL_CHECK_SAME_WORLD`.
 
-**Physical CORE fixture specs counted as 22 rows above excluding NX;**  
-E1-E-NX is boundary documentation only and is **not** required for CORE_PASS.
-
-Adjusted CORE physical cases in `fixtures/`: **22** (A1, B1–B4, C1–C2, D1–D3,
-E1–E3, F1–F2, G1–G4, H1, I1, J1) with J2 = cross-ref to G4.
-
----
-
-## Pairwise deltas (exact material Δ)
-
-| Pair | Cases | Material Δ only |
-|------|-------|-----------------|
-| P-B-eff | B-01 / B-02 / B-03 | `query_as_of` relative to same `effective_from` |
-| P-B-bound | B-03 / B-04 | `query_as_of` vs exclusive `valid_to` |
-| P-C-rec | C-01 / C-02 | which record is late-recorded vs current decision |
-| P-D-scope | D-01 / D-02 / D-03 | `query_scope` only (`eu` / `us-canary` / `us`) |
-| P-E-jur | E-01 vs expressible baseline | authority jurisdiction match |
-| P-E-out | E-02 | `outcome=refused` vs would-be approved |
-| P-E-sup | E-03 | supersession present vs absent |
-| P-F-dep | F-01 / F-02 | required dep missing vs optional field UNKNOWN |
-| P-G-re | G-01…G-04 | reopen-condition completeness / reapproval |
-
----
-
-## Generalization (anti-memorization)
-
-E1 entities / reasons differ from E0 (`ent:service:atlas`, `orion`, Path-A/B/C,
-`VX-17`, etc.):
-
-Examples: `ent:service:mira`, `ent:service:kepler`, `ent:project:nova`,
-`scope:production-apac`, reason codes `R_E1_*`.
-
-Chain lengths, temporal arrangements, and force combinations differ while
-the **same** E0 semantic obligations remain.
+No `POS-ish/NEG` labels remain.

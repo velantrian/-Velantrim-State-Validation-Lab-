@@ -1,24 +1,28 @@
-# SEM-REV-E1 — Forbidden Atoms (Candidate)
+# SEM-REV-E1 — Forbidden Atoms (C2–C12)
 
 **STATUS:** preregistration candidate · NOT FROZEN
 
 ---
 
-## Cross-cutting forbidden (all CORE fixtures)
+## Cross-cutting
 
 ```text
 scope_widening
 proposal→decision force flip
 observation→authorization
 retracted→qualified_active
-superseded→current without legitimate reopen
-UNKNOWN→FALSE_or_fabricated_value
-required_dependency_loss→valid_absence
+superseded→current without new superseding version identity
+UNKNOWN→FALSE_or_fabricated_value on optional uncertainty
+declared_loss=UNKNOWN  (unsupported encoding)
+required_dependency_loss→valid_absence / ordinary NO_QUALIFIED_RESULT
 recorded_at used as sole currentness authority
 mutable is_current stored answer flag
-oracle_atoms visible to SUT before S5 hash
+oracle_atoms visible to SUT before evidence fixed
 prose_parsed mandatory qualifier
 majority_pass_override
+same_id_resurrection
+hidden_condition_flag_records
+invented_authority_jurisdiction_or_rank
 ```
 
 ---
@@ -26,11 +30,15 @@ majority_pass_override
 ## E1-A-01
 
 ```text
+A.status=superseded   (must remain retracted, not collapsed)
+B.status=retracted
+C.status=retracted
 A.status=current
 B.status=current
 C.status=current
 current_path=Path-A|Path-B|Path-C
 D omitted while claiming currentness elsewhere
+generic historical_recoverable_not_current as sole A/B/C status
 ```
 
 ---
@@ -38,9 +46,11 @@ D omitted while claiming currentness elsewhere
 ## E1-B
 
 ```text
-dec:e1b-1 current before effective_from
-valid_to inclusive when contract is exclusive
-older overlapping interval preferred solely by recorded_at
+dec:e1b-1 qualified before effective_from
+NO_QUALIFIED_RESULT while dec:e1b-0 remains valid (B-01)
+dec:e1b-0 incorrectly expired before valid_to (B-01)
+dec:e1b-0 qualified at T==valid_to (B-02/B-04)
+OR multi-valued B-04 oracle
 time_axes_conflated
 ```
 
@@ -68,7 +78,7 @@ lab-* silently widened to production-*
 ## E1-E
 
 ```text
-out_of_jurisdiction approval accepted for query scope
+scope_mismatch treated as jurisdiction proof
 refused→approved flip
 superseded authority decision treated current
 invented_authority_hierarchy_winner
@@ -79,8 +89,9 @@ invented_authority_hierarchy_winner
 ## E1-F
 
 ```text
-F-01: silent NO_QUALIFIED_RESULT as success path for missing required dep
+F-01: silent ordinary NO_QUALIFIED_RESULT as success path for missing required dep
 F-02: optional UNKNOWN coerced to FALSE / concrete value
+declared_loss=UNKNOWN
 ```
 
 ---
@@ -88,10 +99,12 @@ F-02: optional UNKNOWN coerced to FALSE / concrete value
 ## E1-G
 
 ```text
-reopen on unsatisfied condition
-reopen on half condition
-reopen without required authority reapproval
-"superseded once" → permanently unreopenable when full frozen condition met
+as:e1g-prior-v1.status=current
+current_via_legitimate_reopen
+same-ID revival
+OR dual expected forms
+generic rev:* used as condition flag (e.g. rev:e1g-k-removed)
+compound condition evaluated without registered primitive
 ```
 
 ---
@@ -99,8 +112,11 @@ reopen without required authority reapproval
 ## E1-H
 
 ```text
-conflict collapsed to single asserted truth without authority decision
-authorization inferred from evidence conflict alone
+silent_merge_or_delete_of_either_observation
+authorization_inferred_from_observations_alone
+claim_typed_conflict_relation_detected
+prose_parsed_effect_code_as_mandatory_atom
+evidence_conflict_preserved as typed detection claim
 ```
 
 ---
@@ -123,4 +139,5 @@ wrong scope
 authority=UNKNOWN
 decision omitted
 trivial abstention
+counting J-02 as independent physical evidence
 ```

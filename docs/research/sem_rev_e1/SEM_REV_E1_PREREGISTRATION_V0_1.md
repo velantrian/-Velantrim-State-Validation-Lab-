@@ -1,10 +1,10 @@
 # SEM-REV-E1 — Adversarial Robustness / Generalization
-## Preregistration Candidate v0.1
+## Preregistration Candidate v0.1 (C1–C12)
 
 **STATUS:** `PREREGISTRATION_CANDIDATE` — **NOT FROZEN**  
 **DATE BASELINE:** 2026-09-15  
 **MODE:** research design · falsification-first · docs-only · anti-drift  
-**CORRECTION:** C1 applied 2026-09-15 against reviewed HEAD `1d572982cac9aaf068c3c2c16f5de3383e6c3b38`
+**CORRECTIONS:** C1 CLOSED · C2–C12 applied on branch `research/sem-rev-e1-prereg-v0.1`
 
 ---
 
@@ -28,25 +28,12 @@ The frozen deterministic S0–S5 implementation preserved the tested semantic
 distinctions on frozen Fixtures A/B/C under the specified SQLite 3.53.4
 environment.
 
-### What E0 did **not** establish
-
-- general semantic-memory correctness;
-- robustness under deeper / adversarial histories;
-- production suitability;
-- graph-kernel unnecessary;
-- general architecture validity.
-
 ### What this document is
 
-A **falsification-first** research design + preregistration **candidate** for
-SEM-REV-E1. It does **not** authorize:
-
-- experiment execution;
-- implementation change;
-- freeze execution;
-- S6 / S7 / Graph Kernel / Continuum / Crystal;
-- architecture or canon promotion;
-- merge.
+A falsification-first research design + preregistration **candidate** for
+SEM-REV-E1. It does **not** authorize experiment execution, implementation,
+freeze, S6/S7/Graph Kernel/Continuum/Crystal, architecture/canon promotion,
+or merge.
 
 ---
 
@@ -60,31 +47,14 @@ architectural machinery merely to rescue failing cases?
 
 ## 2. Central hypothesis
 
-### H0-E1 (null / continuity)
+### H0-E1
 
-The bounded deterministic semantic-preservation mechanism continues to
-preserve required distinctions under adversarial variations of:
+Continuity under adversarial histories that are **expressible under the
+current E0 contract**.
 
-revision depth · temporal order · temporal overlap · scope similarity ·
-authority conflict · evidence conflict · dependency loss · late-arriving
-records · conditional reopen · UNKNOWN · positive controls.
+### Failure classes H1–H10
 
-### Explicit alternatives (failure classes)
-
-| ID | Failure class |
-|----|----------------|
-| H1 | REVISION DEPTH FAILURE |
-| H2 | TEMPORAL ORDERING FAILURE |
-| H3 | SCOPE DISAMBIGUATION FAILURE |
-| H4 | AUTHORITY CONFLICT FAILURE |
-| H5 | DEPENDENCY INTEGRITY FAILURE |
-| H6 | LATE-ARRIVAL FAILURE |
-| H7 | REOPEN-CONDITION FAILURE |
-| H8 | CONTRADICTORY-EVIDENCE FAILURE |
-| H9 | UNKNOWN DISCIPLINE FAILURE |
-| H10 | OVER-ABSTENTION / POSITIVE-CONTROL FAILURE |
-
-Details: `HYPOTHESES_AND_FAILURE_MODES.md`.
+See `HYPOTHESES_AND_FAILURE_MODES.md` (H4/H7/H8 **narrowed** after C4–C6).
 
 ---
 
@@ -98,122 +68,87 @@ OBSERVATION ≠ AUTHORIZATION
 HISTORICAL ≠ CURRENT
 SUPERSEDED ≠ FALSE
 RETRACTED ≠ NEVER EXISTED
+RETRACTED ≠ SUPERSEDED
 NOT RETRIEVED ≠ ABSENT
 UNKNOWN ≠ FALSE
 CAPABILITY ≠ AUTHORITY
 MODEL OUTPUT ≠ CANON
+SCOPE ≠ JURISDICTION
+HISTORICAL IDENTITY ≠ NEW CURRENT VERSION
+REOPEN PATH ≠ REVIVE OLD ASSERTION/DECISION IDENTITY
+PRESERVING DISTINCT OPPOSING OBSERVATIONS ≠ DERIVING A TYPED CONFLICT RELATION
+EXPECTED_FAIL_CLOSED ≠ EXPERIMENT_EXECUTION_FAILURE
 ```
-
-No new distinction is introduced merely because it sounds useful.
 
 ---
 
 ## 4. Architectural reuse policy
 
-**Default assumption for E1 design:**
-
 ```text
-NO NEW ORGAN
-NO NEW ENGINE
-NO NEW DATABASE
-NO NEW LLM
-NO GRAPH
-NO NEW AUTHORITY MODEL
+NO NEW ORGAN / ENGINE / DATABASE / LLM / GRAPH / AUTHORITY MODEL
 ```
 
-Reuse the verified E0 mechanism vocabulary.
+If a case needs an unregistered primitive → `NOT EXPRESSIBLE UNDER CURRENT CONTRACT`.
 
-If a proposed case requires an unregistered primitive → mark
-`OUT_OF_CURRENT_E1_SCOPE` or `NOT EXPRESSIBLE UNDER CURRENT CONTRACT`.
-
-Do **not** silently redesign E0.
-
-Post-prereg audit (separate task) must decide:
-
-- **A.** E0 implementation already supports E1 as-is;
-- **B.** bounded fixture-loader / harness extensions only;
-- **C.** a semantic capability is genuinely missing → scientific finding / boundary.
-
-This candidate authorizes **none** of A/B/C implementation work.
+Post-prereg audit (separate) may decide A/B/C about implementation support.
+This candidate authorizes **none** of that work.
 
 ---
 
-## 5. Fixture suite overview
+## 5. Fixture suite overview (corrected counts)
 
-Approximately **10 families** (E1-A … E1-J), **22 CORE cases**, with pairwise
-counterfactuals where one material property changes.
+| Metric | Count |
+|--------|------:|
+| PHYSICAL_CORE_FIXTURES | 19 |
+| CORE_ROLE_OR_CHECK_ENTRIES | 21 |
+| TRUE_PAIRWISE groups | 3 |
+| CONTRAST groups | 2 |
+| DUAL_CHECK_SAME_WORLD groups | 2 |
+| ROLE_ALIASES | 1 (J-02→G-04) |
+| POSITIVE_CONTROL_PHYSICAL | 5 |
+| NX_CASES | 2 (E1-E-NX, E1-G-NX) |
 
-| Family | Focus | Hypotheses |
-|--------|-------|------------|
-| E1-A | Deep revision chain | H1 |
-| E1-B | Temporal overlap / boundary | H2 |
-| E1-C | Late-arriving record | H6, H2 |
-| E1-D | Nearby / colliding scopes | H3 |
-| E1-E | Conflicting authority decisions | H4 |
-| E1-F | Required dependency loss vs optional UNKNOWN | H5, H9 |
-| E1-G | Conditional reopen | H7 |
-| E1-H | Contradictory evidence | H8 |
-| E1-I | Retraction + late contradictory evidence | H8, H1 |
-| E1-J | Positive controls | H10 |
-
-Full matrix: `FIXTURE_MATRIX.md`  
-Per-family specs: `fixtures/`
-
-Entity / reason IDs are **new** (not E0 renames). Same contract, new histories.
+Full matrix: `FIXTURE_MATRIX.md`.
 
 ---
 
-## 6. Time axes (must remain distinct)
+## 6. Time axes
 
 | Axis | Role |
 |------|------|
-| `observed_at` | when the phenomenon was observed |
-| `asserted_at` | when the claim/decision was asserted |
-| `recorded_at` | when the record entered the store |
-| `valid_from` / `valid_to` | interval of temporal applicability |
-| `effective_from` | when a revision relation takes effect |
+| `observed_at` | when observed |
+| `asserted_at` | when asserted |
+| `recorded_at` | when entered store |
+| `valid_from` / `valid_to` | applicability (`T < valid_to` when set) |
+| `effective_from` | revision effect time |
 | `query_as_of` | evaluation time `T` |
 
-Currentness remains a **derived projection** (E0 rule), not a stored answer flag.
-
-Temporal applicability at `T`:
-
-```text
-valid_from <= T
-AND
-(valid_to IS NULL OR T < valid_to)
-```
-
-Then revision state applies.
+Currentness = derived projection, not stored answer flag.
 
 ---
 
-## 7. Scope / authority / UNKNOWN rules
+## 7. Scope / authority / UNKNOWN / declared_loss
 
-- Scope identity is **exact**. Semantic similarity must not widen scope.
-- Authority is typed; unauthorized / refused outcomes must not become approved.
-- **No new authority hierarchy** is introduced in this candidate.
-- If two authorities conflict and precedence is underdefined under current
-  contract → case labeled `NOT EXPRESSIBLE UNDER CURRENT CONTRACT` (not
-  silently given a winner).
-- Intentional absence of an optional property → `UNKNOWN`.
-- Missing **required** typed qualification dependency → preregistered **S4 fail-closed**
-  (`EXPECTED_FAIL_CLOSED`; `DEPENDENCY LOSS ≠ VALID ABSENCE`). That outcome is a
-  classifiable fixture PASS when exact; it is not suite INCOMPLETE and does not
-  by itself prohibit CORE_PASS.
+- Scope identity is **exact**. Similarity must not widen scope.
+- `SCOPE ≠ JURISDICTION`. Principal names are not jurisdiction atoms.
+- Authority outcomes/supersession are typed; refused must not flip to approved.
+- No new authority hierarchy.
+- Optional unspecified **uncertainty** → `UNKNOWN`.
+- **`declared_loss`**: INTEGER `0` (no loss) / `1` (loss). **Not** `UNKNOWN`.
+  Encoding unchanged from E0 schema (`DECLARED_LOSS_ENCODING_CHANGED = NO`).
+- Missing **required** typed qualification dependency → preregistered
+  **S4 fail-closed** (`EXPECTED_FAIL_CLOSED`). Exact fail-closed ⇒ fixture
+  semantic PASS; does not by itself prohibit CORE_PASS; must not abort the suite.
 
 ---
 
-## 8. Oracle isolation (design boundary only)
+## 8. Oracle isolation
 
 ```text
 SYSTEM UNDER TEST ≠ ANSWER KEY
 ```
 
-Future E1 S0–S5 must not access REQUIRED / FORBIDDEN atoms, expected labels,
-or gold structures. Oracle only after S5 bytes fixed + hashed.
-
-See `ORACLE_ISOLATION.md`. **Not implemented in this task.**
+See `ORACLE_ISOLATION.md`. Not implemented here.
 
 ---
 
@@ -225,56 +160,16 @@ SEM_REV_E1_CORE_FAIL
 SEM_REV_E1_CORE_INCOMPLETE
 ```
 
-No majority-pass. One CORE hard fail → `CORE_PASS` prohibited.
+Fixture-level: `FIXTURE_SEMANTIC_PASS` / `FIXTURE_SEMANTIC_FAIL` /
+`FIXTURE_EXPECTED_FAIL_CLOSED` / `EXECUTION_INTEGRITY_FAILURE`.
 
-Per-fixture:
-
-```text
-FIXTURE_EXPECTATION = PASS | FAIL
-```
-
-### C1 — expected fail-closed ≠ experiment failure
-
-E1-F-01 intentionally omits a **required** typed qualification dependency.
-The preregistered outcome is **S4 fail-closed**.
-
-If and only if that exact fail-closed outcome occurs:
-
-```text
-FIXTURE_EXPECTATION = PASS
-```
-
-This does **not** prohibit `SEM_REV_E1_CORE_PASS`.
-
-```text
-EXPECTED_FAIL_CLOSED ≠ EXPERIMENT_EXECUTION_FAILURE
-EXPECTED_FAIL_CLOSED ≠ ordinary NO_QUALIFIED_RESULT
-```
-
-Unexpected pipeline / execution failure (crash, integrity abort, S4 FAIL on a
-fixture that expected S4 PASS / S5) remains FAIL or INCOMPLETE.
-
-The future execution protocol MUST process CORE fixtures **independently**, so
-an expected fail-closed negative control cannot abort the suite.
-
-Do **not** rewrite E1-F-01 as ordinary `NO_QUALIFIED_RESULT`.
-
-See `PASS_FAIL_INCOMPLETE_RULES.md`.
+No majority-pass. See `PASS_FAIL_INCOMPLETE_RULES.md`.
 
 ---
 
 ## 10. Strongest allowed claim if PASS
 
-> Across the frozen SEM-REV-E1 adversarial fixture suite, the bounded
-> deterministic mechanism preserved the preregistered semantic distinctions
-> under the tested revision, temporal, scope, authority, dependency,
-> late-arrival, conflict, UNKNOWN, and reopen perturbations.
-
-Even PASS does **not** claim universal correctness, production readiness,
-human-like memory, unrestricted understanding, arbitrary domain
-generalization, or that graph is unnecessary.
-
-See `CLAIM_BOUNDARY.md`.
+See `CLAIM_BOUNDARY.md` (expressible-suite wording; excludes NX capabilities).
 
 ---
 
@@ -288,13 +183,15 @@ See `CLAIM_BOUNDARY.md`.
 6. `ORACLE_ISOLATION.md`
 7. `PASS_FAIL_INCOMPLETE_RULES.md`
 8. `CLAIM_BOUNDARY.md`
-9. `fixtures/E1-A` … `E1-J`
+9. `INTERNAL_CONSISTENCY_AUDIT.md`
+10. `fixtures/E1-A` … `E1-J`
 
 ---
 
-## 12. Explicit non-goals
+## 12. Explicit non-goals / NX boundaries
 
 - Do not change frozen E0 evidence or the E0 scientific result.
-- Do not invent hidden precedence to “solve” authority conflicts.
+- Do not invent hidden precedence / jurisdiction / condition flags.
 - Do not design oracle atoms from implementation outputs.
 - Do not execute SQLite / S0–S5 / scorer in this candidate phase.
+- **NX:** `E1-E-NX` (authority precedence); `E1-G-NX` (compound reopen-condition evaluation).
