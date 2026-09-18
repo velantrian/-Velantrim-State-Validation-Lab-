@@ -1,72 +1,68 @@
 # E1-A — Deep Revision Chain
 
-**Family:** E1-A  
-**Hypothesis:** H1  
-**CORE physical case:** E1-A-01  
-**Role:** NEG
-
----
-
-## Purpose
-
-Test whether increased revision depth causes an older valid-looking state to
-revive as current.
-
-Required question: can D remain current while A remains **retracted** and
-B/C remain **superseded** (recoverable by identity, not current)?
-
-Do **not** collapse RETRACTED and SUPERSEDED into generic “historical”.
-
----
-
-## E1-A-01
-
-### Query
-
-- `fixture_id`: `E1-A-01`
-- `entity_id`: `ent:project:nova`
-- `query`: `What is the current path decision for project Nova?`
-- `query_scope`: `scope:project-nova`
-- `query_as_of`: `2026-03-15T00:00:00Z`
-
-### Records (chain A→B→C→D)
-
-| ID | Force | Exact status at query | asserted_at | recorded_at | valid_from | valid_to | effective_from | notes |
-|----|-------|------------------------|-------------|-------------|------------|----------|----------------|-------|
-| `as:e1a-path-a` | proposal | **retracted** | 2026-01-01T00:00:00Z | 2026-01-01T01:00:00Z | 2026-01-01T00:00:00Z | NULL | — | Path-A |
-| `rev:e1a-a-retract` | revision `retracts` | retracts A | 2026-01-02T00:00:00Z | 2026-01-02T01:00:00Z | — | — | 2026-01-02T00:00:00Z | reason `R_E1_A_CONSTRAINT` |
-| `dec:e1a-path-b` / `as:e1a-path-b` | decision | **superseded** | 2026-01-05T00:00:00Z | 2026-01-05T01:00:00Z | 2026-01-05T00:00:00Z | NULL | — | Path-B; authority `principal:project-owner` |
-| `dec:e1a-path-c` / `as:e1a-path-c` | decision | **superseded** | 2026-01-20T00:00:00Z | 2026-01-20T01:00:00Z | 2026-01-20T00:00:00Z | NULL | — | Path-C |
-| `rev:e1a-b-to-c` | revision `supersedes` | B→C | 2026-01-20T00:00:00Z | 2026-01-20T01:00:00Z | — | — | 2026-01-20T00:00:00Z | reason `R_E1_B_SUPERSEDED` |
-| `dec:e1a-path-d` / `as:e1a-path-d` | decision | **current** | 2026-02-10T00:00:00Z | 2026-02-10T01:00:00Z | 2026-02-10T00:00:00Z | NULL | — | Path-D |
-| `rev:e1a-c-to-d` | revision `supersedes` | C→D | 2026-02-10T00:00:00Z | 2026-02-10T01:00:00Z | — | — | 2026-02-10T00:00:00Z | reason `R_E1_C_SUPERSEDED` |
-
-### Shared typed fields
-
-- `scope_id`: `scope:project-nova` (all)
-- `uncertainty`: NULL → projects as `UNKNOWN` where unspecified (optional)
-- `declared_loss`: INTEGER `0` (no declared loss) unless a case explicitly sets `1`
-- `observed_at`: not applicable on decision/proposal rows (no fabricated value)
-- **required dependencies:** retraction of A; supersessions B→C and C→D; scope; temporal applicability of D
-
-### Expected (exact)
+**Family:** E1-A · **Hypothesis:** H1 · **PHYSICAL:** E1-A-01 · **Category:** NEG
 
 ```text
-A.status=retracted
-A.force=proposal
-A.recoverable_by_identity=true
-B.status=superseded
-B.force=decision
-B.recoverable_by_identity=true
-C.status=superseded
-C.force=decision
-C.recoverable_by_identity=true
-D.status=current
-D.force=decision
+REVISIONS TARGET ASSERTIONS ONLY
+ASSERTION CURRENTNESS ≠ AUTHORITY DECISION OUTCOME
+```
+
+---
+
+## Query
+
+- `fixture_id`: E1-A-01
+- `entity_id`: ent:project:nova
+- `query_scope`: scope:project-nova
+- `query_as_of`: 2026-03-15T00:00:00Z
+- query: `What is the current path decision for project Nova?`
+
+---
+
+## Assertions (explicit — no combined dec/as rows)
+
+| ID | force | path | scope | asserted_at | recorded_at | valid_from | valid_to | uncertainty | declared_loss | reason |
+|----|-------|------|-------|-------------|-------------|------------|----------|-------------|---------------|--------|
+| `as:e1a-path-a` | proposal | Path-A | scope:project-nova | 2026-01-01T00:00:00Z | 2026-01-01T01:00:00Z | 2026-01-01T00:00:00Z | NULL | NULL | 0 | — |
+| `as:e1a-path-b` | decision | Path-B | scope:project-nova | 2026-01-05T00:00:00Z | 2026-01-05T01:00:00Z | 2026-01-05T00:00:00Z | NULL | NULL | 0 | R_E1_A_PATH_B |
+| `as:e1a-path-c` | decision | Path-C | scope:project-nova | 2026-01-20T00:00:00Z | 2026-01-20T01:00:00Z | 2026-01-20T00:00:00Z | NULL | NULL | 0 | R_E1_A_PATH_C |
+| `as:e1a-path-d` | decision | Path-D | scope:project-nova | 2026-02-10T00:00:00Z | 2026-02-10T01:00:00Z | 2026-02-10T00:00:00Z | NULL | NULL | 0 | R_E1_A_PATH_D |
+
+A is proposal-only (no authority_decision required).
+
+## Authority decisions (B/C/D)
+
+| decision_id | assertion_id | authority | outcome | force | scope | reason | effective_from | recorded_at |
+|-------------|--------------|-----------|---------|-------|-------|--------|----------------|-------------|
+| `dec:e1a-path-b` | as:e1a-path-b | principal:project-owner | approved | authority_decision | scope:project-nova | R_E1_A_PATH_B | 2026-01-05T00:00:00Z | 2026-01-05T01:00:00Z |
+| `dec:e1a-path-c` | as:e1a-path-c | principal:project-owner | approved | authority_decision | scope:project-nova | R_E1_A_PATH_C | 2026-01-20T00:00:00Z | 2026-01-20T01:00:00Z |
+| `dec:e1a-path-d` | as:e1a-path-d | principal:project-owner | approved | authority_decision | scope:project-nova | R_E1_A_PATH_D | 2026-02-10T00:00:00Z | 2026-02-10T01:00:00Z |
+
+## Revisions (assertion targets only)
+
+| revision_id | type | target_assertion_id | replacement_assertion_id | reason | effective_from | recorded_at |
+|-------------|------|---------------------|--------------------------|--------|----------------|-------------|
+| `rev:e1a-a-retract` | retracts | as:e1a-path-a | NULL | R_E1_A_CONSTRAINT | 2026-01-02T00:00:00Z | 2026-01-02T01:00:00Z |
+| `rev:e1a-b-to-c` | supersedes | as:e1a-path-b | as:e1a-path-c | R_E1_B_SUPERSEDED | 2026-01-20T00:00:00Z | 2026-01-20T01:00:00Z |
+| `rev:e1a-c-to-d` | supersedes | as:e1a-path-c | as:e1a-path-d | R_E1_C_SUPERSEDED | 2026-02-10T00:00:00Z | 2026-02-10T01:00:00Z |
+
+## Expected (exact E0 statuses)
+
+```text
+as:e1a-path-a.status=retracted
+as:e1a-path-a.force=proposal
+as:e1a-path-a.recoverable_by_identity=true
+as:e1a-path-b.status=superseded
+as:e1a-path-b.force=decision
+as:e1a-path-b.recoverable_by_identity=true
+as:e1a-path-c.status=superseded
+as:e1a-path-c.force=decision
+as:e1a-path-c.recoverable_by_identity=true
+as:e1a-path-d.status=current
+as:e1a-path-d.force=decision
 current_path=Path-D
+dec:e1a-path-d.outcome=approved
 scope=scope:project-nova
 ```
 
-### S3 candidate constraint (anti-trivial)
-
-Must include at least Path-A/B/C/D identities so success cannot be “forget history”.
+S3 must include Path-A/B/C/D assertion identities (anti-trivial omit-history).

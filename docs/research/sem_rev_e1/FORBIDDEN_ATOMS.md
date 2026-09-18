@@ -7,6 +7,10 @@
 ## Cross-cutting
 
 ```text
+assertion status not_yet_effective
+assertion status not_temporally_applicable
+TEMPORAL REASON promoted to new status primitive
+observed_at on assertion rows
 ASSERTION CURRENTNESS assigned as dec:*.status
 revision target/replacement = dec:* (must be as:*)
 asserted_at/valid_*/uncertainty/declared_loss on authority_decision rows
@@ -53,12 +57,10 @@ generic historical_recoverable_not_current as sole A/B/C status
 ```text
 dec:e1b-1 qualified before effective_from
 NO_QUALIFIED_RESULT while as:e1b-0 remains valid (B-01)
-as:e1b-0 incorrectly expired before valid_to (B-01)
-as:e1b-0 treated applicable at T==valid_to (B-02/B-04)
-dec:e1b-*.status used as assertion-currentness atom
-OR multi-valued B-04 oracle
-time_axes_conflated
-revision targeting dec:* 
+as:e1b-0.status other than superseded at/after supersession effective (B-02/B-03)
+as:e1b-bound qualified at T==valid_to (B-04)
+B-04 combined with supersession confound
+assertion status not_yet_effective / not_temporally_applicable
 ```
 
 ---
@@ -101,7 +103,10 @@ invented_authority_hierarchy_winner
 
 ```text
 F-01: silent ordinary NO_QUALIFIED_RESULT as success path for missing required dep
-F-02: optional UNKNOWN coerced to FALSE / concrete value
+F-01: fail due to any omitted dependency other than dec:e1f-auth
+F-02: NO_QUALIFIED_RESULT
+F-02: uncertainty=FALSE or fabricated uncertainty value
+F-02: decision omitted
 declared_loss=UNKNOWN
 ```
 

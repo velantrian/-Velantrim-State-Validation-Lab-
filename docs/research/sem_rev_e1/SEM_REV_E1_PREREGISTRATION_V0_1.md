@@ -99,17 +99,18 @@ This candidate authorizes **none** of that work.
 
 | Metric | Count |
 |--------|------:|
-| PHYSICAL_CORE_FIXTURES | **17** |
+| PHYSICAL_CORE_FIXTURES | **18** |
 | CORE_ROLE_OR_CHECK_ENTRIES | **20** |
 | TRUE_PAIRWISE groups | **2** (P-B-eff, P-D-scope) |
 | CONTRAST groups | **3** (CG-E-out, CG-E-sup, CG-F-dep) |
-| DUAL_CHECK_SAME_WORLD groups | **2** |
+| DUAL_CHECK_SAME_WORLD groups | **1** (C only) |
 | ROLE_ALIASES | 1 (J-02→G-04) |
 | POSITIVE_CONTROL_PHYSICAL | 5 |
 | NX_CASES | 2 (E1-E-NX, E1-G-NX) |
 
 F-01/F-02 are **CONTRAST_GROUP** (not TRUE_PAIRWISE).  
 C-01 is one physical late-arrival world; C-02 is dual-check only.  
+B-04 is an isolated physical valid_to fixture (not dual-check of B-02).  
 Full matrix: `FIXTURE_MATRIX.md`.
 
 ---
@@ -134,6 +135,9 @@ Currentness = derived projection, not stored answer flag.
 ```text
 ASSERTION CURRENTNESS ≠ AUTHORITY DECISION OUTCOME
 REVISIONS TARGET ASSERTIONS ONLY
+E0 status vocabulary only: current | not_current | retracted | superseded
+TEMPORAL REASON ≠ NEW STATUS PRIMITIVE
+observed_at belongs to EVIDENCE
 ```
 
 Where qualification depends on currentness/temporality/revision, every
