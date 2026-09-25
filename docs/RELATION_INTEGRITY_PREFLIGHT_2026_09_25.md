@@ -551,16 +551,19 @@ GO != ARCHITECTURE PROMOTION
 The bounded package now exists on this draft branch:
 
 - `docs/RELATION_INTEGRITY_TINY_FIXTURE_SCORING_2026_09_25.md`;
-- `fixtures/relation_integrity_qualification_v0_1.jsonl`.
+- `fixtures/relation_integrity_qualification_v0_2.jsonl`.
 
-Frozen first package:
+Frozen first package, revision 0.2:
 
 ```text
-F-A  temporal adjacency without causality
-F-F  source assertion without world acceptance
-F-G  multi-source repetition without causal identification
-F-H  UNKNOWN preservation
+F-A   temporal adjacency without causality
+F-F   source assertion without world acceptance
+F-G   multi-source repetition without causal identification
+F-H   UNKNOWN preservation
+F-P1  positive identity control
 ```
+
+Revision 0.2 also freezes one model-visible relation candidate per fixture and evaluator-side normalization to `SUPPORTED / HYPOTHESIS / UNKNOWN / REJECTED / UNSCORABLE`.
 
 Primary metric:
 
@@ -568,9 +571,11 @@ Primary metric:
 O1 Unsupported Relation Promotion Rate
 ```
 
-Targeted secondary metrics only:
+Targeted metrics for the first package:
 
 ```text
+O1  Unsupported Relation Promotion Rate
+O2  Explicit relation preservation [positive control]
 O5  UNKNOWN preservation
 O7  False causality
 O10 Source/world separation
@@ -586,7 +591,9 @@ PARTIAL_OVERLAP DECLARED            = TRUE
 OWNER GO TO FREEZE PACKAGE          = TRUE
 FROZEN FIXTURE                      = PRESENT
 FROZEN SCORING                      = PRESENT
-DISTINCT_RESIDUAL CONFIRMED         = PENDING PACKAGE REVIEW
+PACKAGE REVISION                   = 0.2
+PACKAGE REVIEW                      = ACCEPTED FOR EXECUTION PLANNING
+DISTINCT_RESIDUAL CONFIRMED         = BOUNDED PLANNING CONFIRMATION
 IMPLEMENTATION / EVIDENCE PLAN      = NOT CREATED
 EXPERIMENT ID                       = NONE
 RUN_AUTHORIZED                      = FALSE
@@ -596,16 +603,20 @@ ARCHITECTURE_CONSEQUENCE            = NONE
 
 ## 18. Next bounded action
 
-Review only the frozen fixture/scoring package.
+Revision 0.2 has passed bounded package re-review.
 
-Allowed review outcomes:
+Review record:
+
+- `docs/RELATION_INTEGRITY_PACKAGE_REVIEW_2026_09_25.md` -> revision required;
+- `docs/RELATION_INTEGRITY_PACKAGE_REREVIEW_2026_09_25.md` -> `ACCEPT_PACKAGE_FOR_EXECUTION_PLANNING`.
+
+The only next artifact allowed by the current gate is an execution/evidence plan.
+
+That plan must freeze the tested conditions, prompt/answer contract, system/model identity, evaluator, replicate policy, evidence artifact format, exact repo head, and invalidation/stopping conditions before any execution is authorized.
 
 ```text
-ACCEPT_PACKAGE_FOR_EXECUTION_PLANNING
-REVISE_PACKAGE_BEFORE_EXECUTION_PLANNING
-CLOSE_AS_DUPLICATE
+PACKAGE ACCEPTED
+!= EXECUTION AUTHORIZED
 ```
 
-Even `ACCEPT_PACKAGE_FOR_EXECUTION_PLANNING` does not authorize execution.
-
-Do not assign an experiment ID, create runtime code, merge PR #4, or promote any architectural claim until that later gate is explicitly passed.
+Do not assign an experiment ID, run the package, create runtime code, merge PR #4, or promote any architectural claim until a later explicit gate.
