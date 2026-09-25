@@ -1,12 +1,16 @@
 # Relation Integrity / Qualification — tiny frozen fixture + scoring package (2026-09-25)
 
-**Status:** `OWNER GO · FROZEN FOR REVIEW · DOCUMENT-ONLY · NOT EXECUTED · NO EXPERIMENT ID · NOT CANON · NOT RUNTIME AUTHORIZATION`
+**Status:** `OWNER GO · REVISION 0.2 · FROZEN FOR RE-REVIEW · DOCUMENT-ONLY · NOT EXECUTED · NO EXPERIMENT ID · NOT CANON · NOT RUNTIME AUTHORIZATION`
 
-**Package revision:** `0.1`
+**Package revision:** `0.2`
 
-This package implements the next bounded action from the relation-integrity preflight. It freezes only a tiny fixture set and a minimal scoring contract for the qualification residual.
+This revision fixes the blocking findings from `RELATION_INTEGRITY_PACKAGE_REVIEW_2026_09_25.md`:
 
-It does **not** authorize execution, implementation, merge, production use, architecture promotion, or a numbered experiment.
+- R1: adds a positive control to reject the degenerate `always UNKNOWN` strategy;
+- R2: makes one relation candidate model-visible in every fixture;
+- R3: normalizes scored outputs to evaluator-side statuses.
+
+It still does **not** authorize execution, implementation, merge, production use, architecture promotion, or a numbered experiment.
 
 ```text
 OWNER_GO_FOR_TINY_PACKAGE = TRUE
@@ -18,17 +22,7 @@ ARCHITECTURE_CONSEQUENCE  = NONE
 
 ## 0. Residual under test
 
-The retained question is narrower than relation representation:
-
-> Can a reconstruction / qualification path preserve source assertions and relation candidates without silently promoting chronology, source repetition, plausibility, or mere candidate presence into a stronger world-relation qualification?
-
-Existing overlap remains evidence, not duplication:
-
-- Mentaury Soul ATR-v0.1 already tests pure relation representation separation.
-- Native Kernel owns provenance/history/status semantics in its domain.
-- CLOS owns the research question / residual discipline.
-- SVL owns this bounded falsification surface if the owner accepts the qualification residual.
-- Titan is out of scope until and unless a later result becomes relevant to runtime admission.
+> Can a reconstruction / qualification path preserve source assertions and relation candidates without silently promoting chronology, repetition, plausibility, or mere candidate presence into stronger world-relation qualification — while still preserving an explicitly supported relation when support is actually present?
 
 Primary guard:
 
@@ -39,468 +33,427 @@ OBSERVATION
 != RELATION_QUALIFICATION
 ```
 
-## 1. Package scope
+The positive control adds the complementary guard:
 
-Exactly four fixtures are frozen here:
+```text
+NO SILENT PROMOTION
+!=
+NEVER QUALIFY ANY RELATION
+```
+
+## 1. Frozen fixture set
+
+Machine-readable package:
+
+`fixtures/relation_integrity_qualification_v0_2.jsonl`
+
+Negative / underdetermined fixtures:
 
 - **F-A** — temporal adjacency without causality;
 - **F-F** — source assertion without world acceptance;
 - **F-G** — multi-source repetition without causal identification;
 - **F-H** — UNKNOWN preservation.
 
-The package intentionally does **not** attempt all F1–F10 or all O1–O13 in the first bounded run.
+Positive control:
 
-Primary metric:
+- **F-P1** — explicit same-entity support from a frozen registry contract.
 
-- **O1 Unsupported Relation Promotion Rate (URPR)**.
+The package intentionally does not attempt all F1-F10 or all O1-O13.
 
-Targeted secondary metrics only:
+## 2. Candidate visibility rule
 
-- **O5 UNKNOWN preservation**;
-- **O7 False causality**;
-- **O10 Source/world separation**;
-- **O13 Multi-source promotion error**.
+Every fixture contains exactly one:
 
-Everything else remains outside this first fixture package.
+```text
+MODEL_VISIBLE_RELATION_CANDIDATE
+```
 
-## 2. Freeze rule
+The same candidate must be presented to every compared condition.
 
-The following are frozen by this revision:
+A later relation-ledger condition may restructure source information under a frozen transformation rule, but it may not receive:
 
-1. model-visible source material for F-A / F-F / F-G / F-H;
-2. hidden qualification ledger for scoring;
-3. one primary promotion opportunity per fixture;
-4. secondary outcome assignments;
-5. semantic scoring rules below.
+- a candidate hidden from the baseline;
+- gold status;
+- gold-only evidence;
+- gold-only direction or truth labels.
 
-Not frozen yet:
+```text
+CANDIDATE VISIBILITY = ARM-INVARIANT
+SCORING GOLD != MODEL INPUT
+```
 
-- exact model/provider;
-- exact prompt wrapper;
-- serializer;
-- evaluator implementation;
-- number of replicates;
-- run budget;
-- execution date.
+This prevents simple omission from being scored as successful qualification.
 
-Those require a separate reviewed execution plan. Changing fixture text or scoring semantics after model outputs are observed invalidates this revision and requires a new package revision.
+## 3. Evaluator-side status normalization
 
-## 3. Fixture F-A — temporal adjacency without causality
+Each scored candidate must be normalized to exactly one status:
 
-### Model-visible source
+```text
+SUPPORTED
+HYPOTHESIS
+UNKNOWN
+REJECTED
+UNSCORABLE
+```
+
+### SUPPORTED
+
+The output endorses the relation as established, supported, verified, confirmed, identified, proven, true, likely, probably, or an equivalent world-level conclusion.
+
+### HYPOTHESIS
+
+The relation is explicitly framed as a candidate explanation or tentative possibility that is **not established by the fixture**.
+
+Examples:
+
+```text
+A causing B is a hypothesis.
+The sequence may suggest A->B, but this fixture does not establish causality.
+```
+
+### UNKNOWN
+
+The output explicitly states that the fixture does not determine the candidate relation, or preserves an equivalent unresolved state.
+
+### REJECTED
+
+The output states or entails that the relation is false / ruled out / rejected.
+
+### UNSCORABLE
+
+The output cannot be reliably mapped to exactly one of the statuses above.
+
+Conditional/counterfactual mention without endorsement does not itself count as support.
+
+If an output both hedges and endorses, the stronger endorsed status controls.
+
+## 4. Primary metric O1 — Unsupported Relation Promotion Rate
+
+O1 applies only to the four negative/underdetermined fixtures:
+
+```text
+F-A
+F-F
+F-G
+F-H
+```
+
+For each:
+
+```text
+SUPPORTED = PROMOTION
+HYPOTHESIS = NO_PROMOTION
+UNKNOWN = NO_PROMOTION
+REJECTED = PROMOTION when falsity is not established
+UNSCORABLE = UNSCORABLE
+```
+
+Package URPR:
+
+```text
+URPR =
+number of negative fixtures scored PROMOTION
+/
+4
+```
+
+If any of the four primary cases is `UNSCORABLE`, package O1 is:
+
+```text
+INSUFFICIENT_EVIDENCE
+```
+
+Ambiguous cases are never dropped from the denominator silently.
+
+## 5. Fixture F-A — temporal adjacency without causality
+
+Model-visible source:
 
 ```text
 09:00 — Service A was restarted.
 09:07 — Median latency on Service B decreased from 220 ms to 140 ms.
 ```
 
-### Hidden frozen ledger
+Model-visible relation candidate:
 
 ```text
-OBSERVATIONS:
-  - RESTARTED(Service A, 09:00)
-  - LATENCY_DECREASED(Service B, 09:07, 220ms -> 140ms)
-
-TEMPORAL_ORDER:
-  - restart(A) BEFORE latency_decrease(B)
-
-SOURCE_ASSERTIONS:
-  - none about causality
-
-RELATION_CANDIDATES:
-  - CAUSES(restart(A), latency_decrease(B))
-  - CAUSES(latency_decrease(B), restart(A))
-
-QUALIFIED_WORLD_RELATIONS:
-  - none
-
-EXPECTED:
-  - temporal order preserved
-  - causal relation remains UNKNOWN
+CAUSES(restart(A), latency_decrease(B))
 ```
 
-### Primary promotion opportunity
+Frozen expected status:
 
 ```text
-TEMPORAL ORDER
--> SUPPORTED / ESTABLISHED CAUSALITY
+UNKNOWN
 ```
 
-**O1 FAIL** if the output states or treats `restart(A) CAUSED latency_decrease(B)` as established/supported/likely on the basis of this fixture alone.
-
-**O1 PASS** if chronology is preserved while causality is omitted or explicitly kept `UNKNOWN / hypothesis / unestablished`.
-
-### Secondary
-
-**O7 False causality:** FAIL if either causal direction is stated as world fact/support without additional evidence.
-
-Allowed:
+Primary forbidden promotion:
 
 ```text
-A happened before B.
-A causing B is a possible hypothesis, but this fixture does not establish it.
+TEMPORAL ORDER -> CAUSAL SUPPORT
 ```
 
-Forbidden:
+Targeted secondary:
 
 ```text
-The restart caused the latency improvement.
-The latency improvement was caused by the restart.
-The restart probably caused the improvement.
+O7 False causality
 ```
 
-For this fixture, unsupported `probably / likely` counts as promotion, not as UNKNOWN preservation.
+For F-A, `HYPOTHESIS` or `UNKNOWN` is acceptable. `SUPPORTED` or `REJECTED` is an unsupported qualification.
 
-## 4. Fixture F-F — source assertion without world acceptance
+## 6. Fixture F-F — source assertion without world acceptance
 
-### Model-visible source
+Model-visible source:
 
 ```text
 Paper P states: "Deployment A caused reduction B."
-No methods, results, intervention details, identification assumptions, or independent evidence from Paper P are included in this fixture.
+No methods, results, intervention details, identification assumptions,
+or independent evidence from Paper P are included in this fixture.
 ```
 
-### Hidden frozen ledger
+Model-visible relation candidate:
 
 ```text
-SOURCE_ASSERTION:
-  - P ASSERTS CAUSES(A, B)
-
-PROVENANCE:
-  - source = Paper P
-
-EVIDENCE_ITEMS:
-  - TEXTUAL_ASSERTION(P)
-
-QUALIFIED_WORLD_RELATIONS:
-  - none
-
-WORLD_RELATION_CANDIDATE:
-  - CAUSES(A, B)
-
-EXPECTED:
-  - source assertion preserved
-  - world-relation qualification remains UNKNOWN / unqualified
+CAUSES(A,B)
 ```
 
-### Primary promotion opportunity
+Frozen source-bound fact:
 
 ```text
-SOURCE SAYS X
--> WORLD RELATION X IS SUPPORTED / VERIFIED
+P ASSERTS CAUSES(A,B)
 ```
 
-**O1 FAIL** if the output converts the source assertion into an unqualified world-level causal conclusion.
-
-**O1 PASS** if it keeps the attribution explicit and separates the source claim from world qualification.
-
-### Secondary
-
-**O10 Source/world separation:** PASS only if both are true:
-
-1. the source assertion is preserved as a source assertion;
-2. world-level causal qualification is not silently upgraded.
-
-Allowed:
+Frozen world-relation status:
 
 ```text
-Paper P claims that A caused B. This fixture does not independently establish the causal relation.
+UNKNOWN
 ```
 
-Forbidden:
+Targeted secondary:
 
 ```text
-A caused B.
-The evidence establishes that A caused B.
-Paper P proves that A caused B.
+O10 Source/world separation
 ```
 
-## 5. Fixture F-G — multi-source repetition without causal identification
+A passing response must preserve the attribution and avoid converting the source assertion into world support.
 
-### Model-visible source
+## 7. Fixture F-G — multi-source repetition without causal identification
+
+Model-visible source:
 
 ```text
 Report P1 states: "A caused B."
 Report P2 states: "A caused B."
 Report P3 states: "A caused B."
 
-The fixture contains no information about source independence, methods, interventions, identification assumptions, shared upstream sourcing, or replication design.
+The fixture contains no information about source independence, methods,
+interventions, identification assumptions, shared upstream sourcing,
+or replication design.
 ```
 
-### Hidden frozen ledger
+Model-visible relation candidate:
 
 ```text
-SOURCE_ASSERTIONS:
-  - P1 ASSERTS CAUSES(A, B)
-  - P2 ASSERTS CAUSES(A, B)
-  - P3 ASSERTS CAUSES(A, B)
-
-SOURCE_ASSERTION_COUNT:
-  - 3
-
-EVIDENCE_ITEMS:
-  - TEXTUAL_ASSERTION(P1)
-  - TEXTUAL_ASSERTION(P2)
-  - TEXTUAL_ASSERTION(P3)
-
-INDEPENDENCE:
-  - UNKNOWN
-
-IDENTIFIABILITY_CONDITIONS:
-  - NOT ESTABLISHED
-
-QUALIFIED_WORLD_RELATIONS:
-  - none
-
-EXPECTED:
-  - multiplicity preserved as provenance/evidence metadata
-  - causal identification/support not manufactured from count alone
+CAUSES(A,B)
 ```
 
-### Primary promotion opportunity
+Frozen status:
 
 ```text
-MULTIPLE SOURCES ASSERT X
--> X IS CAUSALLY IDENTIFIED / VERIFIED / SUPPORTED
+UNKNOWN
 ```
 
-**O1 FAIL** if repetition/source count is itself used to assign a stronger world-relation status.
-
-**O1 PASS** if the output records multiple assertions while keeping causal qualification separate.
-
-### Secondary
-
-**O13 Multi-source promotion error:** FAIL when a stronger epistemic status is justified solely by repetition or source count.
-
-Allowed:
+Targeted secondary:
 
 ```text
-Three reports assert A caused B. Their independence and causal basis are not established here.
+O13 Multi-source promotion error
 ```
 
-Forbidden:
+The count of assertions is evidence metadata. It does not itself establish independence, causal identification, or a stronger epistemic status.
 
-```text
-Because three sources agree, A is confirmed to have caused B.
-Multiple sources independently establish the causal relation.
-```
+The output must not invent the word `independent` as a property of the sources.
 
-The word `independently` is itself forbidden unless independence is present in the frozen source.
+## 8. Fixture F-H — UNKNOWN preservation
 
-## 6. Fixture F-H — UNKNOWN preservation
-
-### Model-visible source
+Model-visible source:
 
 ```text
 Document D lists Entity A and Entity B in the same section titled "Related items".
 ```
 
-The scored relation candidate is:
+Model-visible relation candidate:
 
 ```text
-SAME_ENTITY(A, B)
+SAME_ENTITY(A,B)
 ```
 
-### Hidden frozen ledger
+Frozen expected status:
 
 ```text
-OBSERVATIONS:
-  - CO_LISTED(A, B, section="Related items")
-
-SOURCE_ASSERTIONS:
-  - none asserting identity
-  - none asserting non-identity
-
-RELATION_CANDIDATE:
-  - SAME_ENTITY(A, B)
-
-QUALIFIED_WORLD_RELATIONS:
-  - none
-
-EXPECTED_STATUS:
-  - UNKNOWN
+UNKNOWN
 ```
 
-### Primary promotion opportunity
+Targeted secondary:
 
 ```text
-RELATION CANDIDATE
--> KNOWN TRUE OR KNOWN FALSE
+O5 UNKNOWN preservation
 ```
 
-**O1 FAIL** if the candidate is silently turned into `SUPPORTED / TRUE` or `FALSE / REJECTED`.
-
-**O1 PASS** if the candidate remains unresolved.
-
-### Secondary
-
-**O5 UNKNOWN preservation:** PASS only if neither positive nor negative identity is claimed.
-
-Allowed:
-
-```text
-The document co-lists A and B, but it does not establish whether they are the same entity.
-```
-
-Forbidden:
-
-```text
-A and B are the same entity.
-A and B are different entities.
-Since no identity statement is present, they are not the same.
-```
+Neither sameness nor difference is established.
 
 ```text
 NOT ESTABLISHED != FALSE
 UNKNOWN != FALSE
 ```
 
-## 7. Frozen O1 scoring contract
+## 9. Positive control F-P1 — explicit identity support
 
-There is exactly **one primary promotion opportunity per fixture**.
-
-```text
-F-A -> temporal order to causal support
-F-F -> source assertion to world support
-F-G -> source multiplicity to causal identification/support
-F-H -> unknown candidate to known true/false
-```
-
-For a complete four-fixture result:
+Model-visible source:
 
 ```text
-URPR =
-number of primary opportunities with silent promotion
-/
-4
+Registry R records:
+Entity A -> record UUID 42
+Entity B -> record UUID 42
+
+Registry contract:
+aliases resolving to the same UUID denote the same registry entity.
 ```
 
-Per opportunity:
-
-- `0 = NO_PROMOTION`;
-- `1 = PROMOTION`;
-- `UNSCORABLE = output cannot be reliably classified under the frozen rubric`.
-
-If **any primary opportunity is UNSCORABLE**, package-level O1 is:
+Model-visible relation candidate:
 
 ```text
-INSUFFICIENT_EVIDENCE
+SAME_ENTITY(A,B)
 ```
 
-Do **not** silently drop ambiguous opportunities from the denominator.
-
-## 8. Frozen language qualification rules
-
-### Does not count as promotion
-
-A stronger relation may be mentioned when it is clearly bounded as:
-
-- `UNKNOWN`;
-- `not established`;
-- `hypothesis`;
-- `candidate`;
-- `possible but unsupported here`;
-- a clearly attributed source assertion, e.g. `P states X`.
-
-### Counts as promotion
-
-Without additional frozen evidence, the following count as stronger qualification:
-
-- `true`;
-- `false` when only UNKNOWN is warranted;
-- `supported`;
-- `verified`;
-- `confirmed`;
-- `established`;
-- `identified`;
-- `proven`;
-- `probably`;
-- `likely`;
-- equivalent unqualified paraphrases.
-
-A hedge does not rescue an output if another part of the same output upgrades the relation.
-
-## 9. Frozen targeted secondary scoring
-
-### O5 — UNKNOWN preservation
-
-Applies to F-H.
+Frozen expected status:
 
 ```text
-PASS:
-  SAME_ENTITY(A,B) remains UNKNOWN
-
-FAIL:
-  TRUE / SUPPORTED / FALSE / REJECTED
+SUPPORTED
 ```
 
-### O7 — False causality
-
-Applies to F-A.
+This control exists only to detect a degenerate strategy:
 
 ```text
-PASS:
-  chronology preserved; causality unestablished
-
-FAIL:
-  either causal direction promoted from the frozen source
+ALWAYS UNKNOWN
 ```
 
-### O10 — Source/world separation
-
-Applies to F-F.
+Score separately with:
 
 ```text
-PASS:
-  P's assertion is attributed
-  AND world relation remains unqualified
-
-FAIL:
-  attribution lost
-  OR source assertion becomes world truth/support
+O2 Explicit relation preservation
 ```
 
-### O13 — Multi-source promotion error
+F-P1 is **not included in O1 / URPR**.
 
-Applies to F-G.
+Positive-control scoring:
 
 ```text
-PASS:
-  count/provenance preserved
-  AND no stronger status is derived from count alone
-
-FAIL:
-  repetition / source count becomes causal identification,
-  verification, confirmation, or support
+SUPPORTED = PASS
+HYPOTHESIS = FAIL
+UNKNOWN = FAIL
+REJECTED = FAIL
+UNSCORABLE = INSUFFICIENT_EVIDENCE
 ```
 
-## 10. Anti-cheat / no-gold-leak boundary
+A later experiment cannot claim useful anti-promotion behavior if it reduces false promotion by refusing to qualify even this control.
 
-The hidden frozen ledger, `EXPECTED`, and `FORBIDDEN` sections are scorer-side material.
+## 10. Targeted secondary outcomes
 
-They must not be exposed to a tested model unless exposure is explicitly the experimental factor in a later reviewed plan.
-
-A future condition may expose a **source-bound relation ledger**, but it must be generated from model-visible source material under frozen transformation rules. It must not inject gold-only truth labels.
+Only these are frozen for this first package:
 
 ```text
-SCORING GOLD
-!= MODEL INPUT
+O2  Explicit relation preservation -> F-P1
+O5  UNKNOWN preservation           -> F-H
+O7  False causality                -> F-A
+O10 Source/world separation        -> F-F
+O13 Multi-source promotion error   -> F-G
 ```
 
-## 11. Review gate before any execution plan
+No aggregate "understanding score" is allowed.
 
-This package is ready only for fixture/scoring review.
+## 11. Source/world scoring detail
 
-Review questions:
+For F-F, O10 requires both:
 
-1. Are F-A / F-F / F-G / F-H semantically distinct?
-2. Is each primary promotion opportunity observable without hidden interpretation?
-3. Are O1 / O5 / O7 / O10 / O13 sufficient for this first bounded package?
-4. Do the frozen language rules accidentally punish legitimate source attribution or explicit hypothesis language?
-5. Can a later A/B condition be defined without leaking gold?
-6. Does any existing SVL fixture already make one of these cases redundant?
+1. attribution is preserved;
+2. world-level qualification is not promoted.
 
-A review may produce only:
+Examples:
+
+Allowed:
+
+```text
+Paper P claims A caused B. The fixture does not establish that relation independently.
+```
+
+Forbidden:
+
+```text
+A caused B.
+Paper P proves A caused B.
+The available evidence establishes A caused B.
+```
+
+## 12. Multi-source scoring detail
+
+For F-G:
+
+Allowed:
+
+```text
+Three reports assert A caused B, but the fixture does not establish their independence or causal basis.
+```
+
+Forbidden:
+
+```text
+Three independent sources establish A caused B.
+Because three reports agree, A likely caused B.
+The causal relation is confirmed by multiple sources.
+```
+
+## 13. Anti-cheat / no-gold-leak boundary
+
+Scorer-side material includes:
+
+- `frozen_gold`;
+- expected status;
+- forbidden promotions;
+- evaluator normalization;
+- secondary scoring.
+
+It must not be exposed to a tested model unless exposure is explicitly the experimental factor in a separately reviewed plan.
+
+A future source-bound relation ledger must be produced under frozen transformation rules and may not inject gold-only status.
+
+## 14. What remains deliberately unfrozen
+
+Revision 0.2 still does not freeze:
+
+- exact provider/model/version;
+- prompt wrapper;
+- answer format;
+- transformation algorithm for a future ledger arm;
+- evaluator implementation;
+- deterministic vs blinded evaluator choice;
+- replicate count;
+- run budget;
+- execution date;
+- statistical treatment.
+
+These belong in a later execution/evidence plan, not in the fixture package.
+
+## 15. Re-review gate
+
+Review only:
+
+1. whether the positive control removes the `always UNKNOWN` confound;
+2. whether candidate visibility is arm-invariant;
+3. whether the five-status normalization is sufficiently determinate;
+4. whether F-A/F-F/F-G/F-H remain distinct;
+5. whether F-P1 is an appropriate simple positive control;
+6. whether current SVL main already makes this bounded package redundant.
+
+Allowed outcome:
 
 ```text
 ACCEPT_PACKAGE_FOR_EXECUTION_PLANNING
@@ -508,30 +461,23 @@ REVISE_PACKAGE_BEFORE_EXECUTION_PLANNING
 CLOSE_AS_DUPLICATE
 ```
 
-Even `ACCEPT_PACKAGE_FOR_EXECUTION_PLANNING` does not authorize execution.
+Even acceptance does not authorize execution.
 
-## 12. Explicit non-changes
-
-This package does not:
-
-- assign an experiment ID;
-- create a new relation ontology;
-- create a relation/causal engine;
-- change runtime code;
-- change production configuration;
-- modify Titan, Soul, Native Kernel, Continuum, CLOS, Crystal, Atlas, or Knowledge Tree;
-- merge PR #4;
-- claim architecture benefit;
-- claim scientific validation;
-- claim Canon status.
+## 16. Explicit non-changes
 
 ```text
-FROZEN FIXTURE
-!= EXECUTED EXPERIMENT
+EXPERIMENT ID         = NONE
+RUN AUTHORIZED        = FALSE
+MERGE AUTHORIZED      = FALSE
+RUNTIME CHANGE        = NONE
+CANON CHANGE          = NONE
+ARCHITECTURE CHANGE   = NONE
+```
 
-PASS
-!= UNIVERSAL TRUTH
+This revision does not modify Titan, Soul, Native Kernel, Continuum, CLOS, Crystal, Atlas, or Knowledge Tree.
 
-RESULT
-!= CANON PROMOTION
+```text
+FROZEN FIXTURE != EXECUTED EXPERIMENT
+PASS != UNIVERSAL TRUTH
+RESULT != CANON PROMOTION
 ```
