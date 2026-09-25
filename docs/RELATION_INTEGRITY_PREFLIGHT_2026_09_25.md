@@ -594,7 +594,7 @@ FROZEN SCORING                      = PRESENT
 PACKAGE REVISION                   = 0.2
 PACKAGE REVIEW                      = ACCEPTED FOR EXECUTION PLANNING
 DISTINCT_RESIDUAL CONFIRMED         = BOUNDED PLANNING CONFIRMATION
-IMPLEMENTATION / EVIDENCE PLAN      = NOT CREATED
+IMPLEMENTATION / EVIDENCE PLAN      = DRAFT CREATED
 EXPERIMENT ID                       = NONE
 RUN_AUTHORIZED                      = FALSE
 MERGE_AUTHORIZED                    = FALSE
@@ -610,13 +610,20 @@ Review record:
 - `docs/RELATION_INTEGRITY_PACKAGE_REVIEW_2026_09_25.md` -> revision required;
 - `docs/RELATION_INTEGRITY_PACKAGE_REREVIEW_2026_09_25.md` -> `ACCEPT_PACKAGE_FOR_EXECUTION_PLANNING`.
 
-The only next artifact allowed by the current gate is an execution/evidence plan.
+The execution/evidence plan now exists:
 
-That plan must freeze the tested conditions, prompt/answer contract, system/model identity, evaluator, replicate policy, evidence artifact format, exact repo head, and invalidation/stopping conditions before any execution is authorized.
+- `docs/RELATION_INTEGRITY_EXECUTION_EVIDENCE_PLAN_2026_09_25.md`.
+
+It freezes the intended A/B comparison shape, structured answer contract, deterministic primary scoring, 3 x 5 x 2 planned output matrix, evidence manifest fields, anti-gold-leak rule, and stopping/invalidation conditions.
+
+The exact API/catalog model identifier, provider configuration, frozen prompt hash, ledger-transform implementation/version, scorer implementation/version, evidence output location, and exact run head still require a later explicit owner gate before any execution.
 
 ```text
 PACKAGE ACCEPTED
 != EXECUTION AUTHORIZED
+
+PLAN CREATED
+!= RUN AUTHORIZED
 ```
 
-Do not assign an experiment ID, run the package, create runtime code, merge PR #4, or promote any architectural claim until a later explicit gate.
+Do not assign an experiment ID, run the package, create runtime code, merge PR #4, or promote any architectural claim until that later gate.
