@@ -536,12 +536,76 @@ Downgrade or stop this line if:
 - evaluator agreement is too weak to identify unsupported relation promotion;
 - the effect disappears under matched source/prompt controls.
 
-## 17. Next bounded action
+## 17. Owner decision and current bounded state
 
-Human/owner review of the refined **PARTIAL_OVERLAP** boundary and the residual qualification question.
+Owner decision on 2026-09-25:
 
-If accepted, the next artifact is only a tiny frozen fixture + frozen scoring package focused on the qualification residual; reuse existing Mentaury Soul representation tests as overlap evidence rather than re-labelling them as new SVL evidence.
+```text
+GO = FREEZE TINY FIXTURE + SCORING PACKAGE
+GO != EXECUTION AUTHORIZATION
+GO != MERGE AUTHORIZATION
+GO != EXPERIMENT ID
+GO != ARCHITECTURE PROMOTION
+```
 
-No numbered experiment is warranted until that bounded package is reviewed.
+The bounded package now exists on this draft branch:
 
-If rejected or duplicate, record the reason and close without creating a new experiment.
+- `docs/RELATION_INTEGRITY_TINY_FIXTURE_SCORING_2026_09_25.md`;
+- `fixtures/relation_integrity_qualification_v0_1.jsonl`.
+
+Frozen first package:
+
+```text
+F-A  temporal adjacency without causality
+F-F  source assertion without world acceptance
+F-G  multi-source repetition without causal identification
+F-H  UNKNOWN preservation
+```
+
+Primary metric:
+
+```text
+O1 Unsupported Relation Promotion Rate
+```
+
+Targeted secondary metrics only:
+
+```text
+O5  UNKNOWN preservation
+O7  False causality
+O10 Source/world separation
+O13 Multi-source promotion error
+```
+
+The package deliberately does not pull all F1-F10 or O1-O13 into the first bounded test.
+
+Current gate state:
+
+```text
+PARTIAL_OVERLAP DECLARED            = TRUE
+OWNER GO TO FREEZE PACKAGE          = TRUE
+FROZEN FIXTURE                      = PRESENT
+FROZEN SCORING                      = PRESENT
+DISTINCT_RESIDUAL CONFIRMED         = PENDING PACKAGE REVIEW
+IMPLEMENTATION / EVIDENCE PLAN      = NOT CREATED
+EXPERIMENT ID                       = NONE
+RUN_AUTHORIZED                      = FALSE
+MERGE_AUTHORIZED                    = FALSE
+ARCHITECTURE_CONSEQUENCE            = NONE
+```
+
+## 18. Next bounded action
+
+Review only the frozen fixture/scoring package.
+
+Allowed review outcomes:
+
+```text
+ACCEPT_PACKAGE_FOR_EXECUTION_PLANNING
+REVISE_PACKAGE_BEFORE_EXECUTION_PLANNING
+CLOSE_AS_DUPLICATE
+```
+
+Even `ACCEPT_PACKAGE_FOR_EXECUTION_PLANNING` does not authorize execution.
+
+Do not assign an experiment ID, create runtime code, merge PR #4, or promote any architectural claim until that later gate is explicitly passed.
