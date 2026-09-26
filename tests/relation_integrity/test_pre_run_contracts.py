@@ -37,6 +37,22 @@ class Contracts(unittest.TestCase):
         self.assertEqual(canonical_json(build_source_bound_ledger(public_fixture_projection(a),SCHEMA)),
                          canonical_json(build_source_bound_ledger(public_fixture_projection(b),SCHEMA)))
 
+    def test_scorer_mutation_invariance(self):
+        p=public_fixture_projection(BY_ID["F-G"])
+        scorer_a={"O1":{"SUPPORTED":"PROMOTION"}}
+        scorer_b={"O1":{"SUPPORTED":"NO_PROMOTION"},"invented_gold":"bait"}
+        out_a=canonical_json(build_source_bound_ledger(p,SCHEMA))
+        out_b=canonical_json(build_source_bound_ledger(p,SCHEMA))
+        self.assertNotEqual(scorer_a,scorer_b)
+        self.assertEqual(out_a,out_b)
+
+    def test_schema_conformance(self):
+        p=public_fixture_projection(BY_ID["F-G"])
+        ledger=build_source_bound_ledger(p,SCHEMA)
+        legal={x["field_id"] for x in SCHEMA["fields"]}
+        self.assertTrue(all(x["field_id"] in legal and x["status"]=="NOT_PROVIDED_BY_SOURCE"
+                            for x in ledger["MISSING_SOURCE_FIELDS"]))
+
     def test_deterministic(self):
         p=public_fixture_projection(BY_ID["F-G"])
         self.assertEqual(canonical_json(build_source_bound_ledger(p,SCHEMA)),
