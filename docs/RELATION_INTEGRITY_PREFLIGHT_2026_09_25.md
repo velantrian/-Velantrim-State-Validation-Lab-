@@ -627,3 +627,51 @@ PLAN CREATED
 ```
 
 Do not assign an experiment ID, run the package, create runtime code, merge PR #4, or promote any architectural claim until that later gate.
+
+
+## 2026-09-26 bounded pre-run reconciliation addendum
+
+Owner instruction in the working session authorized implementation of the bounded pre-run repairs only. It did **not** authorize experiment execution, merge, Canon/runtime change, or architecture promotion.
+
+The prior frozen package revision 0.2 remains preserved as a historical artifact. A separate revision 0.3 candidate now exists for bounded re-review.
+
+### Accepted repair classifications for implementation
+
+```text
+F-P1 registry/world scope
+-> PACKAGE_REVISION
+
+qualification vs brief_basis semantic consistency
+-> EXECUTION_PLAN_REVISION
+
+Condition B MISSING_SOURCE_FIELDS gold/scorer blindness
+-> EXECUTION_PLAN_REVISION
+```
+
+### Added bounded artifacts
+
+```text
+fixtures/relation_integrity_qualification_v0_3.jsonl
+docs/RELATION_INTEGRITY_TINY_FIXTURE_SCORING_2026_09_26.md
+tools/relation_integrity/pre_run_contracts.py
+tools/relation_integrity/source_field_schema_v1.json
+tests/relation_integrity/test_pre_run_contracts.py
+```
+
+F-P1 in revision 0.3 is Registry-R scoped and no longer places unqualified `SAME_ENTITY(A,B)` in `qualified_world_relations`.
+
+SC-1 uses a structured `basis_world_status` contract rather than a scoring-bearing free-text `brief_basis`. The normalizer is versioned as `sc1-structured-basis-v1`.
+
+Condition B uses only the allowlisted public fixture projection and `SourceFieldSchema v1`; the transform is versioned as `source-bound-ledger-v1`. Gold/scorer mutation invariance is part of the acceptance suite.
+
+This addendum records implementation state only. A separate bounded re-review is still required.
+
+```text
+PACKAGE 0.2              = HISTORICAL / UNCHANGED
+PACKAGE 0.3 CANDIDATE    = CREATED
+BOUNDED RE-REVIEW        = REQUIRED
+RUN_AUTHORIZED           = FALSE
+EXPERIMENT_ID            = NONE
+MERGE_AUTHORIZED         = FALSE
+ARCHITECTURE_CONSEQUENCE = NONE
+```
