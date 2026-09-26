@@ -2,7 +2,7 @@
 
 **Status:** `REVISED DRAFT PLAN · PACKAGE 0.3 CANDIDATE FROZEN FOR BOUNDED RE-REVIEW · NOT EXECUTED · NO EXPERIMENT ID · RUN NOT AUTHORIZED`
 
-This plan is the only artifact authorized by the package re-review. It does not authorize execution.
+This revised plan records the bounded repairs authorized by the owner in the working session after the 2026-09-26 pre-run reconciliation. It does not authorize execution.
 
 ## 0. Boundaries
 
@@ -79,7 +79,7 @@ B != GOLD INJECTION
 
 Use only:
 
-`fixtures/relation_integrity_qualification_v0_2.jsonl`
+`fixtures/relation_integrity_qualification_v0_3.jsonl`
 
 Fixtures:
 
