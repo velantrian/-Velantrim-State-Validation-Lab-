@@ -28,7 +28,7 @@ def public_fixture_projection(record):
     }
 
 def _relation_type(candidate):
-    m = re.match(r"^([A-Z_]+)\\(", str(candidate).strip())
+    m = re.match(r"^([A-Z_]+)\(", str(candidate).strip())
     return m.group(1) if m else "UNKNOWN"
 
 def build_source_bound_ledger(public_fixture, schema):
