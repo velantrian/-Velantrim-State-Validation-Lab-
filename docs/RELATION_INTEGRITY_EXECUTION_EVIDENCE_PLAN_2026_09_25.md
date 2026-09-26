@@ -1,13 +1,13 @@
 # Relation Integrity / Qualification — execution & evidence plan (revised 2026-09-26)
 
-**Status:** `REVISED DRAFT PLAN · PACKAGE 0.3 CANDIDATE FROZEN FOR BOUNDED RE-REVIEW · NOT EXECUTED · NO EXPERIMENT ID · RUN NOT AUTHORIZED`
+**Status:** `REVISED DRAFT PLAN · PACKAGE 0.3 FROZEN AFTER BOUNDED RE-REVIEW · NOT EXECUTED · NO EXPERIMENT ID · RUN NOT AUTHORIZED`
 
 This revised plan records the bounded repairs authorized by the owner in the working session after the 2026-09-26 pre-run reconciliation. It does not authorize execution.
 
 ## 0. Boundaries
 
 ```text
-PACKAGE REVISION        = 0.3 CANDIDATE · RE-REVIEW REQUIRED
+PACKAGE REVISION        = 0.3 · BOUNDED RE-REVIEW PASS
 EXPERIMENT ID           = NONE
 RUN AUTHORIZED          = FALSE
 MERGE AUTHORIZED        = FALSE
