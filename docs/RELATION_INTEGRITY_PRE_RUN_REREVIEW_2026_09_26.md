@@ -1,13 +1,13 @@
 # Relation Integrity — bounded pre-run re-review (2026-09-26)
 
-**Reviewed implementation/evidence head:** `b52d6cbc92be45dccbb21349ccf20408519b747e`
+**Reviewed implementation/evidence content through:** `f4ab545a496940b02b7f819efe5081907ce78c5e`
 
 **Review scope:** only the three reconciled pre-run blockers:
 1. F-P1 registry/world scope;
 2. SC-1 qualification/basis consistency;
 3. Condition B `MISSING_SOURCE_FIELDS` gold/scorer blindness.
 
-**Status:** `BOUNDED RE-REVIEW PASS · READY FOR LATER OWNER GO/NO-GO CONSIDERATION · NOT A RUN AUTHORIZATION`
+**Status:** `BOUNDED RE-REVIEW PASS · PACKAGE 0.3 FROZEN AFTER RE-REVIEW · READY FOR LATER OWNER GO/NO-GO CONSIDERATION · NOT A RUN AUTHORIZATION`
 
 ## 1. F-P1 package revision
 
