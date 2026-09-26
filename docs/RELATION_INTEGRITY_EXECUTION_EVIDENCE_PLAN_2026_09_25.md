@@ -1,13 +1,13 @@
-# Relation Integrity / Qualification — execution & evidence plan (2026-09-25)
+# Relation Integrity / Qualification — execution & evidence plan (revised 2026-09-26)
 
-**Status:** `DRAFT PLAN · PACKAGE 0.2 ACCEPTED · NOT EXECUTED · NO EXPERIMENT ID · RUN NOT AUTHORIZED`
+**Status:** `REVISED DRAFT PLAN · PACKAGE 0.3 CANDIDATE FROZEN FOR BOUNDED RE-REVIEW · NOT EXECUTED · NO EXPERIMENT ID · RUN NOT AUTHORIZED`
 
 This plan is the only artifact authorized by the package re-review. It does not authorize execution.
 
 ## 0. Boundaries
 
 ```text
-PACKAGE REVISION        = 0.2
+PACKAGE REVISION        = 0.3 CANDIDATE · RE-REVIEW REQUIRED
 EXPERIMENT ID           = NONE
 RUN AUTHORIZED          = FALSE
 MERGE AUTHORIZED        = FALSE
@@ -93,7 +93,7 @@ F-P1
 
 No extra examples may be added after outputs are observed.
 
-## 3. Answer contract
+## 3. Answer contract — SC-1 structured consistency contract
 
 Each response must return exactly one JSON object:
 
@@ -102,21 +102,58 @@ Each response must return exactly one JSON object:
   "fixture_id": "F-A",
   "relation_candidate": "CAUSES(...)",
   "qualification": "SUPPORTED | HYPOTHESIS | UNKNOWN | REJECTED",
+  "basis_world_status": "SUPPORTED | HYPOTHESIS | UNKNOWN | REJECTED",
+  "basis_rationale_codes": [
+    "SOURCE_ASSERTION_ONLY | TEMPORAL_ONLY | MISSING_METHOD | MISSING_INDEPENDENCE | MISSING_IDENTIFICATION | EXPLICIT_SCOPED_IDENTITY | OTHER_DECLARED"
+  ],
   "source_claims_preserved": ["source identifiers or explicit source-bound claims"],
-  "independence_status": "PROVIDED | NOT_PROVIDED | NOT_APPLICABLE",
-  "brief_basis": "max 80 words"
+  "independence_status": "PROVIDED | NOT_PROVIDED | NOT_APPLICABLE"
 }
 ```
+
+There is no scoring-bearing free-text `brief_basis` in this run contract. The purpose is to make response consistency mechanically reproducible without an unfrozen semantic judge.
 
 Rules:
 
 - choose exactly one `qualification`;
+- choose exactly one `basis_world_status`;
+- `basis_rationale_codes` uses only the frozen closed vocabulary above;
 - do not invent source independence;
 - source attribution must remain source-bound;
-- `brief_basis` may mention alternatives but must not silently change the selected qualification;
-- malformed/non-JSON output is `UNSCORABLE`.
+- malformed/non-JSON output is `UNSCORABLE`;
+- scoring uses only `normalized_qualification`, never the raw field alone.
 
-The tested model is **not** shown the evaluator normalization or frozen gold.
+### SC-1 normalization
+
+Frozen implementation/version:
+
+```text
+tools/relation_integrity/pre_run_contracts.py
+SC1_VERSION = sc1-structured-basis-v1
+```
+
+The response retains both raw status fields. The normalizer records:
+
+```text
+declared_qualification
+basis_world_status
+consistency_status
+normalization_rule_version
+normalized_qualification
+```
+
+Rules:
+
+1. same declared/basis status -> `CONSISTENT`, keep that status;
+2. `UNKNOWN` vs `HYPOTHESIS` -> normalize to `HYPOTHESIS`;
+3. any determinate `SUPPORTED` endorsement against a weaker field -> normalize to `SUPPORTED`;
+4. any determinate `REJECTED` endorsement against `UNKNOWN` or `HYPOTHESIS` -> normalize to `REJECTED`;
+5. direct `SUPPORTED` vs `REJECTED` opposition -> `SEMANTIC_CONFLICT_UNRESOLVED` -> `UNSCORABLE`;
+6. invalid/missing status -> `UNSCORABLE`.
+
+This operationalizes the existing stronger-endorsement rule without changing frozen negative-fixture gold.
+
+The tested model is **not** shown frozen gold or evaluator outcome mappings.
 
 ## 4. Prompt contract
 
@@ -208,13 +245,15 @@ replicate O1 = INSUFFICIENT_EVIDENCE
 
 ### O2 — positive control
 
-Applies to F-P1.
+Applies to F-P1, whose v0.3 candidate is explicitly Registry-R scoped.
 
 ```text
 SUPPORTED  -> PASS
 other      -> FAIL
-malformed  -> INSUFFICIENT_EVIDENCE
+malformed/UNSCORABLE -> INSUFFICIENT_EVIDENCE
 ```
+
+O2 preserves only the scoped relation `SAME_REGISTRY_ENTITY(A,B,registry=R)`. It does not establish unscoped/world identity.
 
 An arm cannot be interpreted as useful anti-promotion if O1 improves only because F-P1 loses supported qualification.
 
@@ -317,6 +356,10 @@ raw_input_hash
 raw_response
 parsed_response
 parse_status
+declared_qualification
+basis_world_status
+consistency_status
+normalization_rule_version
 normalized_qualification
 O1
 targeted_secondary_outcome
@@ -325,28 +368,70 @@ limitations
 
 Evidence must retain raw model outputs. Parsed results do not replace raw evidence.
 
-## 11. Ledger transformation rule
+## 11. Ledger transformation rule — source-only contract v1
 
-The B ledger must be deterministic and source-local.
+Condition B uses only a hermetic public projection:
 
-For each fixture it may:
+```text
+public_fixture_v1 = {
+  fixture_id,
+  model_visible_source,
+  model_visible_relation_candidate
+}
+```
 
-- split explicit sentences/events;
-- preserve exact source identifiers;
-- copy explicit asserted relation wording;
-- copy explicit temporal order;
-- state that a named field is not provided.
+The transform must not receive the full fixture record, `frozen_gold`, primary/secondary outcome metadata, scorer configuration, or expected status.
+
+Frozen artifacts:
+
+```text
+tools/relation_integrity/source_field_schema_v1.json
+tools/relation_integrity/pre_run_contracts.py
+LEDGER_TRANSFORM_VERSION = source-bound-ledger-v1
+```
+
+`SourceFieldSchema v1` defines a closed legal registry of source fields, relation-type applicability, source-presence patterns, source-relative absence patterns, and canonical identifiers.
+
+```text
+NOT_PROVIDED_BY_SOURCE
+!= FALSE
+!= ABSENT_IN_WORLD
+!= INSUFFICIENT_FOR_GOLD_STATUS
+```
+
+For each public fixture the transform may:
+
+- preserve exact source/candidate identifiers;
+- mechanically project schema-defined source-relative missing fields;
+- emit only canonical source-local ledger JSON.
 
 It may not:
 
+- read or infer from `frozen_gold`;
+- read scorer/outcome configuration;
 - infer causal support;
 - infer source independence;
 - infer identity;
 - infer falsity;
-- assign epistemic status;
+- assign expected epistemic status;
 - inject expected answers.
 
-The transformation implementation, if created, must have unit tests showing that no `frozen_gold` field is serialized into B.
+Required acceptance properties:
+
+- public-input projection excludes gold/scorer data;
+- deterministic/canonical output for identical public input + schema;
+- gold-mutation invariance;
+- scorer-mutation invariance;
+- schema conformance;
+- non-causal F-P1 receives no CAUSES-specific missing-field hints.
+
+Acceptance tests live at:
+
+```text
+tests/relation_integrity/test_pre_run_contracts.py
+```
+
+If this transform/schema cannot pass the frozen tests, `MISSING_SOURCE_FIELDS` must be omitted from Condition B rather than generated ad hoc.
 
 ## 12. Stopping / invalidation conditions
 
@@ -357,6 +442,9 @@ Stop and mark the run `BLOCKED` or `INSUFFICIENT_EVIDENCE` if:
 - gold leaks into B;
 - prompt changes after outputs begin;
 - fixture content changes during the run;
+- package/scoring binding is not the accepted scoped package revision;
+- SC-1 contract tests fail;
+- source-ledger determinism or gold/scorer-invariance tests fail;
 - evaluator/scorer changes after outputs are inspected;
 - provider failure prevents the declared replicate set from completing;
 - parsing ambiguity cannot be resolved by the frozen answer contract.
@@ -395,8 +483,8 @@ Execution requires a later explicit owner decision confirming:
 
 - exact model identifier/configuration;
 - exact frozen prompt;
-- exact ledger transform version;
-- exact scorer version;
+- exact ledger transform version + SourceFieldSchema hash;
+- exact SC-1 normalization/scorer version;
 - evidence output location;
 - exact branch/head.
 
@@ -409,3 +497,30 @@ MERGE          = FALSE
 ```
 
 No numbered experiment is created by this plan.
+
+
+## 15. 2026-09-26 pre-run reconciliation revision
+
+This plan revision was created after a bounded source-grounded reconciliation of three blockers at prior immutable head `cdb4a2af53cdb02c8b2cec4992b476131b37092e`.
+
+Classification applied:
+
+```text
+F-P1 registry/world scope
+-> PACKAGE_REVISION
+
+qualification vs basis consistency
+-> EXECUTION_PLAN_REVISION
+
+MISSING_SOURCE_FIELDS gold-blindness
+-> EXECUTION_PLAN_REVISION
+```
+
+Repository changes in this revision do **not** authorize execution. They prepare a bounded re-review only.
+
+```text
+RUN_AUTHORIZED = FALSE
+EXPERIMENT_ID  = NONE
+MERGE          = FALSE
+ARCHITECTURE_CONSEQUENCE = NONE
+```
