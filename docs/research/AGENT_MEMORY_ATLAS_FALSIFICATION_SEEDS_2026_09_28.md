@@ -6,7 +6,7 @@ Source: https://neoneye.github.io/agent-memory-atlas/
 
 These seeds translate external memory-system patterns into bounded failure questions for SVL. They do not import any external architecture and do not create new experiment IDs or failure families.
 
-Prior Velantrim intake of the same donor already exists: 💠 Crystal `docs/research/MEMORY_EVAL_ADVERSARIAL_PROFILE_V0.md` ([PR #462](https://github.com/velantrian/velantrim-exocortex-crystal/pull/462)), 🧬 Native Kernel `docs/research/MEMORY_EVALUATION_PROTOCOL_V0.md`, and the 🕸 Graphiti Fractal Lab FM-13 → FM-16 Honest Empty line. This note therefore deduplicates against existing SVL experiments (`docs/ARCHITECTURE.md` §6 Relation and Derived-State Plane, §8 Return Arc, §11 E1–E10) before anything is preregistered.
+Prior Atlas-related / pre-existing overlapping coverage already exists: 💠 Crystal `docs/research/MEMORY_EVAL_ADVERSARIAL_PROFILE_V0.md` ([PR #462](https://github.com/velantrian/velantrim-exocortex-crystal/pull/462)), 🧬 Native Kernel `docs/research/MEMORY_EVALUATION_PROTOCOL_V0.md`, and the 🕸 Graphiti Fractal Lab FM-13 → FM-16 Honest Empty line. This note therefore deduplicates against existing SVL experiments (`docs/ARCHITECTURE.md` §6 Relation and Derived-State Plane, §8 Return Arc, §11 E1–E10) before anything is preregistered.
 
 ## Source-fidelity note
 
