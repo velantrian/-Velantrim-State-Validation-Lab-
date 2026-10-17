@@ -1,0 +1,14 @@
+{
+  "schema_version": "source-field-schema-v1",
+  "closed_world_source_convention": "NOT_PROVIDED_BY_SOURCE means no value satisfying the frozen source-presence rule occurs in the model-visible source. It does not mean false, absent in reality, or insufficient for a gold status.",
+  "fields": [
+    {"field_id":"identification_assumptions","relation_types":["CAUSES"],"positive_patterns":["identification assumption","backdoor criterion","instrument validity","ignorability"],"negative_patterns":["no identification assumptions","no information about .*identification assumptions"]},
+    {"field_id":"independent_evidence","relation_types":["CAUSES"],"positive_patterns":["independent evidence","independently replicated"],"negative_patterns":["no independent evidence","independent evidence .* not included"]},
+    {"field_id":"interventions","relation_types":["CAUSES"],"positive_patterns":["intervention:","randomized intervention","assigned treatment"],"negative_patterns":["no interventions","no information about .* interventions","intervention details .* not included"]},
+    {"field_id":"methods","relation_types":["CAUSES"],"positive_patterns":["methods?:","randomized","controlled trial","instrumental variable"],"negative_patterns":["no methods","methods .* not included","no information about .* methods"]},
+    {"field_id":"replication_design","relation_types":["CAUSES"],"positive_patterns":["replication design","replication study","replicated experiment"],"negative_patterns":["no replication design","no information about .* replication design"]},
+    {"field_id":"results","relation_types":["CAUSES"],"positive_patterns":["results?:","effect size","confidence interval","p\\s*[=<]"],"negative_patterns":["no results","results .* not included"]},
+    {"field_id":"shared_sourcing","relation_types":["CAUSES"],"positive_patterns":["shared upstream source","common upstream source","shared sourcing"],"negative_patterns":["no information about .* shared upstream sourcing"]},
+    {"field_id":"source_independence","relation_types":["CAUSES"],"positive_patterns":["independent sources?","independently collected","independent datasets?"],"negative_patterns":["no information about source independence","source independence .* not provided"]}
+  ]
+}
