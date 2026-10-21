@@ -1,5 +1,16 @@
 # 🔬 Velantrim State Validation Lab 👨‍🔬
 
+## 👋 Why State Validation Lab exists
+
+> 🔬 **Studying how durable state can change without silently erasing its history or provenance.**
+>
+> **Why:** A memory can be corrected, revoked or restored, but an old record should not automatically regain authority just because its bytes reappear.
+>
+> **Example:** Restore a snapshot that contains a revoked claim; the laboratory studies how later revocation remains visible and relevant.
+>
+> **Status:** Research architecture, not an activated production service or independent Canon authority.
+
+
 > **Standalone research architecture for studying how persistent state can evolve, conflict, expire, be erased, restored, replayed, and audited over time without losing provenance, scope, applicability, continuity, or causal explainability.**
 
 **Status:** `FOUNDATION v0.2 · RESEARCH ARCHITECTURE · NOT PRODUCTION AUTHORITY`
